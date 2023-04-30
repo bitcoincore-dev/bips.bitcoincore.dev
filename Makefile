@@ -1,7 +1,8 @@
+default: bips npm build image
 .PHONY: bips
 bips:
-	git submodule update --init --recursive
-	bash ./web/build/transcode-md.sh
+	@git submodule update --init --recursive || ls bips
+	./web/build/transcode-md.sh
 
 .PHONY: npm
 npm:
