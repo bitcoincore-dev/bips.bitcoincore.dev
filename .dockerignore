@@ -1,5 +1,6 @@
-bips
-src
-target
-templates
-web
+!.git
+!bips
+!src
+!target
+!templates
+!web
