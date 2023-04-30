@@ -1,1106 +1,1109 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>https://bips.dev/</loc>
+        <loc>https://bips.bitcoincore.dev/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/1/</loc>
+        <loc>https://bips.bitcoincore.dev/1/</loc>
         <lastmod>2011-09-19</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/1/bip-0001/</loc>
+        <loc>https://bips.bitcoincore.dev/1/bip-0001/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/10/</loc>
+        <loc>https://bips.bitcoincore.dev/10/</loc>
         <lastmod>2011-10-28</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/100/</loc>
+        <loc>https://bips.bitcoincore.dev/100/</loc>
         <lastmod>2015-06-11</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/101/</loc>
+        <loc>https://bips.bitcoincore.dev/101/</loc>
         <lastmod>2015-06-22</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/102/</loc>
+        <loc>https://bips.bitcoincore.dev/102/</loc>
         <lastmod>2015-06-23</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/103/</loc>
+        <loc>https://bips.bitcoincore.dev/103/</loc>
         <lastmod>2015-07-21</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/104/</loc>
+        <loc>https://bips.bitcoincore.dev/104/</loc>
         <lastmod>2017-01-13</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/105/</loc>
+        <loc>https://bips.bitcoincore.dev/105/</loc>
         <lastmod>2015-08-21</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/106/</loc>
+        <loc>https://bips.bitcoincore.dev/106/</loc>
         <lastmod>2015-08-24</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/107/</loc>
+        <loc>https://bips.bitcoincore.dev/107/</loc>
         <lastmod>2015-09-11</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/109/</loc>
+        <loc>https://bips.bitcoincore.dev/109/</loc>
         <lastmod>2016-01-28</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/11/</loc>
+        <loc>https://bips.bitcoincore.dev/11/</loc>
         <lastmod>2011-10-18</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/111/</loc>
+        <loc>https://bips.bitcoincore.dev/111/</loc>
         <lastmod>2015-08-20</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/112/</loc>
+        <loc>https://bips.bitcoincore.dev/112/</loc>
         <lastmod>2015-08-10</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/113/</loc>
+        <loc>https://bips.bitcoincore.dev/113/</loc>
         <lastmod>2015-08-10</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/114/</loc>
+        <loc>https://bips.bitcoincore.dev/114/</loc>
         <lastmod>2016-04-02</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/114/bip-0114/</loc>
+        <loc>https://bips.bitcoincore.dev/114/bip-0114/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/115/</loc>
+        <loc>https://bips.bitcoincore.dev/115/</loc>
         <lastmod>2016-09-23</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/116/</loc>
+        <loc>https://bips.bitcoincore.dev/116/</loc>
         <lastmod>2017-08-25</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/117/</loc>
+        <loc>https://bips.bitcoincore.dev/117/</loc>
         <lastmod>2017-08-25</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/118/</loc>
+        <loc>https://bips.bitcoincore.dev/118/</loc>
         <lastmod>2017-02-28</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/119/</loc>
+        <loc>https://bips.bitcoincore.dev/119/</loc>
         <lastmod>2020-01-06</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/119/bip-0119/</loc>
+        <loc>https://bips.bitcoincore.dev/119/bip-0119/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/12/</loc>
+        <loc>https://bips.bitcoincore.dev/12/</loc>
         <lastmod>2011-10-18</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/120/</loc>
+        <loc>https://bips.bitcoincore.dev/120/</loc>
         <lastmod>2015-07-28</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/121/</loc>
+        <loc>https://bips.bitcoincore.dev/121/</loc>
         <lastmod>2015-07-27</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/122/</loc>
+        <loc>https://bips.bitcoincore.dev/122/</loc>
         <lastmod>2015-08-29</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/122/bip-0122/</loc>
+        <loc>https://bips.bitcoincore.dev/122/bip-0122/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/123/</loc>
+        <loc>https://bips.bitcoincore.dev/123/</loc>
         <lastmod>2015-08-26</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/124/</loc>
+        <loc>https://bips.bitcoincore.dev/124/</loc>
         <lastmod>2015-11-20</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/125/</loc>
+        <loc>https://bips.bitcoincore.dev/125/</loc>
         <lastmod>2015-12-04</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/126/</loc>
+        <loc>https://bips.bitcoincore.dev/126/</loc>
         <lastmod>2016-02-10</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/127/</loc>
+        <loc>https://bips.bitcoincore.dev/127/</loc>
         <lastmod>2019-01-28</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/129/</loc>
+        <loc>https://bips.bitcoincore.dev/129/</loc>
         <lastmod>2020-11-10</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/13/</loc>
+        <loc>https://bips.bitcoincore.dev/13/</loc>
         <lastmod>2011-10-18</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/130/</loc>
+        <loc>https://bips.bitcoincore.dev/130/</loc>
         <lastmod>2015-05-08</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/131/</loc>
+        <loc>https://bips.bitcoincore.dev/131/</loc>
         <lastmod>2015-11-30</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/132/</loc>
+        <loc>https://bips.bitcoincore.dev/132/</loc>
         <lastmod>2015-08-31</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/133/</loc>
+        <loc>https://bips.bitcoincore.dev/133/</loc>
         <lastmod>2016-02-13</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/134/</loc>
+        <loc>https://bips.bitcoincore.dev/134/</loc>
         <lastmod>2016-07-27</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/135/</loc>
+        <loc>https://bips.bitcoincore.dev/135/</loc>
         <lastmod>2017-03-29</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/135/bip-0135/</loc>
+        <loc>https://bips.bitcoincore.dev/135/bip-0135/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/136/</loc>
+        <loc>https://bips.bitcoincore.dev/136/</loc>
         <lastmod>2017-07-09</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/137/</loc>
+        <loc>https://bips.bitcoincore.dev/137/</loc>
         <lastmod>2019-02-16</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/14/</loc>
+        <loc>https://bips.bitcoincore.dev/14/</loc>
         <lastmod>2011-11-10</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/140/</loc>
+        <loc>https://bips.bitcoincore.dev/140/</loc>
         <lastmod>2015-10-14</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/141/</loc>
+        <loc>https://bips.bitcoincore.dev/141/</loc>
         <lastmod>2015-12-21</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/142/</loc>
+        <loc>https://bips.bitcoincore.dev/142/</loc>
         <lastmod>2015-12-24</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/143/</loc>
+        <loc>https://bips.bitcoincore.dev/143/</loc>
         <lastmod>2016-01-03</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/144/</loc>
+        <loc>https://bips.bitcoincore.dev/144/</loc>
         <lastmod>2016-01-08</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/144/bip-0144/</loc>
+        <loc>https://bips.bitcoincore.dev/144/bip-0144/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/145/</loc>
+        <loc>https://bips.bitcoincore.dev/145/</loc>
         <lastmod>2016-01-30</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/146/</loc>
+        <loc>https://bips.bitcoincore.dev/146/</loc>
         <lastmod>2016-08-16</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/147/</loc>
+        <loc>https://bips.bitcoincore.dev/147/</loc>
         <lastmod>2016-09-02</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/148/</loc>
+        <loc>https://bips.bitcoincore.dev/148/</loc>
         <lastmod>2017-03-12</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/149/</loc>
+        <loc>https://bips.bitcoincore.dev/149/</loc>
         <lastmod>2017-04-14</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/15/</loc>
+        <loc>https://bips.bitcoincore.dev/15/</loc>
         <lastmod>2011-12-10</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/150/</loc>
+        <loc>https://bips.bitcoincore.dev/150/</loc>
         <lastmod>2016-03-23</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/151/</loc>
+        <loc>https://bips.bitcoincore.dev/151/</loc>
         <lastmod>2016-03-23</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/152/</loc>
+        <loc>https://bips.bitcoincore.dev/152/</loc>
         <lastmod>2016-04-27</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/152/bip-0152/</loc>
+        <loc>https://bips.bitcoincore.dev/152/bip-0152/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/154/</loc>
+        <loc>https://bips.bitcoincore.dev/154/</loc>
         <lastmod>2017-04-12</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/155/</loc>
+        <loc>https://bips.bitcoincore.dev/155/</loc>
         <lastmod>2019-02-27</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/156/</loc>
+        <loc>https://bips.bitcoincore.dev/156/</loc>
         <lastmod>2017-06-09</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/156/bip-0156/</loc>
+        <loc>https://bips.bitcoincore.dev/156/bip-0156/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/157/</loc>
+        <loc>https://bips.bitcoincore.dev/157/</loc>
         <lastmod>2017-05-24</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/158/</loc>
+        <loc>https://bips.bitcoincore.dev/158/</loc>
         <lastmod>2017-05-24</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/158/bip-0158/</loc>
+        <loc>https://bips.bitcoincore.dev/158/bip-0158/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/159/</loc>
+        <loc>https://bips.bitcoincore.dev/159/</loc>
         <lastmod>2017-05-11</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/16/</loc>
+        <loc>https://bips.bitcoincore.dev/16/</loc>
         <lastmod>2012-01-03</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/16/bip-0016/</loc>
+        <loc>https://bips.bitcoincore.dev/16/bip-0016/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/17/</loc>
+        <loc>https://bips.bitcoincore.dev/17/</loc>
         <lastmod>2012-01-18</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/171/</loc>
+        <loc>https://bips.bitcoincore.dev/171/</loc>
         <lastmod>2017-03-04</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/173/</loc>
+        <loc>https://bips.bitcoincore.dev/173/</loc>
         <lastmod>2017-03-20</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/174/</loc>
+        <loc>https://bips.bitcoincore.dev/174/</loc>
         <lastmod>2017-07-12</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/174/bip-0174/</loc>
+        <loc>https://bips.bitcoincore.dev/174/bip-0174/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/175/</loc>
+        <loc>https://bips.bitcoincore.dev/175/</loc>
         <lastmod>2017-07-17</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/176/</loc>
+        <loc>https://bips.bitcoincore.dev/176/</loc>
         <lastmod>2017-12-12</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/178/</loc>
+        <loc>https://bips.bitcoincore.dev/178/</loc>
         <lastmod>2018-04-04</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/179/</loc>
+        <loc>https://bips.bitcoincore.dev/179/</loc>
         <lastmod>2019-10-17</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/18/</loc>
+        <loc>https://bips.bitcoincore.dev/18/</loc>
         <lastmod>2012-01-27</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/180/</loc>
+        <loc>https://bips.bitcoincore.dev/180/</loc>
         <lastmod>2017-03-17</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/19/</loc>
+        <loc>https://bips.bitcoincore.dev/19/</loc>
         <lastmod>2012-01-30</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/197/</loc>
+        <loc>https://bips.bitcoincore.dev/197/</loc>
         <lastmod>2019-03-19</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/199/</loc>
+        <loc>https://bips.bitcoincore.dev/199/</loc>
         <lastmod>2017-03-27</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/2/</loc>
+        <loc>https://bips.bitcoincore.dev/2/</loc>
         <lastmod>2016-02-03</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/2/bip-0002/</loc>
+        <loc>https://bips.bitcoincore.dev/2/bip-0002/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/20/</loc>
+        <loc>https://bips.bitcoincore.dev/20/</loc>
         <lastmod>2011-01-10</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/21/</loc>
+        <loc>https://bips.bitcoincore.dev/21/</loc>
         <lastmod>2012-01-29</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/22/</loc>
+        <loc>https://bips.bitcoincore.dev/22/</loc>
         <lastmod>2012-02-28</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/23/</loc>
+        <loc>https://bips.bitcoincore.dev/23/</loc>
         <lastmod>2012-02-28</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/30/</loc>
+        <loc>https://bips.bitcoincore.dev/30/</loc>
         <lastmod>2012-02-22</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/300/</loc>
+        <loc>https://bips.bitcoincore.dev/300/</loc>
         <lastmod>2017-08-14</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/300/bip-0300/</loc>
+        <loc>https://bips.bitcoincore.dev/300/bip-0300/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/301/</loc>
+        <loc>https://bips.bitcoincore.dev/301/</loc>
         <lastmod>2019-07-23</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/301/bip-0301/</loc>
+        <loc>https://bips.bitcoincore.dev/301/bip-0301/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/31/</loc>
+        <loc>https://bips.bitcoincore.dev/31/</loc>
         <lastmod>2012-04-11</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/310/</loc>
+        <loc>https://bips.bitcoincore.dev/310/</loc>
         <lastmod>2018-03-10</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/32/</loc>
+        <loc>https://bips.bitcoincore.dev/32/</loc>
         <lastmod>2012-02-11</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/32/bip-0032/</loc>
+        <loc>https://bips.bitcoincore.dev/32/bip-0032/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/320/</loc>
+        <loc>https://bips.bitcoincore.dev/320/</loc>
         <lastmod>2018-03-01</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/322/</loc>
+        <loc>https://bips.bitcoincore.dev/322/</loc>
         <lastmod>2018-09-10</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/324/</loc>
+        <loc>https://bips.bitcoincore.dev/324/</loc>
         <lastmod>2019-03-08</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/324/bip-0324/</loc>
+        <loc>https://bips.bitcoincore.dev/324/bip-0324/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/325/</loc>
+        <loc>https://bips.bitcoincore.dev/325/</loc>
         <lastmod>2019-03-20</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/326/</loc>
+        <loc>https://bips.bitcoincore.dev/326/</loc>
         <lastmod>2021-06-10</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/329/</loc>
+        <loc>https://bips.bitcoincore.dev/327/bip-0327/</loc>
+    </url>
+    <url>
+        <loc>https://bips.bitcoincore.dev/329/</loc>
         <lastmod>2022-08-23</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/33/</loc>
+        <loc>https://bips.bitcoincore.dev/33/</loc>
         <lastmod>2012-05-15</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/330/</loc>
+        <loc>https://bips.bitcoincore.dev/330/</loc>
         <lastmod>2019-09-25</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/330/bip-0330/</loc>
+        <loc>https://bips.bitcoincore.dev/330/bip-0330/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/338/</loc>
+        <loc>https://bips.bitcoincore.dev/338/</loc>
         <lastmod>2020-09-03</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/339/</loc>
+        <loc>https://bips.bitcoincore.dev/339/</loc>
         <lastmod>2020-02-03</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/34/</loc>
+        <loc>https://bips.bitcoincore.dev/34/</loc>
         <lastmod>2012-07-06</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/340/</loc>
+        <loc>https://bips.bitcoincore.dev/340/</loc>
         <lastmod>2020-01-19</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/340/bip-0340/</loc>
+        <loc>https://bips.bitcoincore.dev/340/bip-0340/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/341/</loc>
+        <loc>https://bips.bitcoincore.dev/341/</loc>
         <lastmod>2020-01-19</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/341/bip-0341/</loc>
+        <loc>https://bips.bitcoincore.dev/341/bip-0341/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/342/</loc>
+        <loc>https://bips.bitcoincore.dev/342/</loc>
         <lastmod>2020-01-19</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/343/</loc>
+        <loc>https://bips.bitcoincore.dev/343/</loc>
         <lastmod>2021-04-25</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/35/</loc>
+        <loc>https://bips.bitcoincore.dev/35/</loc>
         <lastmod>2012-08-16</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/350/</loc>
+        <loc>https://bips.bitcoincore.dev/350/</loc>
         <lastmod>2020-12-16</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/351/</loc>
+        <loc>https://bips.bitcoincore.dev/351/</loc>
         <lastmod>2022-07-10</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/36/</loc>
+        <loc>https://bips.bitcoincore.dev/36/</loc>
         <lastmod>2012-08-03</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/37/</loc>
+        <loc>https://bips.bitcoincore.dev/37/</loc>
         <lastmod>2012-10-24</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/370/</loc>
+        <loc>https://bips.bitcoincore.dev/370/</loc>
         <lastmod>2021-01-14</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/371/</loc>
+        <loc>https://bips.bitcoincore.dev/371/</loc>
         <lastmod>2021-06-21</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/372/</loc>
+        <loc>https://bips.bitcoincore.dev/372/</loc>
         <lastmod>2022-01-16</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/38/</loc>
+        <loc>https://bips.bitcoincore.dev/38/</loc>
         <lastmod>2012-11-20</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/380/</loc>
+        <loc>https://bips.bitcoincore.dev/380/</loc>
         <lastmod>2021-06-27</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/381/</loc>
+        <loc>https://bips.bitcoincore.dev/381/</loc>
         <lastmod>2021-06-27</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/382/</loc>
+        <loc>https://bips.bitcoincore.dev/382/</loc>
         <lastmod>2021-06-27</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/383/</loc>
+        <loc>https://bips.bitcoincore.dev/383/</loc>
         <lastmod>2021-06-27</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/384/</loc>
+        <loc>https://bips.bitcoincore.dev/384/</loc>
         <lastmod>2021-06-27</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/385/</loc>
+        <loc>https://bips.bitcoincore.dev/385/</loc>
         <lastmod>2021-06-27</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/386/</loc>
+        <loc>https://bips.bitcoincore.dev/386/</loc>
         <lastmod>2021-06-27</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/39/</loc>
+        <loc>https://bips.bitcoincore.dev/39/</loc>
         <lastmod>2013-09-10</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/39/bip-0039/</loc>
+        <loc>https://bips.bitcoincore.dev/39/bip-0039/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/42/</loc>
+        <loc>https://bips.bitcoincore.dev/42/</loc>
         <lastmod>2014-04-01</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/42/bip-0042/</loc>
+        <loc>https://bips.bitcoincore.dev/42/bip-0042/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/43/</loc>
+        <loc>https://bips.bitcoincore.dev/43/</loc>
         <lastmod>2014-04-24</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/44/</loc>
+        <loc>https://bips.bitcoincore.dev/44/</loc>
         <lastmod>2014-04-24</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/45/</loc>
+        <loc>https://bips.bitcoincore.dev/45/</loc>
         <lastmod>2014-04-25</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/47/</loc>
+        <loc>https://bips.bitcoincore.dev/47/</loc>
         <lastmod>2015-04-24</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/47/bip-0047/</loc>
+        <loc>https://bips.bitcoincore.dev/47/bip-0047/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/48/</loc>
+        <loc>https://bips.bitcoincore.dev/48/</loc>
         <lastmod>2020-12-16</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/49/</loc>
+        <loc>https://bips.bitcoincore.dev/49/</loc>
         <lastmod>2016-05-19</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/50/</loc>
+        <loc>https://bips.bitcoincore.dev/50/</loc>
         <lastmod>2013-03-20</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/52/</loc>
+        <loc>https://bips.bitcoincore.dev/52/</loc>
         <lastmod>2021-05-13</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/52/bip-0052/</loc>
+        <loc>https://bips.bitcoincore.dev/52/bip-0052/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/60/</loc>
+        <loc>https://bips.bitcoincore.dev/60/</loc>
         <lastmod>2013-06-16</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/61/</loc>
+        <loc>https://bips.bitcoincore.dev/61/</loc>
         <lastmod>2014-06-18</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/62/</loc>
+        <loc>https://bips.bitcoincore.dev/62/</loc>
         <lastmod>2014-03-12</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/64/</loc>
+        <loc>https://bips.bitcoincore.dev/64/</loc>
         <lastmod>2014-06-10</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/65/</loc>
+        <loc>https://bips.bitcoincore.dev/65/</loc>
         <lastmod>2014-10-01</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/66/</loc>
+        <loc>https://bips.bitcoincore.dev/66/</loc>
         <lastmod>2015-01-10</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/67/</loc>
+        <loc>https://bips.bitcoincore.dev/67/</loc>
         <lastmod>2015-02-08</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/68/</loc>
+        <loc>https://bips.bitcoincore.dev/68/</loc>
         <lastmod>2015-05-28</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/68/bip-0068/</loc>
+        <loc>https://bips.bitcoincore.dev/68/bip-0068/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/69/</loc>
+        <loc>https://bips.bitcoincore.dev/69/</loc>
         <lastmod>2015-06-12</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/69/bip-0069/</loc>
+        <loc>https://bips.bitcoincore.dev/69/bip-0069/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/70/</loc>
+        <loc>https://bips.bitcoincore.dev/70/</loc>
         <lastmod>2013-07-29</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/70/bip-0070/</loc>
+        <loc>https://bips.bitcoincore.dev/70/bip-0070/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/71/</loc>
+        <loc>https://bips.bitcoincore.dev/71/</loc>
         <lastmod>2013-07-29</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/72/</loc>
+        <loc>https://bips.bitcoincore.dev/72/</loc>
         <lastmod>2013-07-29</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/73/</loc>
+        <loc>https://bips.bitcoincore.dev/73/</loc>
         <lastmod>2013-08-27</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/73/bip-0073/</loc>
+        <loc>https://bips.bitcoincore.dev/73/bip-0073/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/74/</loc>
+        <loc>https://bips.bitcoincore.dev/74/</loc>
         <lastmod>2016-01-29</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/75/</loc>
+        <loc>https://bips.bitcoincore.dev/75/</loc>
         <lastmod>2015-11-20</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/75/bip-0075/</loc>
+        <loc>https://bips.bitcoincore.dev/75/bip-0075/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/78/</loc>
+        <loc>https://bips.bitcoincore.dev/78/</loc>
         <lastmod>2019-05-01</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/79/</loc>
+        <loc>https://bips.bitcoincore.dev/79/</loc>
         <lastmod>2018-10-05</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/8/</loc>
+        <loc>https://bips.bitcoincore.dev/8/</loc>
         <lastmod>2017-02-01</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/8/bip-0008/</loc>
+        <loc>https://bips.bitcoincore.dev/8/bip-0008/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/80/</loc>
+        <loc>https://bips.bitcoincore.dev/80/</loc>
         <lastmod>2014-08-11</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/81/</loc>
+        <loc>https://bips.bitcoincore.dev/81/</loc>
         <lastmod>2014-08-11</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/83/</loc>
+        <loc>https://bips.bitcoincore.dev/83/</loc>
         <lastmod>2015-11-16</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/84/</loc>
+        <loc>https://bips.bitcoincore.dev/84/</loc>
         <lastmod>2017-12-28</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/85/</loc>
+        <loc>https://bips.bitcoincore.dev/85/</loc>
         <lastmod>2020-03-20</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/86/</loc>
+        <loc>https://bips.bitcoincore.dev/86/</loc>
         <lastmod>2021-06-22</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/87/</loc>
+        <loc>https://bips.bitcoincore.dev/87/</loc>
         <lastmod>2020-03-11</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/88/</loc>
+        <loc>https://bips.bitcoincore.dev/88/</loc>
         <lastmod>2020-06-23</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/9/</loc>
+        <loc>https://bips.bitcoincore.dev/9/</loc>
         <lastmod>2015-10-04</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/9/bip-0009/</loc>
+        <loc>https://bips.bitcoincore.dev/9/bip-0009/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/90/</loc>
+        <loc>https://bips.bitcoincore.dev/90/</loc>
         <lastmod>2016-11-08</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/91/</loc>
+        <loc>https://bips.bitcoincore.dev/91/</loc>
         <lastmod>2017-05-22</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/98/</loc>
+        <loc>https://bips.bitcoincore.dev/98/</loc>
         <lastmod>2017-08-24</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/98/bip-0098/</loc>
+        <loc>https://bips.bitcoincore.dev/98/bip-0098/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/99/</loc>
+        <loc>https://bips.bitcoincore.dev/99/</loc>
         <lastmod>2015-06-20</lastmod>
     </url>
     <url>
-        <loc>https://bips.dev/authors/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/aaron-chen/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/aaron-chen/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/aaron-voisine/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/aaron-voisine/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/alan-reiner/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/alan-reiner/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/alex-akselrod/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/alex-akselrod/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/alex-morcos/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/alex-morcos/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/alfred-hodler/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/alfred-hodler/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/amir-taaki/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/amir-taaki/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/andrew-chow/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/andrew-chow/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/andrew-miller/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/andrew-miller/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/andy-chase/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/andy-chase/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/anthony-towns/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/anthony-towns/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/bogdan-penkovsky/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/bogdan-penkovsky/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/brad-denby/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/brad-denby/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/btcdrak/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/btcdrak/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/chris-belcher/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/chris-belcher/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/chris-priest/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/chris-priest/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/christian-decker/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/christian-decker/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/christopher-gilliard/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/christopher-gilliard/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/clark-moody/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/clark-moody/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/craig-raw/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/craig-raw/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/cryptaxe/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/cryptaxe/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/dagur-valberg-johannsson/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/dagur-valberg-johannsson/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/daira-hopwood/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/daira-hopwood/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/daniel-pape/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/daniel-pape/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/daniel-weigl/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/daniel-weigl/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/david-a-harding/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/david-a-harding/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/dhruv-mehta/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/dhruv-mehta/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/dmitry-petukhov/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/dmitry-petukhov/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/emil-engler/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/emil-engler/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/eric-lombrozo/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/eric-lombrozo/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/ethan-kosakovsky/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/ethan-kosakovsky/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/fontaine/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/fontaine/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/gavin-andresen/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/gavin-andresen/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/giulia-fanti/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/giulia-fanti/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/gleb-naumenko/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/gleb-naumenko/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/greg-maxwell/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/greg-maxwell/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/hugo-nguyen/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/hugo-nguyen/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/james-hilliard/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/james-hilliard/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/james-macwhyte/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/james-macwhyte/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/jan-capek/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/jan-capek/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/jean-pierre-rupp/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/jean-pierre-rupp/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/jeff-garzik/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/jeff-garzik/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/jeremy-rubin/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/jeremy-rubin/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/jim-posen/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/jim-posen/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/jimmy-song/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/jimmy-song/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/johnson-lau/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/johnson-lau/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/jonas-nick/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/jonas-nick/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/jonas-schnelli/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/jonas-schnelli/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/jorge-timon/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/jorge-timon/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/justin-newton/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/justin-newton/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/justus-ranvier/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/justus-ranvier/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/kalle-alm/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/kalle-alm/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/kalle-rosenbaum/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/kalle-rosenbaum/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/karl-johan-alm/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/karl-johan-alm/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/kinoshitajona/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/kinoshitajona/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/kristov-atlas/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/kristov-atlas/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/luke-dashjr/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/luke-dashjr/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/manuel-araoz/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/manuel-araoz/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/marco-pontello/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/marco-pontello/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/marek-palatinus/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/marek-palatinus/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/mark-friedenbach/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/mark-friedenbach/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/marko-bencun/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/marko-bencun/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/matias-alejo-garcia/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/matias-alejo-garcia/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/matt-corallo/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/matt-corallo/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/matt-david/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/matt-david/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/matthew-black/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/matthew-black/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/maxim-orlovsky/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/maxim-orlovsky/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/michael-dubrovsky/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/michael-dubrovsky/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/michael-folkson/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/michael-folkson/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/mike-caldwell/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/mike-caldwell/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/mike-hearn/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/mike-hearn/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/nicholas-gregory/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/nicholas-gregory/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/nicolas-dorier/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/nicolas-dorier/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/nils-schneider/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/nils-schneider/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/olaoluwa-osuntokun/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/olaoluwa-osuntokun/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/omar-shibli/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/omar-shibli/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/patrick-strateman/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/patrick-strateman/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/paul-sztorc/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/paul-sztorc/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/pavel-moravec/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/pavel-moravec/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/pavol-rusnak/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/pavol-rusnak/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/peter-gray/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/peter-gray/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/peter-todd/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/peter-todd/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/pieter-wuille/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/pieter-wuille/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/pramod-viswanath/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/pramod-viswanath/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/robert-spigler/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/robert-spigler/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/rodolfo-novak/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/rodolfo-novak/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/ruben-de-vries/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/ruben-de-vries/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/rusty-russell/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/rusty-russell/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/ryan-havar/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/ryan-havar/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/ryan-x-charles/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/ryan-x-charles/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/sancho-panza/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/sancho-panza/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/sean-bowe/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/sean-bowe/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/shaileshh-bojja-venkatakrishnan/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/shaileshh-bojja-venkatakrishnan/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/shaolin-fry/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/shaolin-fry/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/shinobius/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/shinobius/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/stefan-thomas/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/stefan-thomas/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/stephen-pair/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/stephen-pair/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/steven-roose/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/steven-roose/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/suhas-daftuar/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/suhas-daftuar/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/surya-bakshi/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/surya-bakshi/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/t-khan/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/t-khan/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/thomas-kerin/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/thomas-kerin/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/tim-ruffing/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/tim-ruffing/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/toby-padilla/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/toby-padilla/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/tom-harding/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/tom-harding/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/tom-zander/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/tom-zander/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/tony-cai/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/tony-cai/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/upal-chakraborty/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/upal-chakraborty/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/veleslav/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/veleslav/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/washington-y-sanchez/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/washington-y-sanchez/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/william-swanson/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/william-swanson/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/authors/wladimir-j-van-der-laan/</loc>
+        <loc>https://bips.bitcoincore.dev/authors/wladimir-j-van-der-laan/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/search/</loc>
+        <loc>https://bips.bitcoincore.dev/search/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/status/</loc>
+        <loc>https://bips.bitcoincore.dev/status/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/status/active/</loc>
+        <loc>https://bips.bitcoincore.dev/status/active/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/status/deferred/</loc>
+        <loc>https://bips.bitcoincore.dev/status/deferred/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/status/draft-some-confusion-applies-the-announcements-for-this-never-made-it-to-the-list-so-it-hasn-t-had-public-discussion/</loc>
+        <loc>https://bips.bitcoincore.dev/status/draft-some-confusion-applies-the-announcements-for-this-never-made-it-to-the-list-so-it-hasn-t-had-public-discussion/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/status/draft/</loc>
+        <loc>https://bips.bitcoincore.dev/status/draft/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/status/final/</loc>
+        <loc>https://bips.bitcoincore.dev/status/final/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/status/obsolete/</loc>
+        <loc>https://bips.bitcoincore.dev/status/obsolete/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/status/proposed/</loc>
+        <loc>https://bips.bitcoincore.dev/status/proposed/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/status/rejected/</loc>
+        <loc>https://bips.bitcoincore.dev/status/rejected/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/status/replaced/</loc>
+        <loc>https://bips.bitcoincore.dev/status/replaced/</loc>
     </url>
     <url>
-        <loc>https://bips.dev/status/withdrawn/</loc>
+        <loc>https://bips.bitcoincore.dev/status/withdrawn/</loc>
     </url>
 </urlset>

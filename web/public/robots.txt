@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 Allow: /
-Sitemap: https://bips.dev/sitemap.xml
+Sitemap: https://bips.bitcoincore.dev/sitemap.xml

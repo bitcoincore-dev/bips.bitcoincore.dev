@@ -46,48 +46,14 @@
     </div>
 
     <div class="content">
-      <pre style="background-color:#fafafa;color:#61676c;"><code><span>  BIP: 71
-</span><span>  Layer: Applications
-</span><span>  Title: Payment Protocol MIME types
-</span><span>  Author: Gavin Andresen &lt;gavinandresen@gmail.com&gt;
-</span><span>  Comments-Summary: No comments yet.
-</span><span>  Comments-URI: https://github.com/bitcoin/bips/wiki/Comments:BIP-0071
-</span><span>  Status: Final
-</span><span>  Type: Standards Track
-</span><span>  Created: 2013-07-29
-</span></code></pre>
-<h2 id="Abstract">Abstract</h2>
-<p>This BIP defines a MIME (RFC 2046) Media Type for Bitcoin payment
-request messages.</p>
-<h2 id="Motivation">Motivation</h2>
-<p>Wallet or server software that sends payment protocol messages over
-email or http should follow Internet standards for properly
-encapsulating the messages.</p>
-<h2 id="Specification">Specification</h2>
-<p>The Media Type (Content-Type in HTML/email headers) for bitcoin protocol
-messages shall be:</p>
-<table><thead><tr><th></th><th></th></tr></thead><tbody>
-<tr><td>Message</td><td>Type/Subtype</td></tr>
-<tr><td>PaymentRequest</td><td>application/bitcoin-paymentrequest</td></tr>
-<tr><td>Payment</td><td>application/bitcoin-payment</td></tr>
-<tr><td>PaymentACK</td><td>application/bitcoin-paymentack</td></tr>
-</tbody></table>
-<p>Payment protocol messages are encoded in binary.</p>
-<h2 id="Example">Example</h2>
-<p>A web server generating a PaymentRequest message to initiate the payment
-protocol would precede the binary message data with the following
-headers:</p>
-<pre style="background-color:#fafafa;color:#61676c;"><code><span>Content-Type: application/bitcoin-paymentrequest
-</span><span>Content-Transfer-Encoding: binary
-</span></code></pre>
-
+      
     </div>
 
         </div>
     </section>
     <footer class="footer">
         <div class="container has-text-centered has-text-weight-bold is-family-monospace">
-            <p class="mb-1">Updated <span class="tag is-medium is-warning is-light">2023-02-22</span></p>
+            <p class="mb-1">Updated <span class="tag is-medium is-warning is-light">2023-04-30</span></p>
             <p>bips.dev - Made with &#x2615; by <a href="https://twitter.com/nickmonad">nickmonad</a></p>
             <p>Check it out on <a href="https://github.com/nickmonad/bips-dev">GitHub</a></p>
             <p>Stay humble. Stack sats. &#x20bf;</p>
