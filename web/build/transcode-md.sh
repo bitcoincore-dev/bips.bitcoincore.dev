@@ -1,6 +1,20 @@
-#!env bash
+#!/usr/bin/env bash
 set -e
-rustup default stable
+if (id -u) then
+	echo -e "\nTRY:\n'sudo su $USER'"
+	SUDOER="sudo su $USER"
+else
+	echo #"id=$(id -u)"
+fi
+
+
+if ! hash cargo 2>/dev/null; then
+export RUSTUP_INIT_SKIP_PATH_CHECK=yes
+curl https://sh.rustup.rs -sSf | sh -s -- -y
+source "$HOME/.cargo/env" #&& cargo b
+fi
+
+source "$HOME/.cargo/env"
 
 bip_number() {
     if [[ $1 =~ ^bip-([0-9]+).*$ ]]
@@ -27,8 +41,7 @@ move_static() {
 export -f bip_number
 export -f move_static
 
-find bips -maxdepth 1 -type f -name 'bip*.mediawiki' \
-    | cargo run --release
+find bips -maxdepth 1 -type f -name 'bip*.mediawiki' | type -P cargo 1>/dev/null  && cargo run --release ||  echo "cargo not found - install rust..."
 
 find bips -maxdepth 1 -type d -name 'bip-*' \
     | xargs -I{} bash -c 'move_static "{}"'
