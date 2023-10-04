@@ -6,11 +6,11 @@ in_search_index = true
 
 [taxonomies]
 authors = ["Pieter Wuille", "Jonas Nick", "Anthony Towns"]
-status = ["Draft"]
+status = ["Final"]
 
 [extra]
 bip = 341
-status = ["Draft"]
+status = ["Final"]
 github = "https://github.com/bitcoin/bips/blob/master/bip-0341.mediawiki"
 +++
 
@@ -22,7 +22,7 @@ github = "https://github.com/bitcoin/bips/blob/master/bip-0341.mediawiki"
               Anthony Towns <aj@erisian.com.au>
       Comments-Summary: No comments yet.
       Comments-URI: https://github.com/bitcoin/bips/wiki/Comments:BIP-0341
-      Status: Draft
+      Status: Final
       Type: Standards Track
       Created: 2020-01-19
       License: BSD-3-Clause
@@ -261,8 +261,8 @@ encoded in little-endian.
   - If the *hash_type & 0x80* does not equal `SIGHASH_ANYONECANPAY`:
     - *sha_prevouts* (32): the SHA256 of the serialization of all input
       outpoints.
-    - *sha_amounts* (32): the SHA256 of the serialization of all spent
-      output amounts.
+    - *sha_amounts* (32): the SHA256 of the serialization of all input
+      amounts.
     - *sha_scriptpubkeys* (32): the SHA256 of all spent outputs'
       *scriptPubKeys*, serialized as script inside `CTxOut`.
     - *sha_sequences* (32): the SHA256 of the serialization of all input
@@ -356,9 +356,10 @@ are likely application dependent, but here are some general guidelines:
   key. If no such condition exists, it may be worthwhile adding one that
   consists of an aggregation of all keys participating in all scripts
   combined; effectively adding an "everyone agrees" branch. If that is
-  inacceptable, pick as internal key a point with unknown discrete
-  logarithm. One example of such a point is *H =
-  lift_x(0x0250929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac0)*
+  inacceptable, pick as internal key a "Nothing Up My Sleeve" (NUMS)
+  point, i.e., a point with unknown discrete logarithm. One example of
+  such a point is *H =
+  lift_x(0x50929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac0)*
   which is
   [constructed](https://github.com/ElementsProject/secp256k1-zkp/blob/11af7015de624b010424273be3d91f117f172c82/src/modules/rangeproof/main_impl.h#L16)
   by taking the hash of the standard uncompressed encoding of the
@@ -480,12 +481,17 @@ def taproot_output_script(internal_pubkey, script_tree):
     return bytes([0x51, 0x20]) + output_pubkey
 ```
 
-![This diagram shows the hashing structure to obtain the tweak from an
-internal key *P* and a Merkle tree consisting of 5 script leaves. *A*,
-*B*, *C* and *E* are *TapLeaf* hashes similar to *D* and *AB* is a
-*TapBranch* hash. Note that when *CDE* is computed *E* is hashed first
-because *E* is less than
-*CD*.](bip-0341/tree.png "This diagram shows the hashing structure to obtain the tweak from an internal key P and a Merkle tree consisting of 5 script leaves. A, B, C and E are TapLeaf hashes similar to D and AB is a TapBranch hash. Note that when CDE is computed E is hashed first because E is less than CD.")
+<figure>
+<img src="bip-0341/tree.png"
+title="This diagram shows the hashing structure to obtain the tweak from an internal key P and a Merkle tree consisting of 5 script leaves. A, B, C and E are TapLeaf hashes similar to D and AB is a TapBranch hash. Note that when CDE is computed E is hashed first because E is less than CD." />
+<figcaption>This diagram shows the hashing structure to obtain the tweak
+from an internal key <em>P</em> and a Merkle tree consisting of 5 script
+leaves. <em>A</em>, <em>B</em>, <em>C</em> and <em>E</em> are
+<em>TapLeaf</em> hashes similar to <em>D</em> and <em>AB</em> is a
+<em>TapBranch</em> hash. Note that when <em>CDE</em> is computed
+<em>E</em> is hashed first because <em>E</em> is less than
+<em>CD</em>.</figcaption>
+</figure>
 
 To spend this output using script *D*, the control block would contain
 the following data in this order:

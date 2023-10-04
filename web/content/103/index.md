@@ -98,7 +98,7 @@ GetMaxBlockSize(pindexBlock-\>pprev-\>GetMedianTimePast()).
 
 The sigop limit scales proportionally.
 
-It implements a series of block size steps, one every \~97 days, between
+It implements a series of block size steps, one every ~97 days, between
 January 2017 and July 2063, each increasing the maximum block size by
 4.4%. This allows an overall growth of 17.7% per year.
 

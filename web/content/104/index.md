@@ -85,7 +85,7 @@ The 75% full block target was selected because:
 - it will maintain average transaction fees at a stable level similar to
   that of May/June 2016
 
-The 2016 block (\~2 weeks) period was selected because:
+The 2016 block (~2 weeks) period was selected because:
 
 - it has been shown to be reasonably adaptive to changing network
   resources (re: difficulty)
@@ -132,7 +132,7 @@ To help negate some of the risks associated with a hard fork and to
 prevent a single relatively small mining pool from preventing Block75's
 adoption, activation would occur at the next difficulty adjustment once
 900 of the last 1,000 blocks mined signal support and a grace period of
-4,032 blocks (\~1 month) has elapsed.
+4,032 blocks (~1 month) has elapsed.
 
 ## Copyright
 

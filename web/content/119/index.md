@@ -5,7 +5,7 @@ weight = 119
 in_search_index = true
 
 [taxonomies]
-authors = ["Jeremy Rubin"]
+authors = ["Jeremy Rubin", "James O'Beirne"]
 status = ["Draft"]
 
 [extra]
@@ -18,6 +18,7 @@ github = "https://github.com/bitcoin/bips/blob/master/bip-0119.mediawiki"
       Layer: Consensus (soft fork)
       Title: CHECKTEMPLATEVERIFY
       Author: Jeremy Rubin <j@rubin.io>
+              James O'Beirne <vaults@au92.org>
       Comments-URI: https://github.com/bitcoin/bips/wiki/Comments:BIP-0119
       Status: Draft
       Type: Standards Track
@@ -79,7 +80,7 @@ see the references.
 ## Detailed Specification
 
 The below code is the main logic for verifying CHECKTEMPLATEVERIFY,
-described in pythonic pseduocode. The canonical specification for the
+described in pythonic pseudocode. The canonical specification for the
 semantics of OP_CHECKTEMPLATEVERIFY as implemented in C++ in the context
 of Bitcoin Core can be seen in the reference implementation.
 
@@ -252,14 +253,14 @@ Once the PR is merged, this BIP should be updated to point to the
 specific code released.
 
 Test vectors are available in \[/bip-0119/vectors the bip-0119/vectors
-directory\] for checking compatibility with the refrence implementation
+directory\] for checking compatibility with the reference implementation
 and BIP.
 
 ## Rationale
 
 The goal of CHECKTEMPLATEVERIFY is to be minimal impact on the existing
 codebase -- in the future, as we become aware of more complex but shown
-to be safe use cases new template types can be added.
+to be safe use cases, new template types can be added.
 
 Below we'll discuss the rules one-by-one:
 
@@ -283,7 +284,7 @@ spending of an output arbitrarily as well as possible to change the
 TXID.
 
 Committing these values, rather than restricting them to specific
-values, is more flexible as it permits users of CHECKTEMPLATEVERIFY the
+values, is more flexible as it permits users of CHECKTEMPLATEVERIFY to
 set the version and locktime as they please.
 
 ##### Committing to the ScriptSigs Hash

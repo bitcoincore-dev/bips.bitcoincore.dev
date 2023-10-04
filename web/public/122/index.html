@@ -76,12 +76,12 @@ links at all.</p>
 <p>The URI follow this form:</p>
 <p><code>blockchain:[//&lt;chain&gt;]/&lt;tx|block|address&gt;/&lt;hash&gt;</code></p>
 <p>Where:</p>
-<table><thead><tr><th>Element</th><th>Description</th><th>Required?</th></tr></thead><tbody>
-<tr><td>chain</td><td><strong>chain ID</strong> (see below) of the desired chain, leading 0s included. If omitted (which would be the usual case), Bitcoin main net is assumed.</td><td>optional</td></tr>
+<table><thead><tr><th>Element</th><th>Description</th><th></th></tr></thead><tbody>
+<tr><td>chain</td><td><strong>chain ID</strong> (see below) of the desired chain, leading 0s included. If omitted (which would be the usual case), Bitcoin main net is assumed.</td><td></td></tr>
 <tr><td>type</td><td>tx</td><td>for transactions.</td></tr>
-<tr><td>block</td><td>for blocks (supports both hash or height).</td><td></td></tr>
-<tr><td>address</td><td>for addresses.</td><td></td></tr>
-<tr><td>hash</td><td>the relevant hash to refer to (leading zeros included), or block height.</td><td>required</td></tr>
+<tr><td></td><td>block</td><td>for blocks (supports both hash or height).</td></tr>
+<tr><td></td><td>address</td><td>for addresses.</td></tr>
+<tr><td>hash</td><td>the relevant hash to refer to (leading zeros included), or block height.</td><td></td></tr>
 </tbody></table>
 <h4 id="ABNF_grammar">ABNF grammar</h4>
 <pre style="background-color:#fafafa;color:#61676c;"><code><span>blockchainuri = &quot;blockchain:&quot; [&quot;//&quot; chain] &quot;/&quot; object

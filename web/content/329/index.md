@@ -46,10 +46,15 @@ UTXO model that Bitcoin uses makes these labels particularly valuable as
 they may indicate the source of funds, whether received externally or as
 a result of change from a prior transaction. In both cases, care must be
 taken when spending to avoid undesirable leaks of private information.
+
 Labels provide valuable guidance in this regard, and have even become
 mandatory when spending in several Bitcoin wallets. Allowing users to
 import and export their labels in a standardized way ensures that they
-do not experience lock-in to a particular wallet application.
+do not experience lock-in to a particular wallet application. In
+addition, many wallets allow unspent outputs to be frozen or made
+unspendable within the wallet. Since this wallet-related metadata is
+similar to labels and not captured elsewhere, it is also included in
+this format.
 
 ## Rationale
 
@@ -76,14 +81,16 @@ line-oriented.
 Further to the JSON Lines specification, an export of labels from a
 wallet must be a UTF-8 encoded text file, containing one record per line
 consisting of a valid JSON object. Lines are separated by `\n`.
-Multiline values are not permitted. Each JSON object must contain 3
+Multiline values are not permitted. Each JSON object must contain 3 or 4
 key/value pairs, defined as follows:
 
-| Key     | Description                                                                             |
-|---------|-----------------------------------------------------------------------------------------|
-| `type`  | One of `tx`, `addr`, `pubkey`, `input`, `output` or `xpub`                              |
-| `ref`   | Reference to the transaction, address, public key, input, output or extended public key |
-| `label` | The label applied to the reference                                                      |
+| Key         | Description                                                                             |
+|-------------|-----------------------------------------------------------------------------------------|
+| `type`      | One of `tx`, `addr`, `pubkey`, `input`, `output` or `xpub`                              |
+| `ref`       | Reference to the transaction, address, public key, input, output or extended public key |
+| `label`     | The label applied to the reference                                                      |
+| `origin`    | Optional key origin information referencing the wallet associated with the label        |
+| `spendable` | One of `true` or `false`, denoting if an output should be spendable by the wallet       |
 
 The reference is defined for each `type` as follows:
 
@@ -96,6 +103,21 @@ The reference is defined for each `type` as follows:
 | `output` | Transaction id and output index separated by a colon | `f91d0a8a78462bc59398f2c5d7a84fcff491c26ba54c4833478b202796c8aafd:1` |
 | `xpub`   | Extended public key as defined by BIP32              | `xpub661MyMwAqRbcFtXgS5sYJABqqG9YLmC4Q1Rdap9gSE8Nq...`               |
 
+Each JSON object must contain both `type` and `ref` properties. The
+`label`, `origin` and `spendable` properties are optional. If the
+`label` or `spendable` properties are omitted, the importing wallet
+should not alter these values. The `origin` property should only appear
+where type is `tx`, and the `spendable` property only where type is
+`output`.
+
+If present, the optional `origin` property must contain an abbreviated
+output descriptor (as defined by BIP380[^3]) describing a BIP32
+compatible originating wallet, including all key origin information but
+excluding any actual keys, any child path elements, or a checksum. This
+property should be used to disambiguate transaction labels from
+different wallets contained in the same export, particularly when
+exporting multiple accounts derived from the same seed.
+
 Care should be taken when exporting due to the privacy sensitive nature
 of the data. Encryption in transit over untrusted networks is highly
 recommended, and encryption at rest should also be considered.
@@ -105,7 +127,9 @@ reasons no private key types are defined.
 ## Importing
 
 - An importing wallet may ignore records it does not store, and truncate
-  labels if necessary.
+  labels if necessary. A suggested default for maximum label length is
+  255 characters, and an importing wallet should consider warning the
+  user if truncation is applied.
 - Wallets importing public key records may derive addresses from them to
   match against known wallet addresses.
 - Wallets importing extended public keys may match them against signers,
@@ -121,12 +145,13 @@ may ignore types not defined here.
 
 The following fragment represents a wallet label export:
 
-    { "type": "tx", "ref": "f91d0a8a78462bc59398f2c5d7a84fcff491c26ba54c4833478b202796c8aafd", "label": "Transaction" }
+    { "type": "tx", "ref": "f91d0a8a78462bc59398f2c5d7a84fcff491c26ba54c4833478b202796c8aafd", "label": "Transaction", "origin": "wpkh([d34db33f/84'/0'/0'])" }
     { "type": "addr", "ref": "bc1q34aq5drpuwy3wgl9lhup9892qp6svr8ldzyy7c", "label": "Address" }
     { "type": "pubkey", "ref": "0283409659355b6d1cc3c32decd5d561abaac86c37a353b52895a5e6c196d6f448", "label": "Public Key" }
     { "type": "input", "ref": "f91d0a8a78462bc59398f2c5d7a84fcff491c26ba54c4833478b202796c8aafd:0", "label": "Input" }
-    { "type": "output", "ref": "f91d0a8a78462bc59398f2c5d7a84fcff491c26ba54c4833478b202796c8aafd:1", "label": "Output" }
+    { "type": "output", "ref": "f91d0a8a78462bc59398f2c5d7a84fcff491c26ba54c4833478b202796c8aafd:1", "label": "Output" , "spendable" : "false" }
     { "type": "xpub", "ref": "xpub661MyMwAqRbcFtXgS5sYJABqqG9YLmC4Q1Rdap9gSE8NqtwybGhePY2gZ29ESFjqJoCu1Rupje8YtGqsefD265TMg7usUDFdp6W1EGMcet8", "label": "Extended Public Key" }
+    { "type": "tx", "ref": "f546156d9044844e02b181026a1a407abfca62e7ea1159f87bbeaa77b4286c74", "label": "Account #1 Transaction", "origin": "wpkh([d34db33f/84'/0'/1'])" }
 
 ## Reference Implementation
 
@@ -139,3 +164,5 @@ TBD
 [^1]: [SLIP-0015](https://github.com/satoshilabs/slips/blob/master/slip-0015.md)
 
 [^2]: [jsonlines.org](https://jsonlines.org/)
+
+[^3]: [BIP-0380](https://github.com/bitcoin/bips/blob/master/bip-0380.mediawiki)

@@ -61,7 +61,26 @@ by this descriptor is the output script produced by the address `ADDR`.
 
 ## Test Vectors
 
-TBD
+Valid descriptors followed by the scripts they produce.
+
+- `raw(deadbeef)`
+  - `deadbeef`
+- `raw(512103a34b99f22c790c4e36b2b3c2c35a36db06226e41c692fc82b8b56ac1c540c5bd4104a34b99f22c790c4e36b2b3c2c35a36db06226e41c692fc82b8b56ac1c540c5bd5b8dec5235a0fa8722476c7709c02559e3aa73aa03918ba2d492eea75abea23552ae)`
+  - `512103a34b99f22c790c4e36b2b3c2c35a36db06226e41c692fc82b8b56ac1c540c5bd4104a34b99f22c790c4e36b2b3c2c35a36db06226e41c692fc82b8b56ac1c540c5bd5b8dec5235a0fa8722476c7709c02559e3aa73aa03918ba2d492eea75abea23552ae`
+- `raw(a9149a4d9901d6af519b2a23d4a2f51650fcba87ce7b87)`
+  - `a9149a4d9901d6af519b2a23d4a2f51650fcba87ce7b87`
+- `addr(3PUNyaW7M55oKWJ3kDukwk9bsKvryra15j)`
+  - `a914eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee87`
+
+Invalid descriptors
+
+- Non-hex script: `raw(asdf)`
+- Invalid address: `addr(asdf)`
+- `raw` nested in `sh`: `sh(raw(deadbeef))`
+- `raw` nested in `wsh`: `wsh(raw(deadbeef))`
+- `addr` nested in `sh`: `sh(addr(3PUNyaW7M55oKWJ3kDukwk9bsKvryra15j))`
+- `addr` nested in `wsh`:
+  `wsh(addr(3PUNyaW7M55oKWJ3kDukwk9bsKvryra15j))`
 
 ## Backwards Compatibility
 

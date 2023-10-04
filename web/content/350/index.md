@@ -6,11 +6,11 @@ in_search_index = true
 
 [taxonomies]
 authors = ["Pieter Wuille"]
-status = ["Draft"]
+status = ["Final"]
 
 [extra]
 bip = 350
-status = ["Draft"]
+status = ["Final"]
 github = "https://github.com/bitcoin/bips/blob/master/bip-0350.mediawiki"
 +++
 
@@ -20,7 +20,7 @@ github = "https://github.com/bitcoin/bips/blob/master/bip-0350.mediawiki"
       Author: Pieter Wuille <pieter@wuille.net>
       Comments-Summary: No comments yet.
       Comments-URI: https://github.com/bitcoin/bips/wiki/Comments:BIP-0350
-      Status: Draft
+      Status: Final
       Type: Standards Track
       Created: 2020-12-16
       License: BSD-2-Clause
@@ -424,36 +424,36 @@ segregated witness addresses[^7].
 | *0*                                                       | *2<sup>-30</sup>* | *2<sup>-25</sup>* | *2<sup>-20</sup>* | *2<sup>-15</sup>*                       |
 | Properties averaged over all HRPs                         |                   |                   |                   |                                         |
 | ≤ 4                                                       | only subst.       | any               | Bech32m/Bech32m   | 100.00%                                 |
-| any                                                       | any               | ≤ 4               | 56.16%            | 43.84%                                  |
-| ≤ 2                                                       | any               | ≤ 68              | 7.71%             | 92.28%                                  |
-| ≤ 2                                                       | any               | any               | 7.79%             | 92.20%                                  |
-| ≤ 3                                                       | any               | ≤ 69              | 7.73%             | 92.23%                                  |
-| ≤ 3                                                       | any               | any               | 7.77%             | 92.19%                                  |
+| any                                                       | any               | ≤ 4               |                   | 56.16%                                  |
+| ≤ 2                                                       | any               | ≤ 68              |                   | 7.71%                                   |
+| ≤ 2                                                       | any               | any               |                   | 7.79%                                   |
+| ≤ 3                                                       | any               | ≤ 69              |                   | 7.73%                                   |
+| ≤ 3                                                       | any               | any               |                   | 7.77%                                   |
 | ≤ 4                                                       | only subst.       | any               | Bech32/Bech32     | 100.00%                                 |
-| any                                                       | any               | ≤ 4               | 54.00%            | 43.84%                                  |
-| ≤ 2                                                       | any               | ≤ 68              | 4.59%             | 92.29%                                  |
-| ≤ 2                                                       | any               | any               | 4.58%             | 92.21%                                  |
-| ≤ 3                                                       | any               | ≤ 69              | 6.69%             | 92.23%                                  |
-| ≤ 3                                                       | any               | any               | 6.66%             | 92.19%                                  |
+| any                                                       | any               | ≤ 4               |                   | 54.00%                                  |
+| ≤ 2                                                       | any               | ≤ 68              |                   | 4.59%                                   |
+| ≤ 2                                                       | any               | any               |                   | 4.58%                                   |
+| ≤ 3                                                       | any               | ≤ 69              |                   | 6.69%                                   |
+| ≤ 3                                                       | any               | any               |                   | 6.66%                                   |
 | 0                                                         | \-                | \-                | Bech32m/Bech32    | 100.00%                                 |
-| 1                                                         | any               | \-                | 46.53%            | 53.46%                                  |
-| ≤ 2                                                       | any               | any               | 22.18%            | 77.77%                                  |
+| 1                                                         | any               | \-                |                   | 46.53%                                  |
+| ≤ 2                                                       | any               | any               |                   | 22.18%                                  |
 | Properties for segregated witness addresses with HRP "bc" |                   |                   |                   |                                         |
 | ≤ 4                                                       | only subst.       | any               | Bech32m/Bech32m   | 100.00%                                 |
-| 1                                                         | any               | \-                | 24.34%            | 75.66%                                  |
-| ≤ 2                                                       | any               | ≤ 28              | 16.85%            | 83.15%                                  |
-| any                                                       | any               | ≤ 4               | 74.74%            | 25.25%                                  |
-| ≤ 2                                                       | any               | any               | 15.72%            | 84.23%                                  |
-| ≤ 3                                                       | any               | any               | 13.98%            | 85.94%                                  |
+| 1                                                         | any               | \-                |                   | 24.34%                                  |
+| ≤ 2                                                       | any               | ≤ 28              |                   | 16.85%                                  |
+| any                                                       | any               | ≤ 4               |                   | 74.74%                                  |
+| ≤ 2                                                       | any               | any               |                   | 15.72%                                  |
+| ≤ 3                                                       | any               | any               |                   | 13.98%                                  |
 | ≤ 4                                                       | only subst.       | any               | Bech32/Bech32     | 100.00%                                 |
-| 1                                                         | any               | \-                | 14.63%            | 75.71%                                  |
-| ≤ 2                                                       | any               | ≤ 28              | 14.22%            | 83.15%                                  |
-| any                                                       | any               | ≤ 4               | 73.23%            | 25.26%                                  |
-| ≤ 2                                                       | any               | any               | 12.79%            | 84.24%                                  |
-| ≤ 3                                                       | any               | any               | 13.00%            | 85.94%                                  |
+| 1                                                         | any               | \-                |                   | 14.63%                                  |
+| ≤ 2                                                       | any               | ≤ 28              |                   | 14.22%                                  |
+| any                                                       | any               | ≤ 4               |                   | 73.23%                                  |
+| ≤ 2                                                       | any               | any               |                   | 12.79%                                  |
+| ≤ 3                                                       | any               | any               |                   | 13.00%                                  |
 | ≤ 3                                                       | only subst.       | any               | Bech32m/Bech32    | 100.00%                                 |
-| 1                                                         | any               | \-                | 70.89%            | 29.11%                                  |
-| ≤ 2                                                       | any               | any               | 36.12%            | 63.79%                                  |
+| 1                                                         | any               | \-                |                   | 70.89%                                  |
+| ≤ 2                                                       | any               | any               |                   | 36.12%                                  |
 
 The numbers in this table, as well as a comparison with the numbers for
 the ‘’1’’ constant and earlier proposed improved constants, can be found

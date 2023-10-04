@@ -241,7 +241,7 @@ notifications.
 ### Allowing Notification Collisions
 
 Since *notification_code* is a 4-byte truncation of the full value, Bob
-has a 1 in \~4.3 billion chance of detecting a spurious notification.
+has a 1 in ~4.3 billion chance of detecting a spurious notification.
 This is considered acceptable because the cost of doing so is adding a
 few more addresses to Bob's watchlist. The benefit of this approach is
 that is saves 28 bytes per notification.

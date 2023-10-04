@@ -188,7 +188,7 @@ Each BIP should have the following parts:
 
 <!-- -->
 
-- Abstract -- a short (\~200 word) description of the technical issue
+- Abstract -- a short (~200 word) description of the technical issue
   being addressed.
 
 <!-- -->

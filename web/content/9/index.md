@@ -242,7 +242,7 @@ multiple-of-2016 block, indexed by its parent.
 ### Warning mechanism
 
 To support upgrade warnings, an extra "unknown upgrade" is tracked,
-using the "implicit bit" mask = (block.nVersion & \~expectedVersion) !=
+using the "implicit bit" mask = (block.nVersion & ~expectedVersion) !=
 0. Mask will be non-zero whenever an unexpected bit is set in nVersion.
 Whenever LOCKED_IN for the unknown upgrade is detected, the software
 should warn loudly about the upcoming soft fork. It should warn even
@@ -323,7 +323,7 @@ stages, with additional validation rules that get enabled one by one.
 The above mechanism can be adapted to support this, by interpreting a
 combination of bits as an integer, rather than as isolated bits. The
 warning system is compatible with this, as (nVersion &
-\~nExpectedVersion) will always be non-zero for increasing integers.
+~nExpectedVersion) will always be non-zero for increasing integers.
 
 ## Rationale
 

@@ -283,13 +283,10 @@ needs to sync a regular Bitcoin wallet. A basic filter MUST contain
 exactly the following items for each transaction in a block:</p>
 <ul>
 <li>The previous output script (the script being spent) for each input,
-except</li>
+except for the coinbase transaction.</li>
+<li>The scriptPubKey of each output, aside from all <code>OP_RETURN</code> output
+scripts.</li>
 </ul>
-<p><code> for the coinbase transaction.</code></p>
-<ul>
-<li>The scriptPubKey of each output, aside from all <code>OP_RETURN</code> output</li>
-</ul>
-<p><code> scripts.</code></p>
 <p>Any &quot;nil&quot; items MUST NOT be included into the final set of filter
 elements.</p>
 <p>We exclude all outputs that start with <code>OP_RETURN</code> in order to allow
@@ -413,8 +410,8 @@ and are easier to understand.</p>
 <h2 id="Appendix_C:_Test_Vectors">Appendix C: Test Vectors</h2>
 <p>Test vectors for basic block filters on five testnet blocks, including
 the filters and filter headers, can be found
-<a href="bip-0158/testnet-19.json" title="wikilink">here</a>. The code to generate them
-can be found <a href="bip-0158/gentestvectors.go" title="wikilink">here</a>.</p>
+<a href="https://bips.dev/158/bip-0158/testnet-19.json" title="wikilink">here</a>. The code to generate them
+can be found <a href="https://bips.dev/158/bip-0158/gentestvectors.go" title="wikilink">here</a>.</p>
 <h2 id="References">References</h2>
 <references/>
 <h2 id="Copyright">Copyright</h2>

@@ -53,7 +53,7 @@ Since Bitcoin private keys can not only be used to sign Bitcoin
 transactions, but also any other message, it has become customary to use
 them to sign various messages for differing purposes. Some applications
 of signing messages with a Bitcoin private key are as follows: proof of
-funds for collateral, credit worthiness, enterence to events, airdrops,
+funds for collateral, credit worthiness, entrance to events, airdrops,
 audits as well as other applications. While there was no BIP written for
 how to digitally sign messages with Bitcoin private keys with P2PKH
 addresses it is a fairly well understood process, however with the

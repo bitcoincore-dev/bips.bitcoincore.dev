@@ -140,7 +140,7 @@ make the transaction that contains it invalid.
 | TxOutScript               | 6   | ByteArray | Required      | The output script                                                                                                            |
 | TxRelativeBlockLock       | 7   | Integer   | Optional      | Part of the input stating the amount of blocks (max 0XFFFF) after that input was mined, it can be mined                      |
 | TxRelativeTimeLock        | 8   | Integer   | Optional      | Part of the input stating the amount of time (max 0XFFFF) after that input was mined, it can be mined. 1 Unit is 512 seconds |
-| CoinbaseMessage           | 9   | ByteArray | Optional      | A message and some data for a coinbase transaction. Can't be used in combination with any TxIn\\\* tags                      |
+| CoinbaseMessage           | 9   | ByteArray | Optional      | A message and some data for a coinbase transaction. Can't be used in combination with any TxIn\\ tags                        |
 | NOP_1x                    | 1x  |           | Optional      | Values that will be ignored by anyone parsing the transaction                                                                |
 |                           |     |           |               |                                                                                                                              |
 

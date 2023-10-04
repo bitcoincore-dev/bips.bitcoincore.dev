@@ -120,8 +120,8 @@ term it stands to erode the censorship resistance and security of
 Bitcoin and other public blockchains through potential regulation or
 [partitioning attacks](https://arxiv.org/pdf/1605.07524.pdf).
 
-Recent events, such as the [\~25% hashrate crash due to coal-powered
-grid failure in
+Recent events, such as the [~25% hashrate crash due to coal-powered grid
+failure in
 china](https://twitter.com/MustafaYilham/status/1384278267067203590) and
 Tesla’s rescinding of its acceptance of Bitcoin as a form of payment,
 show that there are practical real-world downsides to Proof of Works’s

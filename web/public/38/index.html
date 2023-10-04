@@ -165,12 +165,12 @@ following parameters: (string) password, (string) salt, (int) n, (int)
 r, (int) p, (int) length, and deterministically yields an array of
 bytes whose length is equal to the length parameter.</li>
 <li><strong>ECMultiply</strong>: Multiplication of an elliptic curve point by a scalar
-integer with respect to the <a href="secp256k1" title="wikilink">secp256k1</a> elliptic
+integer with respect to the <a href="https://bips.dev/38/secp256k1" title="wikilink">secp256k1</a> elliptic
 curve.</li>
 <li><strong>G, N</strong>: Constants defined as part of the
-<a href="secp256k1" title="wikilink">secp256k1</a> elliptic curve. G is an elliptic
+<a href="https://bips.dev/38/secp256k1" title="wikilink">secp256k1</a> elliptic curve. G is an elliptic
 curve point, and N is a large positive integer.</li>
-<li><strong><a href="Base58Check" title="wikilink">Base58Check</a></strong>: a method for encoding
+<li><strong><a href="https://bips.dev/38/Base58Check" title="wikilink">Base58Check</a></strong>: a method for encoding
 arrays of bytes using 58 alphanumeric characters commonly used in the
 Bitcoin ecosystem.</li>
 </ul>
@@ -180,7 +180,7 @@ a '6'. The number '6' is intended to represent, from the perspective of
 the user, &quot;a private key that needs something else to be usable&quot; - an
 umbrella definition that could be understood in the future to include
 keys participating in multisig transactions, and was chosen with
-deference to the existing prefix '5' most commonly observed in <a href="Wallet_Import_Format" title="wikilink">Wallet
+deference to the existing prefix '5' most commonly observed in <a href="https://bips.dev/38/Wallet_Import_Format" title="wikilink">Wallet
 Import Format</a> which denotes an
 unencrypted private key.</p>
 <p>It is proposed that the second character ought to give a hint as to what
@@ -536,10 +536,10 @@ the passphrase entry was incorrect.</li>
 </ol>
 <h2 id="Backwards_compatibility">Backwards compatibility</h2>
 <p>Backwards compatibility is minimally applicable since this is a new
-standard that at most extends <a href="Wallet_Import_Format" title="wikilink">Wallet Import
+standard that at most extends <a href="https://bips.dev/38/Wallet_Import_Format" title="wikilink">Wallet Import
 Format</a>. It is assumed that an entry
 point for private key data may also accept existing formats of private
-keys (such as hexadecimal and <a href="Wallet_Import_Format" title="wikilink">Wallet Import
+keys (such as hexadecimal and <a href="https://bips.dev/38/Wallet_Import_Format" title="wikilink">Wallet Import
 Format</a>); this draft uses a key format
 that cannot be mistaken for any existing one and preserves
 auto-detection capabilities.</p>

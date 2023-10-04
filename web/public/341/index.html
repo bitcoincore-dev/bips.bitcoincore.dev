@@ -54,7 +54,7 @@
 </span><span>          Anthony Towns &lt;aj@erisian.com.au&gt;
 </span><span>  Comments-Summary: No comments yet.
 </span><span>  Comments-URI: https://github.com/bitcoin/bips/wiki/Comments:BIP-0341
-</span><span>  Status: Draft
+</span><span>  Status: Final
 </span><span>  Type: Standards Track
 </span><span>  Created: 2020-01-19
 </span><span>  License: BSD-3-Clause
@@ -289,8 +289,8 @@ encoded in little-endian.</p>
 <ul>
 <li><em>sha_prevouts</em> (32): the SHA256 of the serialization of all input
 outpoints.</li>
-<li><em>sha_amounts</em> (32): the SHA256 of the serialization of all spent
-output amounts.</li>
+<li><em>sha_amounts</em> (32): the SHA256 of the serialization of all input
+amounts.</li>
 <li><em>sha_scriptpubkeys</em> (32): the SHA256 of all spent outputs'
 <em>scriptPubKeys</em>, serialized as script inside <code>CTxOut</code>.</li>
 <li><em>sha_sequences</em> (32): the SHA256 of the serialization of all input
@@ -404,9 +404,10 @@ that this may complicate the signing procedure.</li>
 key. If no such condition exists, it may be worthwhile adding one that
 consists of an aggregation of all keys participating in all scripts
 combined; effectively adding an &quot;everyone agrees&quot; branch. If that is
-inacceptable, pick as internal key a point with unknown discrete
-logarithm. One example of such a point is <em>H =
-lift_x(0x0250929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac0)</em>
+inacceptable, pick as internal key a &quot;Nothing Up My Sleeve&quot; (NUMS)
+point, i.e., a point with unknown discrete logarithm. One example of
+such a point is <em>H =
+lift_x(0x50929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac0)</em>
 which is
 <a rel="noopener" target="_blank" href="https://github.com/ElementsProject/secp256k1-zkp/blob/11af7015de624b010424273be3d91f117f172c82/src/modules/rangeproof/main_impl.h#L16">constructed</a>
 by taking the hash of the standard uncompressed encoding of the
@@ -455,7 +456,7 @@ condition are known, consider constructing the tree as a Huffman tree.</li>
 into an internal key <code>internal_pubkey</code> and a binary tree whose leaves
 are (leaf_version, script) tuples, the output script can be computed
 using the Python3 algorithms below. These algorithms take advantage of
-helper functions from the <a href="bip-0340/reference.py" title="wikilink">BIP340 reference
+helper functions from the <a href="https://bips.dev/341/bip-0340/reference.py" title="wikilink">BIP340 reference
 code</a> for integer conversion, point
 multiplication, and tagged hashes.</p>
 <p>First, we define <code>taproot_tweak_pubkey</code> for 32-byte
@@ -518,7 +519,17 @@ CompactSize-encoded length.</p>
 </span><span>    </span><span style="font-style:italic;color:#55b4d4;">_</span><span>, output_pubkey </span><span style="color:#ed9366;">= </span><span style="color:#f29718;">taproot_tweak_pubkey</span><span>(internal_pubkey</span><span style="color:#61676ccc;">, </span><span>h)
 </span><span>    </span><span style="color:#fa6e32;">return </span><span style="font-style:italic;color:#55b4d4;">bytes</span><span>([</span><span style="color:#ff8f40;">0x51</span><span style="color:#61676ccc;">, </span><span style="color:#ff8f40;">0x20</span><span>]) </span><span style="color:#ed9366;">+ </span><span>output_pubkey
 </span></code></pre>
-<p><img src="https://bips.dev/341/bip-0341/tree.png" alt="This diagram shows the hashing structure to obtain the tweak from an internal key P and a Merkle tree consisting of 5 script leaves. A, B, C and E are TapLeaf hashes similar to D and AB is a TapBranch hash. Note that when CDE is computed E is hashed first because E is less than CD." title="This diagram shows the hashing structure to obtain the tweak from an internal key P and a Merkle tree consisting of 5 script leaves. A, B, C and E are TapLeaf hashes similar to D and AB is a TapBranch hash. Note that when CDE is computed E is hashed first because E is less than CD." /></p>
+<figure>
+<img src="bip-0341/tree.png"
+title="This diagram shows the hashing structure to obtain the tweak from an internal key P and a Merkle tree consisting of 5 script leaves. A, B, C and E are TapLeaf hashes similar to D and AB is a TapBranch hash. Note that when CDE is computed E is hashed first because E is less than CD." />
+<figcaption>This diagram shows the hashing structure to obtain the tweak
+from an internal key <em>P</em> and a Merkle tree consisting of 5 script
+leaves. <em>A</em>, <em>B</em>, <em>C</em> and <em>E</em> are
+<em>TapLeaf</em> hashes similar to <em>D</em> and <em>AB</em> is a
+<em>TapBranch</em> hash. Note that when <em>CDE</em> is computed
+<em>E</em> is hashed first because <em>E</em> is less than
+<em>CD</em>.</figcaption>
+</figure>
 <p>To spend this output using script <em>D</em>, the control block would contain
 the following data in this order:</p>
 <p><code>    </code><control byte with leaf version and parity bit><code> </code><internal key p><code> </code><C><code> </code><E><code> </code><AB></p>
@@ -595,7 +606,7 @@ using brute-force search.</p>
 <h2 id="Test_vectors">Test vectors</h2>
 <p>Test vectors for wallet operation (scriptPubKey computation, key path
 spending, control block construction) can be found
-<a href="bip-0341/wallet-test-vectors.json" title="wikilink">here</a>. It consists of two
+<a href="https://bips.dev/341/bip-0341/wallet-test-vectors.json" title="wikilink">here</a>. It consists of two
 sets of vectors.</p>
 <ul>
 <li>The first &quot;scriptPubKey&quot; tests concern computing the scriptPubKey and

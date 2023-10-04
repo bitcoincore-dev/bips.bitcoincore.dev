@@ -345,7 +345,7 @@ to preferentially peer with each other.
 ### Warning mechanism
 
 To support upgrade warnings, an extra "unknown upgrade" is tracked,
-using the "implicit bit" mask = (block.nVersion & \~expectedVersion) !=
+using the "implicit bit" mask = (block.nVersion & ~expectedVersion) !=
 0. Mask will be non-zero whenever an unexpected bit is set in nVersion.
 Whenever LOCKED_IN for the unknown upgrade is detected, the software
 should warn loudly about the upcoming soft fork. It should warn even

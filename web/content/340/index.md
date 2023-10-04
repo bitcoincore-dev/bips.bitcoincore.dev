@@ -6,11 +6,11 @@ in_search_index = true
 
 [taxonomies]
 authors = ["Pieter Wuille", "Jonas Nick", "Tim Ruffing"]
-status = ["Draft"]
+status = ["Final"]
 
 [extra]
 bip = 340
-status = ["Draft"]
+status = ["Final"]
 github = "https://github.com/bitcoin/bips/blob/master/bip-0340.mediawiki"
 +++
 
@@ -21,7 +21,7 @@ github = "https://github.com/bitcoin/bips/blob/master/bip-0340.mediawiki"
               Tim Ruffing <crypto@timruffing.de>
       Comments-Summary: No comments yet.
       Comments-URI: https://github.com/bitcoin/bips/wiki/Comments:BIP-0340
-      Status: Draft
+      Status: Final
       Type: Standards Track
       License: BSD-2-Clause
       Created: 2020-01-19
@@ -250,7 +250,8 @@ context-specific constant and the *SHA256* block size is also 64 bytes,
 optimized implementations are possible (identical to SHA256 itself, but
 with a modified initial state). Using SHA256 of the tag name itself is
 reasonably simple and efficient for implementations that don't choose to
-use the optimization.
+use the optimization. In general, tags can be arbitrary byte arrays, but
+are suggested to be textual descriptions in UTF-8 encoding.
 
 **Final scheme** As a result, our final scheme ends up using public key
 *pk* which is the X coordinate of a point *P* on the curve whose Y
@@ -318,9 +319,9 @@ pseudocode:
   - Return the unique point *P* such that *x(P) = x* and *y(P) = y* if
     *y mod 2 = 0* or *y(P) = p-y* otherwise.
 
-- - The function *hash<sub>tag</sub>(x)* where *tag* is a UTF-8 encoded
-    tag name and *x* is a byte array returns the 32-byte hash
-    *SHA256(SHA256(tag) \|\| SHA256(tag) \|\| x)*.
+- - The function *hash<sub>name</sub>(x)* where *x* is a byte array
+    returns the 32-byte hash *SHA256(SHA256(tag) \|\| SHA256(tag) \|\|
+    x)*, where *tag* is the UTF-8 encoding of *name*.
 
 #### Public Key Generation
 
@@ -357,7 +358,7 @@ remain usable.
 Input:
 
 - The secret key *sk*: a 32-byte array
-- The message *m*: a 32-byte array
+- The message *m*: a byte array
 - Auxiliary random data *a*: a 32-byte array
 
 The algorithm *Sign(sk, m)* is defined as:
@@ -444,7 +445,7 @@ from untrusted sources.
 Input:
 
 - The public key *pk*: a 32-byte array
-- The message *m*: a 32-byte array
+- The message *m*: a byte array
 - A signature *sig*: a 64-byte array
 
 The algorithm *Verify(pk, m, sig)* is defined as:
@@ -480,7 +481,7 @@ Input:
 
 - The number *u* of signatures
 - The public keys *pk<sub>1..u</sub>*: *u* 32-byte arrays
-- The messages *m<sub>1..u</sub>*: *u* 32-byte arrays
+- The messages *m<sub>1..u</sub>*: *u* byte arrays
 - The signatures *sig<sub>1..u</sub>*: *u* 64-byte arrays
 
 The algorithm *BatchVerify(pk<sub>1..u</sub>, m<sub>1..u</sub>,
@@ -519,6 +520,66 @@ If all individual signatures are valid (i.e., *Verify* would return
 success for them), *BatchVerify* will always return success. If at least
 one signature is invalid, *BatchVerify* will return success with at most
 a negligible probability.
+
+### Usage Considerations
+
+#### Messages of Arbitrary Size
+
+The signature scheme specified in this BIP accepts byte strings of
+arbitrary size as input messages.[^14] It is understood that
+implementations may reject messages which are too large in their
+environment or application context, e.g., messages which exceed
+predefined buffers or would otherwise cause resource exhaustion.
+
+Earlier revisions of this BIP required messages to be exactly 32 bytes.
+This restriction puts a burden on callers who typically need to perform
+pre-hashing of the actual input message by feeding it through SHA256 (or
+another collision-resistant cryptographic hash function) to create a
+32-byte digest which can be passed to signing or verification (as for
+example done in [BIP341](/341).)
+
+Since pre-hashing may not always be desirable, e.g., when actual
+messages are shorter than 32 bytes,[^15] the restriction to 32-byte
+messages has been lifted. We note that pre-hashing is recommended for
+performance reasons in applications that deal with large messages. If
+large messages are not pre-hashed, the algorithms of the signature
+scheme will perform more hashing internally. In particular, the signing
+algorithm needs two sequential hashing passes over the message, which
+means that the full message must necessarily be kept in memory during
+signing, and large messages entail a runtime penalty.[^16]
+
+#### Domain Separation
+
+It is good cryptographic practice to use a key pair only for a single
+purpose. Nevertheless, there may be situations in which it may be
+desirable to use the same key pair in multiple contexts, i.e., to sign
+different types of messages within the same application or even messages
+in entirely different applications (e.g., a secret key may be used to
+sign Bitcoin transactions as well plain text messages).
+
+As a consequence, applications should ensure that a signed application
+message intended for one context is never deemed valid in a different
+context (e.g., a signed plain text message should never be
+misinterpreted as a signed Bitcoin transaction, because this could cause
+unintended loss of funds). This is called "domain separation" and it is
+typically realized by partitioning the message space. Even if key pairs
+are intended to be used only within a single context, domain separation
+is a good idea because it makes it easy to add more contexts later.
+
+As a best practice, we recommend applications to use exactly one of the
+following methods to pre-process application messages before passing it
+to the signature scheme:
+
+- Either, pre-hash the application message using *hash<sub>name</sub>*,
+  where *name* identifies the context uniquely (e.g.,
+  "foo-app/signed-bar"),
+- or prefix the actual message with a 33-byte string that identifies the
+  context uniquely (e.g., the UTF-8 encoding of "foo-app/signed-bar",
+  padded with null bytes to 33 bytes).
+
+As the two pre-processing methods yield different message sizes (32
+bytes vs. at least 33 bytes), there is no risk of collision between
+them.
 
 ## Applications
 
@@ -616,6 +677,7 @@ To help implementors understand updates to this BIP, we keep a list of
 substantial changes.
 
 - 2022-08: Fix function signature of lift_x in reference code
+- 2023-04: Allow messages of arbitrary size
 
 ## Footnotes
 
@@ -721,3 +783,22 @@ reviews](https://github.com/ajtowns/taproot-review).
     invalid signatures which may leak information about the secret key.
     It is recommended, but can be omitted if the computation cost is
     prohibitive.
+
+[^14]: In theory, the message size is restricted due to the fact that
+    SHA256 accepts byte strings only up to size of 2^61-1 bytes.
+
+[^15]: Another reason to omit pre-hashing is to protect against certain
+    types of cryptanalytic advances against the hash function used for
+    pre-hashing: If pre-hashing is used, an attacker that can find
+    collisions in the pre-hashing function can necessarily forge
+    signatures under chosen-message attacks. If pre-hashing is not used,
+    an attacker that can find collisions in SHA256 (as used inside the
+    signature scheme) may not be able to forge signatures. However, this
+    seeming advantage is mostly irrelevant in the context of Bitcoin,
+    which already relies on collision resistance of SHA256 in other
+    places, e.g., for transaction hashes.
+
+[^16]: Typically, messages of 56 bytes or longer enjoy a performance
+    benefit from pre-hashing, assuming the speed of SHA256 inside the
+    signing algorithm matches that of the pre-hashing done by the
+    calling application.

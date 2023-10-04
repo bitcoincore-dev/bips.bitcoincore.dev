@@ -73,7 +73,7 @@ This BIP provides such a framework.</p>
 <h2 id="Specification">Specification</h2>
 <p>Two new fields are added to the <code>version</code> command, after <code>extra_height</code>:</p>
 <table><thead><tr><th>Field Size</th><th>Description</th><th>Data type</th><th>Comments</th></tr></thead><tbody>
-<tr><td>1+</td><td>service_count</td><td><a href="Protocol_specification#Variable_length_integer" title="wikilink">var_int</a></td><td>Number of extra services</td></tr>
+<tr><td>1+</td><td>service_count</td><td><a href="https://bips.dev/36/Protocol_specification#Variable_length_integer" title="wikilink">var_int</a></td><td>Number of extra services</td></tr>
 <tr><td>?</td><td>service_list</td><td>service[]</td><td>List of service definitions</td></tr>
 </tbody></table>
 <p>The service definitions <code>service[]</code> are given in the following format:</p>
@@ -104,7 +104,7 @@ is service-specific and may be any binary or ASCII data. For ease of
 debugging, a human-readable (ASCII) format is generally recommended.</p>
 <h3 id="Service_identifier">Service identifier</h3>
 <p>Each service SHOULD choose a new identifier that is not used by any
-other service. To register a new identifier, add it to the <a href="Service_identifiers" title="wikilink">Service
+other service. To register a new identifier, add it to the <a href="https://bips.dev/36/Service_identifiers" title="wikilink">Service
 identifiers</a> wiki page along with the
 name of the maintainer and a way to contact them. Please do not register
 identifiers unless you are actually using them.</p>

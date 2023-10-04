@@ -105,8 +105,8 @@ become active: either by performing a persistent man-in-the-middle
 (MitM) attack, by downgrading connections to v1, or by spinning up
 their own nodes and getting honest nodes to make connections to them.
 Active attacks at scale are more resource intensive in general, but in
-case of manual, deliberate connections (as opposed to automatic,
-random ones) they are also in principle detectable: even very basic
+the case of manual, deliberate connections (as opposed to automatic,
+random ones), they are also in principle detectable: even very basic
 checks, e.g., operators manually comparing protocol versions and
 session IDs (as supported by the proposed protocol), will expose the
 attacker.</li>
@@ -123,21 +123,22 @@ than a blocklist basis.</li>
 <p><strong>Why encrypt without authentication?</strong></p>
 <p>As we have argued above, unauthenticated encryption<sup class="footnote-reference"><a href="#1">1</a></sup> (one in each
 direction) using HKDF-SHA256.</p>
-<p>#** Send their 16-byte garbage terminator<sup class="footnote-reference"><a href="#2">2</a></sup> followed by a <strong>garbage
-authentication packet</strong><sup class="footnote-reference"><a href="#3">3</a></sup>, an <strong>encrypted packet</strong> (see further) with
-arbitrary <strong>contents</strong>, and <strong>associated data</strong> equal to the garbage.</p>
+<p>#** Send their 16-byte garbage terminator.<sup class="footnote-reference"><a href="#2">2</a></sup></p>
 <p>#** Receive up to 4111 bytes, stopping when encountering the garbage
 terminator.</p>
-<p>#** Receive an encrypted packet, verify that it decrypts correctly
-with associated data set to the garbage received, and then ignore its
-contents.</p>
 <p>#* At this point, both parties have the same keys, and all further
-communication proceeds in the form of encrypted packets. Packets have an
-<strong>ignore bit</strong>, which makes them <strong>decoy packets</strong> if set. Decoy packets
-are to be ignored by the receiver apart from verifying they decrypt
-correctly. Either peer may send such decoy packets at any point after
-this. These form the primary shapability mechanism in the protocol. How
-and when to use them is out of scope for this document.</p>
+communication proceeds in the form of <strong>encrypted packets</strong>.</p>
+<p>#** Encrypted packets have an <strong>ignore bit</strong>, which makes them
+<strong>decoy packets</strong> if set. Decoy packets are to be ignored by the
+receiver apart from verifying they decrypt correctly. Either peer may
+send such decoy packets at any point from here on. These form the
+primary shapability mechanism in the protocol. How and when to use them
+is out of scope for this document.</p>
+<p>#** For each of the two directions, the first encrypted packet that
+will be sent in that direction (regardless of it being a decoy packet or
+not) will make use of the associated authenticated data (AAD) feature of
+the AEAD to authenticate the garbage that has been sent in that
+direction.<sup class="footnote-reference"><a href="#3">3</a></sup></p>
 <ol>
 <li>The <strong>Version negotiation phase</strong>, where parties negotiate what
 transport version they will use, as well as data defined by that
@@ -178,22 +179,21 @@ that application message as <strong>contents</strong>.</li>
 </ul>
 </li>
 </ol>
-<p>In order to provide a means of avoiding the recognizable pattern of
-first messages being at least 64 bytes, a future backwards-compatible
-upgrade to this protocol may allow both peers to send their public key +
-garbage + garbage terminator in multiple rounds, slicing those bytes up
-into messages arbitrarily, as long as progress is guaranteed.<sup class="footnote-reference"><a href="#6">6</a></sup></p>
+<p>To avoid the recognizable pattern of first messages being at least 64
+bytes, a future backwards-compatible upgrade to this protocol may allow
+both peers to send their public key + garbage + garbage terminator in
+multiple rounds, slicing those bytes up into messages arbitrarily, as
+long as progress is guaranteed.<sup class="footnote-reference"><a href="#6">6</a></sup></p>
 <p>Note that the version negotiation phase does not need to wait for the
 key exchange phase to complete; version packets can be sent immediately
-after sending the garbage authentication packet. So the first two phases
-together, jointly called <strong>the handshake</strong>, comprise just 1.5
-roundtrips:</p>
+after sending the garbage terminator. So the first two phases together,
+jointly called <strong>the handshake</strong>, comprise just 1.5 roundtrips:</p>
 <ul>
 <li>the initiator sends public key + garbage</li>
-<li>the responder sends public key + garbage + garbage terminator +
-garbage authentication packet + version packet</li>
-<li>the initiator sends garbage terminator + garbage authentication
-packet + version packet</li>
+<li>the responder sends public key + garbage + garbage terminator + decoy
+packets (optional) + version packet</li>
+<li>the initiator sends garbage terminator + decoy packets (optional) +
+version packet</li>
 </ul>
 <p><strong>Packet encryption overview</strong></p>
 <p>All data on the wire after the garbage terminators takes the form of
@@ -208,7 +208,7 @@ of its contents.</p>
 <li>An authenticated encryption of the <strong>plaintext</strong>, which consists of:
 <ul>
 <li>A 1-byte <strong>header</strong> which consists of transport layer protocol
-flags. Currently only the highest bit is defined as the <strong>ignore
+flags. Currently, only the highest bit is defined as the <strong>ignore
 bit</strong>. The other bits are ignored, but this may change in future
 versions<sup class="footnote-reference"><a href="#8">8</a></sup>.</li>
 <li>The variable-length <strong>contents</strong>.</li>
@@ -248,26 +248,24 @@ key.</p>
 <pre style="background-color:#fafafa;color:#61676c;"><code><span> ----------------------------------------------------------------------------------------------------
 </span><span> | Initiator                         Responder                                                      |
 </span><span> |                                                                                                  |
-</span><span> | x, ellswift_X = ellswift_create(initiating=True)                                                 |
+</span><span> | x, ellswift_X = ellswift_create()                                                                |
 </span><span> |                                                                                                  |
-</span><span> |           --- ellswift_X + initiator_garbage (initiator_garbage_len bytes; max 4095) ---&gt;        |
+</span><span> |    ---- ellswift_X + initiator_garbage (initiator_garbage_len bytes; max 4095) ---&gt;              |
 </span><span> |                                                                                                  |
-</span><span> |                                   y, ellswift_Y = ellswift_create(initiating=False)              |
+</span><span> |                                   y, ellswift_Y = ellswift_create()                              |
 </span><span> |                                   ecdh_secret = v2_ecdh(                                         |
 </span><span> |                                                     y, ellswift_X, ellswift_Y, initiating=False) |
 </span><span> |                                   v2_initialize(initiator, ecdh_secret, initiating=False)        |
 </span><span> |                                                                                                  |
-</span><span> |           &lt;-- ellswift_Y + responder_garbage (responder_garbage_len bytes; max 4095) +           |
-</span><span> |                    responder_garbage_terminator (16 bytes) +                                     |
-</span><span> |                    v2_enc_packet(initiator, b&#39;&#39;, aad=responder_garbage) +                        |
-</span><span> |                    v2_enc_packet(initiator, RESPONDER_TRANSPORT_VERSION) ---                     |
+</span><span> |    &lt;--- ellswift_Y + responder_garbage (responder_garbage_len bytes; max 4095) +                 |
+</span><span> |             responder_garbage_terminator (16 bytes) +                                            |
+</span><span> |             v2_enc_packet(initiator, RESPONDER_TRANSPORT_VERSION, aad=responder_garbage) ----    |
 </span><span> |                                                                                                  |
 </span><span> | ecdh_secret = v2_ecdh(x, ellswift_Y, ellswift_X, initiating=True)                                |
 </span><span> | v2_initialize(responder, ecdh_secret, initiating=True)                                           |
 </span><span> |                                                                                                  |
-</span><span> |            --- initiator_garbage_terminator (16 bytes) +                                         |
-</span><span> |                    v2_enc_packet(responder, b&#39;&#39;, aad=initiator_garbage) +                        |
-</span><span> |                    v2_enc_packet(responder, INITIATOR_TRANSPORT_VERSION) ---&gt;                    |
+</span><span> |     ---- initiator_garbage_terminator (16 bytes) +                                               |
+</span><span> |              v2_enc_packet(responder, INITIATOR_TRANSPORT_VERSION, aad=initiator_garbage) ---&gt;   |
 </span><span> |                                                                                                  |
 </span><span> ----------------------------------------------------------------------------------------------------
 </span></code></pre>
@@ -331,8 +329,8 @@ notation from
 <p>To find encodings of a given X coordinate <em>x</em>, we first need the inverse
 of <em>XSwiftEC</em>. The function <em>XSwiftECInv(x, u, case)</em> either returns <em>t</em>
 such that <em>XSwiftEC(u, t) = x</em>, or <em>None</em>. The <em>case</em> variable is an
-integer in range 0 to 7 inclusive, which selects which of the up to 8
-valid such <em>t</em> values to return:</p>
+integer in range <em>0..7</em>, which selects which of the up to 8 valid such
+<em>t</em> values to return:</p>
 <ul>
 <li><em>XSwiftECInv(x, u, case)</em>:
 <ul>
@@ -344,18 +342,15 @@ valid such <em>t</em> values to return:</p>
 (mod p)</em>.</li>
 </ul>
 </li>
-<li>If <em>case &amp; 2 = 2</em>:
+<li>Else (<em>case &amp; 2 = 2</em>):
 <ul>
 <li>Let <em>s = x - u (mod p)</em>.</li>
 <li>If <em>s = 0</em>, return <em>None</em>.</li>
 <li>Let <em>r</em> be the square root of <em>-s(4(u<sup>3</sup> + 7) +
 3u<sup>2</sup>s) (mod p).</em><sup class="footnote-reference"><a href="#18">18</a></sup> Return <em>None</em> if it does not
 exist.</li>
-</ul>
-</li>
-<li>If <em>case &amp; 1 = 1</em> and <em>r = 0</em>, return <em>None</em>.
-<ul>
-<li>Let <em>v = (-u + r/s)/2</em>.</li>
+<li>If <em>case &amp; 1 = 1</em> and <em>r = 0</em>, return <em>None</em>.</li>
+<li>Let <em>v = (r/s - u)/2</em>.</li>
 </ul>
 </li>
 <li>Let <em>w</em> be the square root of <em>s (mod p)</em>. Return <em>None</em> if it does
@@ -461,7 +456,7 @@ encoding of the public key to the responding peer followed by
 unencrypted pseudorandom bytes <code>initiator_garbage</code> of length
 <code>garbage_len &lt; 4096</code>.</p>
 <pre style="background-color:#fafafa;color:#61676c;"><code><span>def initiate_v2_handshake(peer, garbage_len):
-</span><span>    peer.privkey_ours, peer.ellswift_ours = ellswift_create(initiating=True)
+</span><span>    peer.privkey_ours, peer.ellswift_ours = ellswift_create()
 </span><span>    peer.sent_garbage = rand_bytes(garbage_len)
 </span><span>    send(peer, peer.ellswift_ours + peer.sent_garbage)
 </span></code></pre>
@@ -469,18 +464,18 @@ unencrypted pseudorandom bytes <code>initiator_garbage</code> of length
 shared ECDH secret (using the first 64 received bytes) which enables it
 to instantiate the encrypted transport. It then sends 64 bytes of the
 unencrypted ElligatorSwift encoding of its own public key and its own
-<code>responder_garbage</code> also of length <code>garbage_len &lt; 4096</code>. If the first 12
+<code>responder_garbage</code> also of length <code>garbage_len &lt; 4096</code>. If the first 16
 bytes received match the v1 prefix, the v1 protocol is used instead.</p>
 <pre style="background-color:#fafafa;color:#61676c;"><code><span>TRANSPORT_VERSION = b&#39;&#39;
 </span><span>NETWORK_MAGIC = b&#39;\xf9\xbe\xb4\xd9&#39; # Mainnet network magic; differs on other networks.
-</span><span>V1_PREFIX = NETWORK_MAGIC + b&#39;version\x00&#39;
+</span><span>V1_PREFIX = NETWORK_MAGIC + b&#39;version\x00\x00\x00\x00\x00&#39;
 </span><span>
 </span><span>def respond_v2_handshake(peer, garbage_len):
 </span><span>    peer.received_prefix = b&quot;&quot;
-</span><span>    while len(peer.received_prefix) &lt; 12:
+</span><span>    while len(peer.received_prefix) &lt; len(V1_PREFIX):
 </span><span>        peer.received_prefix += receive(peer, 1)
 </span><span>        if peer.received_prefix[-1] != V1_PREFIX[len(peer.received_prefix) - 1]:
-</span><span>            peer.privkey_ours, peer.ellswift_ours = ellswift_create(initiating=False)
+</span><span>            peer.privkey_ours, peer.ellswift_ours = ellswift_create()
 </span><span>            peer.sent_garbage = rand_bytes(garbage_len)
 </span><span>            send(peer, ellswift_Y + peer.sent_garbage)
 </span><span>            return
@@ -488,34 +483,40 @@ bytes received match the v1 prefix, the v1 protocol is used instead.</p>
 </span></code></pre>
 <p>Upon receiving the encoded responder public key, the initiator derives
 the shared ECDH secret and instantiates the encrypted transport. It then
-sends the derived 16-byte <code>initiator_garbage_terminator</code> followed by an
-authenticated, encrypted packet with empty contents<sup class="footnote-reference"><a href="#22">22</a></sup> to authenticate
-the garbage, and its own version packet. It then receives the
-responder's garbage and garbage authentication packet (delimited by the
-garbage terminator), and checks if the garbage is authenticated
-correctly. The responder performs very similar steps, but includes the
-earlier received prefix bytes in the public key. As mentioned before,
-the encrypted packets for the <strong>version negotiation phase</strong> can be
-piggybacked with the garbage authentication packet to minimize
-roundtrips.</p>
-<pre style="background-color:#fafafa;color:#61676c;"><code><span>def complete_handshake(peer, initiating):
+sends the derived 16-byte <code>initiator_garbage_terminator</code>, optionally
+followed by an arbitrary number of decoy packets. Afterwards, it
+receives the responder's garbage (delimited by the garbage terminator).
+The responder performs very similar steps but includes the earlier
+received prefix bytes in the public key. Both the initiator and the
+responder set the AAD of the first encrypted packet they send after the
+garbage terminator (i.e., either an optional decoy packet or the version
+packet) to the garbage they have just sent, not including the garbage
+terminator.</p>
+<pre style="background-color:#fafafa;color:#61676c;"><code><span>def complete_handshake(peer, initiating, decoy_content_lengths=[]):
 </span><span>    received_prefix = b&#39;&#39; if initiating else peer.received_prefix
 </span><span>    ellswift_theirs = receive(peer, 64 - len(received_prefix))
+</span><span>    if not initiating and ellswift_theirs[4:16] == V1_PREFIX[4:16]:
+</span><span>        # Looks like a v1 peer from the wrong network.
+</span><span>        disconnect(peer)
 </span><span>    ecdh_secret = v2_ecdh(peer.privkey_ours, ellswift_theirs, peer.ellswift_ours,
 </span><span>                          initiating=initiating)
 </span><span>    initialize_v2_transport(peer, ecdh_secret, initiating=True)
-</span><span>    # Send garbage terminator + garbage authentication packet + version packet.
-</span><span>    send(peer, peer.send_garbage_terminator +
-</span><span>               v2_enc_packet(peer, b&#39;&#39;, aad=peer.sent_garbage) +
-</span><span>               v2_enc_packet(peer, TRANSPORT_VERSION))
+</span><span>    # Send garbage terminator
+</span><span>    send(peer, peer.send_garbage_terminator)
+</span><span>    # Optionally send decoy packets after garbage terminator.
+</span><span>    aad = peer.sent_garbage
+</span><span>    for decoy_content_len in decoy_content_lengths:
+</span><span>        send(v2_enc_packet(peer, decoy_content_len * b&#39;\x00&#39;, aad=aad))
+</span><span>        aad = b&#39;&#39;
+</span><span>    # Send version packet.
+</span><span>    send(v2_enc_packet(peer, TRANSPORT_VERSION, aad=aad))
 </span><span>    # Skip garbage, until encountering garbage terminator.
 </span><span>    received_garbage = recv(peer, 16)
 </span><span>    for i in range(4096):
 </span><span>        if received_garbage[-16:] == peer.recv_garbage_terminator:
-</span><span>            # Receive, decode, and ignore garbage authentication packet (decoy or not)
-</span><span>            v2_receive_packet(peer, aad=received_garbage, skip_decoy=False)
-</span><span>            # Receive, decode, and ignore version packet, skipping decoys
-</span><span>            v2_receive_packet(peer)
+</span><span>            # Receive, decode, and ignore version packet.
+</span><span>            # This includes skipping decoys and authenticating the received garbage.
+</span><span>            v2_receive_packet(peer, aad=received_garbage)
 </span><span>            return
 </span><span>        else:
 </span><span>            received_garbage += recv(peer, 1)
@@ -550,7 +551,7 @@ in case the ciphertext was not a valid ChaCha20Poly1305 encryption
 of any plaintext with the specified <em>key</em>, <em>nonce</em>, and <em>aad</em>.</li>
 </ul>
 </li>
-<li>The <strong>ChaCha20 Block Function</strong> is specified in <a rel="noopener" target="_blank" href="https://datatracker.ietf.org/doc/html/rfc8439#section-2.8">RFC 8439 section
+<li>The <strong>ChaCha20 Block Function</strong> is specified in <a rel="noopener" target="_blank" href="https://datatracker.ietf.org/doc/html/rfc8439#section-2.3">RFC 8439 section
 2.3</a>. It is
 a pseudorandom function (PRF) taking a 256-bit key, 96-bit nonce, and
 32-bit counter, and outputs 64 pseudorandom bytes. It is the
@@ -570,14 +571,14 @@ respectively.</p>
 <p>To provide re-keying every 224 packets, we specify two wrappers.</p>
 <p>The first is <strong>FSChaCha20Poly1305</strong>, which represents a ChaCha20Poly1305
 AEAD, which automatically changes the nonce after every message, and
-rekeys every 224 messages by encrypting 32 zero bytes<sup class="footnote-reference"><a href="#23">23</a></sup>, and using
+rekeys every 224 messages by encrypting 32 zero bytes<sup class="footnote-reference"><a href="#22">22</a></sup>, and using
 the first 32 bytes of the result. Each message will be used for one
 packet. Note that in our protocol, any FSChaCha20Poly1305 instance is
 always either exclusively encryption or exclusively decryption, as
 separate instances are used for each direction of the protocol. The
-nonce used for a message is composed of the 32-bit little endian
+nonce used for a message is composed of the 32-bit little-endian
 encoding of the number of messages with the current key, followed by the
-64-bit little endian encoding of the number of rekeyings performed. For
+64-bit little-endian encoding of the number of rekeyings performed. For
 rekeying, the first 32-bit integer is set to <em>0xffffffff</em>.</p>
 <pre style="background-color:#fafafa;color:#61676c;"><code><span>REKEY_INTERVAL = 224
 </span><span>
@@ -615,7 +616,7 @@ chunks using the next 32 bytes of the block function output as new key.
 A <em>chunk</em> refers here to a single invocation of <code>crypt</code>. As explained
 before, the same cipher is used for 224 consecutive chunks, to avoid
 wasting cipher output. The nonce used for these batches of 224 chunks is
-composed of 4 zero bytes followed by the 64-bit little endian encoding
+composed of 4 zero bytes followed by the 64-bit little-endian encoding
 of the number of rekeyings performed. The block counter is reset to 0
 after every rekeying.</p>
 <pre style="background-color:#fafafa;color:#61676c;"><code><span>class FSChaCha20:
@@ -663,17 +664,19 @@ ciphers from the previous section as building blocks.</p>
 </span><span>
 </span><span>CHACHA20POLY1305_EXPANSION = 16
 </span><span>
-</span><span>def v2_receive_packet(peer, aad=b&#39;&#39;, skip_decoy=True):
+</span><span>def v2_receive_packet(peer, aad=b&#39;&#39;):
 </span><span>    while True:
 </span><span>        enc_contents_len = receive(peer, LENGTH_FIELD_LEN)
 </span><span>        contents_len = int.from_bytes(peer.recv_L.crypt(enc_contents_len), &#39;little&#39;)
 </span><span>        aead_ciphertext = receive(peer, HEADER_LEN + contents_len + CHACHA20POLY1305_EXPANSION)
-</span><span>        plaintext = peer.recv_P.decrypt(aead_ciphertext)
+</span><span>        plaintext = peer.recv_P.decrypt(aad, aead_ciphertext)
 </span><span>        if plaintext is None:
 </span><span>            disconnect(peer)
 </span><span>            break
+</span><span>        # Only the first packet is expected to have non-empty AAD.
+</span><span>        aad = b&#39;&#39;
 </span><span>        header = plaintext[:HEADER_LEN]
-</span><span>        if not (skip_decoy and header[0] &amp; (1 &lt;&lt; IGNORE_BIT_POS)):
+</span><span>        if not (header[0] &amp; (1 &lt;&lt; IGNORE_BIT_POS)):
 </span><span>            return plaintext[HEADER_LEN:]
 </span></code></pre>
 <h4 id="Performance">Performance</h4>
@@ -686,54 +689,58 @@ and authenticating a v2 P2P message as proposed.</p>
 structure shown above. An unencrypted application layer <strong>contents</strong> is
 composed of:</p>
 <table><thead><tr><th>Field</th><th>Size in bytes</th><th>Comments</th></tr></thead><tbody>
-<tr><td><code>message_type</code></td><td><em>1..13</em></td><td>either a one byte ID or an ASCII string prefixed with a length byte</td></tr>
+<tr><td><code>message_type</code></td><td>1 or 13</td><td>either a one byte ID in range <em>1..255</em> or <code>b'\x00'</code> followed by a 12-byte ASCII message type (as in the v1 P2P protocol)</td></tr>
 <tr><td><code>message_payload</code></td><td><code>message_length</code></td><td>message payload</td></tr>
 </tbody></table>
-<p>If the first byte of <code>message_type</code> is in the range <em>1..12</em>, it is
-interpreted as the number of ASCII bytes that follow for the message
-type. If it is in the range <em>13..255</em>, it is interpreted as a message
-type ID. This structure results in smaller messages than the v1 protocol
-as most messages sent/received will have a message type ID.<sup class="footnote-reference"><a href="#24">24</a></sup></p>
+<p>If the first byte of <code>message_type</code> is <code>b'\x00'</code>, the following 12 bytes
+are interpreted as an ASCII message type (as in the v1 P2P protocol),
+trailing padded with <code>b'\x00'</code> as necessary. If the first byte of
+<code>message_type</code> is in the range <em>1..255</em>, it is interpreted as a message
+type ID. This structure results in smaller messages than the v1
+protocol, as most messages sent/received will have a message type ID. We
+recommend reserving 1-byte type IDs for message types that are sent more
+than once per direction per connection.<sup class="footnote-reference"><a href="#23">23</a></sup>&lt;ref
+name&quot;fixed_length_long_ids&quot;&gt;<strong>Why not allow variable length long
+message type IDs?</strong> Allowing for variable length long IDs reduces the
+available 1-byte ID space by 12 (to encode the length itself) and
+incentivizes less descriptive message types. In addition, limiting
+message types to fixed lengths of 1 or 13 hampers traffic analysis.</p>
+</ref>
 <p>The following table lists currently defined message type IDs:</p>
 <table><thead><tr><th></th><th>0</th><th>1</th><th>2</th><th>3</th></tr></thead><tbody>
-<tr><td>+0</td><td>(undefined)</td><td>(1 byte string)</td><td>(2 byte string)</td><td>(3 byte string)</td></tr>
-<tr><td>+4</td><td>(4 byte string)</td><td>(5 byte string)</td><td>(6 byte string)</td><td>(7 byte string)</td></tr>
-<tr><td>+8</td><td>(8 byte string)</td><td>(9 byte string)</td><td>(10 byte string)</td><td>(11 byte string)</td></tr>
-<tr><td>+12</td><td>(12 byte string)</td><td><code>ADDR</code></td><td><code>BLOCK</code></td><td><code>BLOCKTXN</code></td></tr>
-<tr><td>+16</td><td><code>CMPCTBLOCK</code></td><td><code>FEEFILTER</code></td><td><code>FILTERADD</code></td><td><code>FILTERCLEAR</code></td></tr>
-<tr><td>+20</td><td><code>FILTERLOAD</code></td><td><code>GETADDR</code></td><td><code>GETBLOCKS</code></td><td><code>GETBLOCKTXN</code></td></tr>
-<tr><td>+24</td><td><code>GETDATA</code></td><td><code>GETHEADERS</code></td><td><code>HEADERS</code></td><td><code>INV</code></td></tr>
-<tr><td>+28</td><td><code>MEMPOOL</code></td><td><code>MERKLEBLOCK</code></td><td><code>NOTFOUND</code></td><td><code>PING</code></td></tr>
-<tr><td>+32</td><td><code>PONG</code></td><td><code>SENDCMPCT</code></td><td><code>SENDHEADERS</code></td><td><code>TX</code></td></tr>
-<tr><td>+36</td><td><code>VERACK</code></td><td><code>VERSION</code></td><td><code>GETCFILTERS</code></td><td><code>CFILTER</code></td></tr>
-<tr><td>+40</td><td><code>GETCFHEADERS</code></td><td><code>CFHEADERS</code></td><td><code>GETCFCHECKPT</code></td><td><code>CFCHECKPT</code></td></tr>
-<tr><td>+44</td><td><code>WTXIDRELAY</code></td><td><code>ADDRV2</code></td><td><code>SENDADDRV2</code></td><td><code>SENDTXRCNCL</code></td></tr>
-<tr><td>+48</td><td><code>REQRECON</code></td><td><code>SKETCH</code></td><td><code>REQSKETCHEXT</code></td><td><code>RECONCILDIFF</code></td></tr>
-<tr><td>≥52</td><td>(undefined)</td><td></td><td></td><td></td></tr>
+<tr><td>+0</td><td>(12 bytes follow)</td><td><code>ADDR</code></td><td><code>BLOCK</code></td><td><code>BLOCKTXN</code></td></tr>
+<tr><td>+4</td><td><code>CMPCTBLOCK</code></td><td><code>FEEFILTER</code></td><td><code>FILTERADD</code></td><td><code>FILTERCLEAR</code></td></tr>
+<tr><td>+8</td><td><code>FILTERLOAD</code></td><td><code>GETBLOCKS</code></td><td><code>GETBLOCKTXN</code></td><td><code>GETDATA</code></td></tr>
+<tr><td>+12</td><td><code>GETHEADERS</code></td><td><code>HEADERS</code></td><td><code>INV</code></td><td><code>MEMPOOL</code></td></tr>
+<tr><td>+16</td><td><code>MERKLEBLOCK</code></td><td><code>NOTFOUND</code></td><td><code>PING</code></td><td><code>PONG</code></td></tr>
+<tr><td>+20</td><td><code>SENDCMPCT</code></td><td><code>TX</code></td><td><code>GETCFILTERS</code></td><td><code>CFILTER</code></td></tr>
+<tr><td>+24</td><td><code>GETCFHEADERS</code></td><td><code>CFHEADERS</code></td><td><code>GETCFCHECKPT</code></td><td><code>CFCHECKPT</code></td></tr>
+<tr><td>+28</td><td><code>ADDRV2</code></td><td></td><td></td><td></td></tr>
+<tr><td>≥29</td><td>(undefined)</td><td></td><td></td><td></td></tr>
 </tbody></table>
-<p>The message types may be updated separately after BIP finalization.</p>
+<p>Additional message types may be added separately after BIP finalization.</p>
 <h3 id="Signaling_specification">Signaling specification</h3>
 <h4 id="Signaling_v2_support">Signaling v2 support</h4>
 <p>Peers supporting the v2 transport protocol signal support by advertising
 the <code>NODE_P2P_V2 = (1 &lt;&lt; 11)</code> service flag in addr relay. If met with
 immediate disconnection when establishing a v2 connection, clients
 implementing this proposal are encouraged to retry connecting using the
-v1 protocol.<sup class="footnote-reference"><a href="#25">25</a></sup></p>
+v1 protocol.<sup class="footnote-reference"><a href="#24">24</a></sup></p>
 <h2 id="Test_Vectors">Test Vectors</h2>
 <p>For development and testing purposes, we provide a collection of test
-vectors in CSV format, and a naive, highly inefficient, <a href="bip-0324/reference.py" title="wikilink">reference
+vectors in CSV format, and a naive, highly inefficient, <a href="https://bips.dev/324/bip-0324/reference.py" title="wikilink">reference
 implementation</a> of the relevant
 algorithms. This code is for demonstration purposes only:</p>
 <ul>
-<li><a href="bip-0324/ellswift_decode_test_vectors.csv" title="wikilink">XElligatorSwift decoding
-vectors</a> give
+<li><a href="https://bips.dev/324/bip-0324/ellswift_decode_test_vectors.csv" title="wikilink">XElligatorSwift decoding
+vectors</a> provide
 examples of ElligatorSwift-encoded public keys, and the X coordinate
 they map to.</li>
-<li><a href="bip-0324/xswiftec_inv_test_vectors.csv" title="wikilink">XSwiftECInv
-vectors</a> give
+<li><a href="https://bips.dev/324/bip-0324/xswiftec_inv_test_vectors.csv" title="wikilink">XSwiftECInv
+vectors</a> provide
 examples of <em>(u, x)</em> pairs, and the various <em>t</em> values that
 <em>xswiftec_inv</em> maps them to.</li>
-<li><a href="bip-0324/packet_encoding_test_vectors.csv" title="wikilink">Packet encoding
+<li><a href="https://bips.dev/324/bip-0324/packet_encoding_test_vectors.csv" title="wikilink">Packet encoding
 vectors</a>
 illustrate the lifecycle of the authenticated encryption scheme
 proposed in this document.</li>
@@ -747,6 +754,7 @@ ideas in this proposal:</p>
 <li>Matt Corallo</li>
 <li>Lloyd Fournier</li>
 <li>Gregory Maxwell</li>
+<li>Anthony Towns</li>
 </ul>
 <div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
 <p><strong>What does <em>authentication</em> mean in this context?</strong>
@@ -764,7 +772,7 @@ channel protocols is ambiguous. It can refer to:</p>
 </span><span>  include such a mechanism.
 </span><span>  &lt;/ref&gt;
 </span><span>
-</span><span>  provides strictly better security than no encryption. Thus all
+</span><span>  provides strictly better security than no encryption. Thus, all
 </span><span>  connections should use encryption, even if they are
 </span><span>  unauthenticated.
 </span><span>
@@ -807,25 +815,25 @@ channel protocols is ambiguous. It can refer to:</p>
 </span><span>Our goal includes making opportunistic encryption ubiquitously
 </span><span>available, as that provides the best defense against large-scale
 </span><span>attacks. That implies protecting both the manual, deliberate
-</span><span>connections node operators instruct their software to make, as well
-</span><span>as the the automatic connections Bitcoin nodes make with each other
-</span><span>based on IP addresses obtained via gossip. While encryption per se
-</span><span>is already possible with proxy networks or VPN networks, these are
-</span><span>not desirable or applicable for automatic connections at scale:
+</span><span>connections node operators instruct their software to make, and the
+</span><span>automatic connections Bitcoin nodes make with each other based on IP
+</span><span>addresses obtained via gossip. While encryption per se is already
+</span><span>possible with proxy networks or VPN protocols, these are not
+</span><span>desirable or applicable for automatic connections at scale:
 </span><span>
 </span><span>- Proxy networks like Tor or I2P introduce a separate address space,
-</span><span>  independent from network topology, with a very low cost per
-</span><span>  address making eclipse attacks cheaper. In comparison, clearnet
-</span><span>  IPv4 and IPv6 networks make obtaining multiple network identities
-</span><span>  in distinct, well-known network partitions carry a non-trivial
-</span><span>  cost. Thus, it is not desirable to have a substantial portion of
-</span><span>  nodes be exclusively connected this way, as this would
-</span><span>  significantly reduce Eclipse attack costs.[^26] Additionally, Tor
-</span><span>  connections come with significant bandwidth and latency costs that
-</span><span>  may not be desirable for all network users.
-</span><span>- VPN networks like WireGuard or OpenVPN inherently define a private
-</span><span>  network, which requires manual configuration and therefore is not
-</span><span>  a realistic avenue for automatic connections.
+</span><span>  independent of network topology, with a very low cost per address
+</span><span>  making eclipse attacks cheaper. In comparison, clearnet IPv4 and
+</span><span>  IPv6 networks make obtaining multiple network identities in
+</span><span>  distinct, well-known network partitions carry a non-trivial cost.
+</span><span>  Thus, it is not desirable to have a substantial portion of nodes
+</span><span>  be exclusively connected this way, as this would significantly
+</span><span>  reduce Eclipse attack costs.[^25] Additionally, Tor connections
+</span><span>  come with significant bandwidth and latency costs that may not be
+</span><span>  desirable for all network users.
+</span><span>- VPN protocols like WireGuard or OpenVPN inherently define a
+</span><span>  private network, which requires manual configuration and therefore
+</span><span>  is not a realistic avenue for automatic connections.
 </span><span>
 </span><span>Thus, to achieve our goal, we need a solution that has minimal
 </span><span>costs, works without configuration, and is always enabled – on top
@@ -846,13 +854,13 @@ channel protocols is ambiguous. It can refer to:</p>
 </span><span>unauthenticated connections), and thus the question of
 </span><span>authentication should be decoupled from encryption. However, native
 </span><span>support for a handful of standard authentication scenarios (e.g.,
-</span><span>using digital signatures and certificates) is at core of the design
-</span><span>of existing general-purpose transport encryption protocols. This
-</span><span>focus on authentication would not provide clear benefits for the
-</span><span>Bitcoin P2P network but would come with a large amount of additional
-</span><span>complexity.
+</span><span>using digital signatures and certificates) is at the core of the
+</span><span>design of existing general-purpose transport encryption protocols.
+</span><span>This focus on authentication would not provide clear benefits for
+</span><span>the Bitcoin P2P network but would come with a large amount of
+</span><span>additional complexity.
 </span><span>
-</span><span>In contrast, our proposal instead aims for simple modular design
+</span><span>In contrast, our proposal instead aims for a simple modular design
 </span><span>that makes it possible to address authentication separately. Our
 </span><span>proposal provides a foundation for authentication by exporting a
 </span><span>*session ID* that uniquely identifies the encrypted channel. After
@@ -864,7 +872,7 @@ channel protocols is ambiguous. It can refer to:</p>
 </span><span>needs to run after an encrypted connection has been established, the
 </span><span>price we pay for this modularity is a possibly higher number of
 </span><span>roundtrips as opposed to other protocols that perform authentication
-</span><span>alongside with the Diffie-Hellman key exchange.[^27] However, the
+</span><span>alongside the Diffie-Hellman key exchange.[^26] However, the
 </span><span>resulting increase in connection establishment latency is a not a
 </span><span>concern for Bitcoin&#39;s long-lived connections, [which typically live
 </span><span>for hours or even weeks](https://www.dsn.kastel.kit.edu/bitcoin/).
@@ -881,7 +889,7 @@ channel protocols is ambiguous. It can refer to:</p>
 </span><span>  minimizes the cryptographic hardness assumptions as well as the
 </span><span>  dependencies that Bitcoin software will need.
 </span><span>- Neither offers shapability of the bytestream.
-</span><span>- Both provide a stream-based interface to the application layer
+</span><span>- Both provide a stream-based interface to the application layer,
 </span><span>  whereas Bitcoin requires a packet-based interface, resulting in
 </span><span>  the need for an additional thin layer to perform packet
 </span><span>  serialization and deserialization.
@@ -911,7 +919,7 @@ channel protocols is ambiguous. It can refer to:</p>
 </span><span>  random bytestream.
 </span><span>- Shapable bytestream: It should be possible to shape the bytestream
 </span><span>  to increase resistance to traffic analysis (for example, to
-</span><span>  conceal block propagation), or censorship avoidance.[^28]
+</span><span>  conceal block propagation), or censorship avoidance.[^27]
 </span><span>- Forward secrecy: An eavesdropping attacker who compromises a
 </span><span>  peer&#39;s sessions secrets should not be able to decrypt past session
 </span><span>  traffic, except for the latest few packets.
@@ -938,7 +946,7 @@ channel protocols is ambiguous. It can refer to:</p>
 </span><span>
 </span><span>### Transport layer specification
 </span><span>
-</span><span>In this section we define the encryption protocol for messages
+</span><span>In this section, we define the encryption protocol for messages
 </span><span>between peers.
 </span><span>
 </span><span>#### Overview and design
@@ -948,7 +956,7 @@ channel protocols is ambiguous. It can refer to:</p>
 </span><span>
 </span><span>**Protocol flow overview**
 </span><span>
-</span><span>Given a newly-established connection (typically TCP/IP) between two
+</span><span>Given a newly established connection (typically TCP/IP) between two
 </span><span>v2 P2P nodes, there are 3 phases the connection goes through. The
 </span><span>first starts immediately, i.e. there are no v1 messages or any other
 </span><span>bytes exchanged on the link beforehand. The two parties are called
@@ -959,18 +967,22 @@ channel protocols is ambiguous. It can refer to:</p>
 </span><span>    establish shared secrets.
 </span><span>    - The initiator:
 </span><span>      - Generates a random ephemeral secp256k1 private key and sends
-</span><span>        a corresponding 64-byte ElligatorSwift[^29][^30]-encoded
+</span><span>        a corresponding 64-byte ElligatorSwift[^28][^29]-encoded
 </span><span>        public key to the responder.
-</span><span>      - May send up to 4095[^31] bytes of arbitrary data after their
+</span><span>      - May send up to 4095[^30] bytes of arbitrary data after their
 </span><span>        public key, called **garbage**, providing a form of
 </span><span>        shapability and avoiding a recognizable pattern of exactly
-</span><span>        64 bytes.[^32]
+</span><span>        64 bytes.[^31]
 </span><span>    - The responder:
-</span><span>      - Waits until one byte is received which does not match the 12
+</span><span>      - Waits until one byte is received which does not match the 16
 </span><span>        bytes consisting of the network magic followed by
-</span><span>        &quot;version\x00&quot;. If the first 12 bytes do match, the
-</span><span>        connection is treated as using the v1 protocol
-</span><span>        instead.[^33][^34]
+</span><span>        &quot;version\x00\x00\x00\x00\x00&quot;. If the first 16 bytes do
+</span><span>        match, the connection is treated as using the v1 protocol
+</span><span>        instead.[^32][^33]
+</span><span>      - If the first 4 received bytes do not match the network
+</span><span>        magic, but the 12 bytes after that do match the version
+</span><span>        message encoding above, implementations may interpret this
+</span><span>        as a v1 peer of a different network, and disconnect them.
 </span><span>      - Similarly generates a random ephemeral private key and sends
 </span><span>        a corresponding 64-byte ElligatorSwift-encoded public key to
 </span><span>        the initiator.
@@ -979,41 +991,40 @@ channel protocols is ambiguous. It can refer to:</p>
 </span><span>    - Both parties:
 </span><span>      - Receive (the remainder of) the full 64-byte public key from
 </span><span>        the other side.
-</span><span>      - Use X-only[^35] ECDH to compute a shared secret from their
-</span><span>        private key and the exchanged public keys[^36], and
+</span><span>      - Use X-only[^34] ECDH to compute a shared secret from their
+</span><span>        private key and the exchanged public keys[^35], and
 </span><span>        deterministically derive from the secret 4 **encryption
 </span><span>        keys** (two in each direction: one for packet lengths, one
 </span><span>        for content encryption), a **session id**, and two 16-byte
-</span><span>        **garbage terminators**[^37]&lt;ref&gt;**What does a garbage
+</span><span>        **garbage terminators**[^36]&lt;ref&gt;**What does a garbage
 </span><span>        terminator in the wild look like?**
 </span><span>        &lt;div&gt;
 </span><span>
 </span><span>        &lt;figure&gt;
 </span><span>        &lt;img src=&quot;bip-0324/garbage_terminator.png&quot;
 </span><span>        title=&quot;A garbage terminator model TX-v2 in the wild... sent by the responder&quot;
-</span><span>        width=&quot;256&quot;
-</span><span>        alt=&quot;A garbage terminator model TX-v2 in the wild... sent by the responder&quot; /&gt;
-</span><span>        &lt;figcaption aria-hidden=&quot;true&quot;&gt;A garbage terminator model TX-v2 in the
-</span><span>        wild... sent by the responder&lt;/figcaption&gt;
+</span><span>        width=&quot;256&quot; /&gt;
+</span><span>        &lt;figcaption&gt;A garbage terminator model TX-v2 in the wild... sent by the
+</span><span>        responder&lt;/figcaption&gt;
 </span><span>        &lt;/figure&gt;
 </span><span>
 </span><span>        &lt;/div&gt;
 </span></code></pre>
 <div class="footnote-definition" id="2"><sup class="footnote-definition-label">2</sup>
 <p><strong>Why does the protocol need a garbage terminator?</strong> While it is
-in principle possible to use the garbage authentication packet
-directly as a terminator (scan until a valid authentication packet
-follows), this would be significantly slower than just scanning for
-a fixed byte sequence, as it would require recomputing a Poly1305
-tag after every received byte.</p>
+in principle possible to use the first packet after the garbage
+directly as a terminator (scan until a valid packet follows), this
+would be significantly slower than just scanning for a fixed byte
+sequence, as it would require recomputing a Poly1305 tag after every
+received byte.</p>
 </div>
 <div class="footnote-definition" id="3"><sup class="footnote-definition-label">3</sup>
-<p><strong>Why does the protocol require a garbage authentication packet?</strong>
-Otherwise the garbage would be modifiable by a third party without
-consequences. We want to force any active attacker to have to
-maintain a full protocol state. In addition, such malleability
-without the consequence of connection termination could enable
-protocol fingerprinting.</p>
+<p><strong>Why does the protocol authenticate the garbage?</strong> Without
+garbage authentication, the garbage would be modifiable by a third
+party without consequences. We want to force any active attacker to
+have to maintain a full protocol state. In addition, such
+malleability without the consequence of connection termination could
+enable protocol fingerprinting.</p>
 </div>
 <div class="footnote-definition" id="4"><sup class="footnote-definition-label">4</sup>
 <p><strong>What features could be added in future protocol versions?</strong>
@@ -1038,9 +1049,9 @@ other party indefinitely. For example, any upgrade that adheres to
 the following conditions will guarantee progress:</p>
 </div>
 <pre style="background-color:#fafafa;color:#61676c;"><code><span>- The initiator must start by sending at least as many bytes as
-</span><span>  necessary to mismatch the magic/version 12 bytes prefix.
+</span><span>  necessary to mismatch the magic/version 16 bytes prefix.
 </span><span>- The responder must start sending after having received at least
-</span><span>  one byte that mismatches that 12-byte prefix.
+</span><span>  one byte that mismatches that 16-byte prefix.
 </span><span>- As soon as either party has received the other peer&#39;s garbage
 </span><span>  terminator, or has received 4095 bytes of garbage, they must send
 </span><span>  their own garbage terminator. (When either of these conditions is
@@ -1050,8 +1061,8 @@ the following conditions will guarantee progress:</p>
 </span><span>  not having sent their garbage terminator completely yet, they must
 </span><span>  send at least one byte in response without waiting for more bytes.
 </span><span>- After either party has sent their garbage terminator, they must
-</span><span>  also send the garbage authentication packet without waiting for
-</span><span>  more bytes, and transition to the version negotiation phase.
+</span><span>  transition to the version negotiation phase without waiting for
+</span><span>  more bytes.
 </span><span>
 </span><span>Since the protocol as specified here adheres to these conditions,
 </span><span>any upgrade which also adheres to these conditions will be
@@ -1084,9 +1095,9 @@ such an approach outweighs the benefit of saving one byte per
 message.</p>
 </div>
 <div class="footnote-definition" id="9"><sup class="footnote-definition-label">9</sup>
-<p><strong>Why is ChaCha20Poly1305 chosen as basis for packet encryption?</strong>
-It is a very widely used authenticated encryption cipher (used
-amongst others in SSH, TLS 1.2, TLS 1.3,
+<p><strong>Why is ChaCha20Poly1305 chosen as the basis for packet
+encryption?</strong> It is a very widely used authenticated encryption
+cipher (used among others in SSH, TLS 1.2, TLS 1.3,
 <a rel="noopener" target="_blank" href="https://en.wikipedia.org/wiki/QUIC">QUIC</a>, Noise, and
 <a rel="noopener" target="_blank" href="https://www.wireguard.com/protocol/">WireGuard</a>; in the latter it
 is currently even the only supported cipher), with very good
@@ -1142,7 +1153,7 @@ The differences are:</p>
 </span><span>  will still trigger authentication failure for the overall packet
 </span><span>  (the plaintext length is implicitly authenticated by
 </span><span>  ChaCha20Poly1305).
-</span><span>- A hash step is performed every 224[^38] messages to rekey the the
+</span><span>- A hash step is performed every 224[^37] messages to rekey the
 </span><span>  encryption ciphers, in order to provide forward security.
 </span></code></pre>
 <div class="footnote-definition" id="12"><sup class="footnote-definition-label">12</sup>
@@ -1181,11 +1192,11 @@ re-performed the ECDH key exchange. Thus, we do not believe the
 benefits of re-performing key exchange outweigh the additional
 complexity that comes with the necessary coordination between the
 peers. We note that the initiator could choose to close and re-open
-the entire connection in order to force a refresh of the ECDH key
-exchange, but that introduces other issues: a connection slot needs
-to be kept open at the responder side, it is not cryptographically
-guaranteed that really the same initiator will use it, and the
-observable TCP reset and handshake may create a detectable pattern.</p>
+the entire connection to force a refresh of the ECDH key exchange,
+but that introduces other issues: a connection slot needs to be kept
+open at the responder side, it is not cryptographically guaranteed
+that really the same initiator will use it, and the observable TCP
+reset and handshake may create a detectable pattern.</p>
 </div>
 <div class="footnote-definition" id="15"><sup class="footnote-definition-label">15</sup>
 <p><strong>What is the <em>c</em> constant used in <em>XSwiftEC</em>?</strong> The algorithm
@@ -1253,15 +1264,6 @@ is low enough to be negligible compared to the rest of a connection
 setup.</p>
 </div>
 <div class="footnote-definition" id="22"><sup class="footnote-definition-label">22</sup>
-<p><strong>Does the content of the garbage authentication packet need to
-be empty?</strong> The receiver ignores the content of the garbage
-authentication packet, so its content can be anything, and it can in
-principle be used as a shaping mechanism too. There is however no
-need for that, as immediately afterwards the initiator can start
-using decoy packets as (much more flexible) shaping mechanism
-instead.</p>
-</div>
-<div class="footnote-definition" id="23"><sup class="footnote-definition-label">23</sup>
 <p><strong>Why is rekeying implemented in terms of an invocation of the
 AEAD?</strong> This means the FSChaCha20Poly1305 wrapper can be thought of
 as a pure layer around the ChaCha20Poly1305 AEAD. Actual
@@ -1270,12 +1272,12 @@ is equivalent to using byte 64 through 95 of the keystream output of
 the underlying ChaCha20 cipher as new key, avoiding the need for
 Poly1305 in the process.</p>
 </div>
-<div class="footnote-definition" id="24"><sup class="footnote-definition-label">24</sup>
-<p><strong>How do the length between v1 and v2 compare?</strong> For messages
+<div class="footnote-definition" id="23"><sup class="footnote-definition-label">23</sup>
+<p><strong>How do the lengths between v1 and v2 compare?</strong> For messages
 that use the 1-byte short message type ID, v2 packets use 3 bytes
 less per message than v1.</p>
 </div>
-<div class="footnote-definition" id="25"><sup class="footnote-definition-label">25</sup>
+<div class="footnote-definition" id="24"><sup class="footnote-definition-label">24</sup>
 <p><strong>Why are v2 clients met with immediate disconnection encouraged
 to retry with a v1 connection?</strong> Service flags propagated through
 untrusted intermediaries using ADDR and ADDRV2 P2P messages and are

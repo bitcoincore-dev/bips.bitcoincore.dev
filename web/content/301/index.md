@@ -51,7 +51,7 @@ However, traditional MM has two drawbacks:
 
 ## Notation and Example
 
-Note: We use notation side:\\\* and main:\\\* in front of
+Note: We use notation side:\\ and main:\\ in front of
 otherwise-ambiguous words (such as "block", "node", or "chain"), to sort
 the mainchain version from its sidechain counterpart. We name all
 sidechain users "Simon", and name all mainchain miners "Mary".

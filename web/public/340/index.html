@@ -53,7 +53,7 @@
 </span><span>          Tim Ruffing &lt;crypto@timruffing.de&gt;
 </span><span>  Comments-Summary: No comments yet.
 </span><span>  Comments-URI: https://github.com/bitcoin/bips/wiki/Comments:BIP-0340
-</span><span>  Status: Draft
+</span><span>  Status: Final
 </span><span>  Type: Standards Track
 </span><span>  License: BSD-2-Clause
 </span><span>  Created: 2020-01-19
@@ -263,7 +263,8 @@ context-specific constant and the <em>SHA256</em> block size is also 64 bytes,
 optimized implementations are possible (identical to SHA256 itself, but
 with a modified initial state). Using SHA256 of the tag name itself is
 reasonably simple and efficient for implementations that don't choose to
-use the optimization.</p>
+use the optimization. In general, tags can be arbitrary byte arrays, but
+are suggested to be textual descriptions in UTF-8 encoding.</p>
 <p><strong>Final scheme</strong> As a result, our final scheme ends up using public key
 <em>pk</em> which is the X coordinate of a point <em>P</em> on the curve whose Y
 coordinate is even and signatures <em>(r,s)</em> where <em>r</em> is the X coordinate
@@ -340,9 +341,9 @@ pseudocode:</p>
 </li>
 <li>
 <ul>
-<li>The function <em>hash<sub>tag</sub>(x)</em> where <em>tag</em> is a UTF-8 encoded
-tag name and <em>x</em> is a byte array returns the 32-byte hash
-<em>SHA256(SHA256(tag) || SHA256(tag) || x)</em>.</li>
+<li>The function <em>hash<sub>name</sub>(x)</em> where <em>x</em> is a byte array
+returns the 32-byte hash <em>SHA256(SHA256(tag) || SHA256(tag) ||
+x)</em>, where <em>tag</em> is the UTF-8 encoding of <em>name</em>.</li>
 </ul>
 </li>
 </ul>
@@ -376,7 +377,7 @@ remain usable.</p>
 <p>Input:</p>
 <ul>
 <li>The secret key <em>sk</em>: a 32-byte array</li>
-<li>The message <em>m</em>: a 32-byte array</li>
+<li>The message <em>m</em>: a byte array</li>
 <li>Auxiliary random data <em>a</em>: a 32-byte array</li>
 </ul>
 <p>The algorithm <em>Sign(sk, m)</em> is defined as:</p>
@@ -456,7 +457,7 @@ from untrusted sources.</p>
 <p>Input:</p>
 <ul>
 <li>The public key <em>pk</em>: a 32-byte array</li>
-<li>The message <em>m</em>: a 32-byte array</li>
+<li>The message <em>m</em>: a byte array</li>
 <li>A signature <em>sig</em>: a 64-byte array</li>
 </ul>
 <p>The algorithm <em>Verify(pk, m, sig)</em> is defined as:</p>
@@ -489,7 +490,7 @@ the X coordinate as public key.</p>
 <ul>
 <li>The number <em>u</em> of signatures</li>
 <li>The public keys <em>pk<sub>1..u</sub></em>: <em>u</em> 32-byte arrays</li>
-<li>The messages <em>m<sub>1..u</sub></em>: <em>u</em> 32-byte arrays</li>
+<li>The messages <em>m<sub>1..u</sub></em>: <em>u</em> byte arrays</li>
 <li>The signatures <em>sig<sub>1..u</sub></em>: <em>u</em> 64-byte arrays</li>
 </ul>
 <p>The algorithm <em>BatchVerify(pk<sub>1..u</sub>, m<sub>1..u</sub>,
@@ -531,6 +532,57 @@ e<sub>1</sub>⋅P<sub>1</sub> +
 success for them), <em>BatchVerify</em> will always return success. If at least
 one signature is invalid, <em>BatchVerify</em> will return success with at most
 a negligible probability.</p>
+<h3 id="Usage_Considerations">Usage Considerations</h3>
+<h4 id="Messages_of_Arbitrary_Size">Messages of Arbitrary Size</h4>
+<p>The signature scheme specified in this BIP accepts byte strings of
+arbitrary size as input messages.<sup class="footnote-reference"><a href="#14">14</a></sup> It is understood that
+implementations may reject messages which are too large in their
+environment or application context, e.g., messages which exceed
+predefined buffers or would otherwise cause resource exhaustion.</p>
+<p>Earlier revisions of this BIP required messages to be exactly 32 bytes.
+This restriction puts a burden on callers who typically need to perform
+pre-hashing of the actual input message by feeding it through SHA256 (or
+another collision-resistant cryptographic hash function) to create a
+32-byte digest which can be passed to signing or verification (as for
+example done in <a href="/341">BIP341</a>.)</p>
+<p>Since pre-hashing may not always be desirable, e.g., when actual
+messages are shorter than 32 bytes,<sup class="footnote-reference"><a href="#15">15</a></sup> the restriction to 32-byte
+messages has been lifted. We note that pre-hashing is recommended for
+performance reasons in applications that deal with large messages. If
+large messages are not pre-hashed, the algorithms of the signature
+scheme will perform more hashing internally. In particular, the signing
+algorithm needs two sequential hashing passes over the message, which
+means that the full message must necessarily be kept in memory during
+signing, and large messages entail a runtime penalty.<sup class="footnote-reference"><a href="#16">16</a></sup></p>
+<h4 id="Domain_Separation">Domain Separation</h4>
+<p>It is good cryptographic practice to use a key pair only for a single
+purpose. Nevertheless, there may be situations in which it may be
+desirable to use the same key pair in multiple contexts, i.e., to sign
+different types of messages within the same application or even messages
+in entirely different applications (e.g., a secret key may be used to
+sign Bitcoin transactions as well plain text messages).</p>
+<p>As a consequence, applications should ensure that a signed application
+message intended for one context is never deemed valid in a different
+context (e.g., a signed plain text message should never be
+misinterpreted as a signed Bitcoin transaction, because this could cause
+unintended loss of funds). This is called &quot;domain separation&quot; and it is
+typically realized by partitioning the message space. Even if key pairs
+are intended to be used only within a single context, domain separation
+is a good idea because it makes it easy to add more contexts later.</p>
+<p>As a best practice, we recommend applications to use exactly one of the
+following methods to pre-process application messages before passing it
+to the signature scheme:</p>
+<ul>
+<li>Either, pre-hash the application message using <em>hash<sub>name</sub></em>,
+where <em>name</em> identifies the context uniquely (e.g.,
+&quot;foo-app/signed-bar&quot;),</li>
+<li>or prefix the actual message with a 33-byte string that identifies the
+context uniquely (e.g., the UTF-8 encoding of &quot;foo-app/signed-bar&quot;,
+padded with null bytes to 33 bytes).</li>
+</ul>
+<p>As the two pre-processing methods yield different message sizes (32
+bytes vs. at least 33 bytes), there is no risk of collision between
+them.</p>
 <h2 id="Applications">Applications</h2>
 <p>There are several interesting applications beyond simple signatures.
 While recent academic papers claim that they are also possible with
@@ -601,9 +653,9 @@ a construction to enable transferring of coins, mediated by an untrusted
 escrow agent, without connecting the transactors in the public
 blockchain transaction graph.</p>
 <h2 id="Test_Vectors_and_Reference_Code">Test Vectors and Reference Code</h2>
-<p>For development and testing purposes, we provide a <a href="bip-0340/test-vectors.csv" title="wikilink">collection of test
+<p>For development and testing purposes, we provide a <a href="https://bips.dev/340/bip-0340/test-vectors.csv" title="wikilink">collection of test
 vectors in CSV format</a> and a
-naive, highly inefficient, and non-constant time <a href="bip-0340/reference.py" title="wikilink">pure Python 3.7
+naive, highly inefficient, and non-constant time <a href="https://bips.dev/340/bip-0340/reference.py" title="wikilink">pure Python 3.7
 reference implementation of the signing and verification
 algorithm</a>. The reference
 implementation is for demonstration purposes only and not to be used in
@@ -613,6 +665,7 @@ production environments.</p>
 substantial changes.</p>
 <ul>
 <li>2022-08: Fix function signature of lift_x in reference code</li>
+<li>2023-04: Allow messages of arbitrary size</li>
 </ul>
 <h2 id="Footnotes">Footnotes</h2>
 <references />
@@ -727,6 +780,28 @@ or attacker provoked computation errors. This prevents publishing
 invalid signatures which may leak information about the secret key.
 It is recommended, but can be omitted if the computation cost is
 prohibitive.</p>
+</div>
+<div class="footnote-definition" id="14"><sup class="footnote-definition-label">14</sup>
+<p>In theory, the message size is restricted due to the fact that
+SHA256 accepts byte strings only up to size of 2^61-1 bytes.</p>
+</div>
+<div class="footnote-definition" id="15"><sup class="footnote-definition-label">15</sup>
+<p>Another reason to omit pre-hashing is to protect against certain
+types of cryptanalytic advances against the hash function used for
+pre-hashing: If pre-hashing is used, an attacker that can find
+collisions in the pre-hashing function can necessarily forge
+signatures under chosen-message attacks. If pre-hashing is not used,
+an attacker that can find collisions in SHA256 (as used inside the
+signature scheme) may not be able to forge signatures. However, this
+seeming advantage is mostly irrelevant in the context of Bitcoin,
+which already relies on collision resistance of SHA256 in other
+places, e.g., for transaction hashes.</p>
+</div>
+<div class="footnote-definition" id="16"><sup class="footnote-definition-label">16</sup>
+<p>Typically, messages of 56 bytes or longer enjoy a performance
+benefit from pre-hashing, assuming the speed of SHA256 inside the
+signing algorithm matches that of the pre-hashing done by the
+calling application.</p>
 </div>
 
     </div>

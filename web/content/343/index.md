@@ -6,11 +6,11 @@ in_search_index = true
 
 [taxonomies]
 authors = ["Shinobius", "Michael Folkson"]
-status = ["Proposed"]
+status = ["Final"]
 
 [extra]
 bip = 343
-status = ["Proposed"]
+status = ["Final"]
 github = "https://github.com/bitcoin/bips/blob/master/bip-0343.mediawiki"
 +++
 
@@ -21,7 +21,7 @@ github = "https://github.com/bitcoin/bips/blob/master/bip-0343.mediawiki"
               Michael Folkson <michaelfolkson@gmail.com>
       Comments-Summary: No comments yet.
       Comments-URI: https://github.com/bitcoin/bips/wiki/Comments:BIP-0343
-      Status: Proposed
+      Status: Final
       Type: Standards Track
       Created: 2021-04-25
       License: BSD-3-Clause

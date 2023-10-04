@@ -6,11 +6,11 @@ in_search_index = true
 
 [taxonomies]
 authors = ["Pavol Rusnak"]
-status = ["Draft"]
+status = ["Final"]
 
 [extra]
 bip = 84
-status = ["Draft"]
+status = ["Final"]
 github = "https://github.com/bitcoin/bips/blob/master/bip-0084.mediawiki"
 +++
 
@@ -20,7 +20,7 @@ github = "https://github.com/bitcoin/bips/blob/master/bip-0084.mediawiki"
       Author: Pavol Rusnak <stick@satoshilabs.com>
       Comments-Summary: No comments yet.
       Comments-URI: https://github.com/bitcoin/bips/wiki/Comments:BIP-0084
-      Status: Draft
+      Status: Final
       Type: Informational
       Created: 2017-12-28
       License: CC0-1.0

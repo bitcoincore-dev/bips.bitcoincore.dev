@@ -278,13 +278,9 @@ needs to sync a regular Bitcoin wallet. A basic filter MUST contain
 exactly the following items for each transaction in a block:
 
 - The previous output script (the script being spent) for each input,
-  except
-
-` for the coinbase transaction.`
-
+  except for the coinbase transaction.
 - The scriptPubKey of each output, aside from all `OP_RETURN` output
-
-` scripts.`
+  scripts.
 
 Any "nil" items MUST NOT be included into the final set of filter
 elements.

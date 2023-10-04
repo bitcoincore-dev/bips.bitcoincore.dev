@@ -50,6 +50,7 @@
 </span><span>  Layer: Consensus (soft fork)
 </span><span>  Title: CHECKTEMPLATEVERIFY
 </span><span>  Author: Jeremy Rubin &lt;j@rubin.io&gt;
+</span><span>          James O&#39;Beirne &lt;vaults@au92.org&gt;
 </span><span>  Comments-URI: https://github.com/bitcoin/bips/wiki/Comments:BIP-0119
 </span><span>  Status: Draft
 </span><span>  Type: Standards Track
@@ -101,7 +102,7 @@ pools, among many others. For more details on these applications, please
 see the references.</p>
 <h2 id="Detailed_Specification">Detailed Specification</h2>
 <p>The below code is the main logic for verifying CHECKTEMPLATEVERIFY,
-described in pythonic pseduocode. The canonical specification for the
+described in pythonic pseudocode. The canonical specification for the
 semantics of OP_CHECKTEMPLATEVERIFY as implemented in C++ in the context
 of Bitcoin Core can be seen in the reference implementation.</p>
 <p>The execution of the opcode is as follows:</p>
@@ -254,12 +255,12 @@ vectors can be found here
 Once the PR is merged, this BIP should be updated to point to the
 specific code released.</p>
 <p>Test vectors are available in [/bip-0119/vectors the bip-0119/vectors
-directory] for checking compatibility with the refrence implementation
+directory] for checking compatibility with the reference implementation
 and BIP.</p>
 <h2 id="Rationale">Rationale</h2>
 <p>The goal of CHECKTEMPLATEVERIFY is to be minimal impact on the existing
 codebase -- in the future, as we become aware of more complex but shown
-to be safe use cases new template types can be added.</p>
+to be safe use cases, new template types can be added.</p>
 <p>Below we'll discuss the rules one-by-one:</p>
 <h4 id="The_DefaultCheckTemplateVerifyHash_of_the_transaction_at_the_current_input_index_matches_the_top_of_the_stack">The DefaultCheckTemplateVerifyHash of the transaction at the current input index matches the top of the stack</h4>
 <p>The set of data committed to is a superset of data which can impact the
@@ -277,7 +278,7 @@ arbitrary sub-protocols.</p>
 spending of an output arbitrarily as well as possible to change the
 TXID.</p>
 <p>Committing these values, rather than restricting them to specific
-values, is more flexible as it permits users of CHECKTEMPLATEVERIFY the
+values, is more flexible as it permits users of CHECKTEMPLATEVERIFY to
 set the version and locktime as they please.</p>
 <h5 id="Committing_to_the_ScriptSigs_Hash">Committing to the ScriptSigs Hash</h5>
 <p>The scriptsig in a segwit transaction must be exactly empty, unless it

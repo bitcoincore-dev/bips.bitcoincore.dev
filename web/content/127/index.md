@@ -266,6 +266,10 @@ A work-in-progress implementation of a tool that produces and verifies
 proofs in the described format can be found here:
 <https://github.com/stevenroose/reserves>
 
+An implementation of the custom proof PSBTs is part of the
+[BDK](https://bitcoindevkit.org/), and can be found here:
+<https://crates.io/crates/bdk-reserves>
+
 ## Footnotes
 
 <references />

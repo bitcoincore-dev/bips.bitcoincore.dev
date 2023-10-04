@@ -106,7 +106,11 @@ unbalanced hash-tree:
 
   
   
-![](bip-0098/unbalanced-hash-tree.png "fig:bip-0098/unbalanced-hash-tree.png")
+<figure>
+<img src="bip-0098/unbalanced-hash-tree.png"
+title="bip-0098/unbalanced-hash-tree.png" />
+<figcaption>bip-0098/unbalanced-hash-tree.png</figcaption>
+</figure>
 
 **A**, **B**, and **C** are leaf labels, 32-byte double-SHA256 hashes of
 the data associated with the leaf. **Node** and **Root** are inner
@@ -237,7 +241,11 @@ the following diagram:
 
   
   
-![](bip-0098/node-variants.png "fig:bip-0098/node-variants.png")
+<figure>
+<img src="bip-0098/node-variants.png"
+title="bip-0098/node-variants.png" />
+<figcaption>bip-0098/node-variants.png</figcaption>
+</figure>
 
 In this diagram, DESCEND means the branch links to another internal
 node, as indicated by its child graph elements labeled "..."; SKIP means
@@ -284,7 +292,11 @@ Consider the following Merkle tree structure:
 
   
   
-![](bip-0098/traversal-example.png "fig:bip-0098/traversal-example.png")
+<figure>
+<img src="bip-0098/traversal-example.png"
+title="bip-0098/traversal-example.png" />
+<figcaption>bip-0098/traversal-example.png</figcaption>
+</figure>
 
 There are six (6) internal nodes. The depth-first, left-to-right,
 pre-order traversal of the tree visits these nodes in the following
@@ -318,7 +330,10 @@ have both branches as SKIP:
 
   
   
-![](bip-0098/skip-skip.png "fig:bip-0098/skip-skip.png")
+<figure>
+<img src="bip-0098/skip-skip.png" title="bip-0098/skip-skip.png" />
+<figcaption>bip-0098/skip-skip.png</figcaption>
+</figure>
 
 This possibility is not allowed as for verification purposes it is
 entirely equivalent to the shorter proof where the branch to that node

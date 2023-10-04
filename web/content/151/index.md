@@ -6,11 +6,11 @@ in_search_index = true
 
 [taxonomies]
 authors = ["Jonas Schnelli"]
-status = ["Withdrawn"]
+status = ["Replaced"]
 
 [extra]
 bip = 151
-status = ["Withdrawn"]
+status = ["Replaced"]
 github = "https://github.com/bitcoin/bips/blob/master/bip-0151.mediawiki"
 +++
 
@@ -20,7 +20,7 @@ github = "https://github.com/bitcoin/bips/blob/master/bip-0151.mediawiki"
       Author: Jonas Schnelli <dev@jonasschnelli.ch>
       Comments-Summary: Controversial; some recommendation, and some discouragement
       Comments-URI: https://github.com/bitcoin/bips/wiki/Comments:BIP-0151
-      Status: Withdrawn
+      Status: Replaced
       Type: Standards Track
       Created: 2016-03-23
       License: PD

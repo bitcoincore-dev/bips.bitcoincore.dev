@@ -1,0 +1,14 @@
+VERSION=v0.17.2
+
+wget -c \
+https://github.com/getzola/zola/releases/download/$VERSION/zola-$VERSION-$(uname -m)-apple-$(uname -s).tar.gz \
+-O zola-$(uname -m)-apple-$(uname -s).tar.gz | tar -xz; open  zola-x86_64-apple-Darwin.tar.gz && install zola /usr/local/bin/ && which zola
+
+wget -c \
+https://github.com/getzola/zola/releases/download/$VERSION/zola-$VERSION-$(uname -m)-unknown-$(uname -s).tar.gz \
+-O zola-$(uname -m)-unknown.tar.gz | tar -xz;
+
+wget -c \
+https://github.com/getzola/zola/releases/download/$VERSION/zola-$VERSION-x86_64-pc-windows-msvc.zip \
+-O zola-$VERSION-x86_64-pc-windows-msvc.zip | tar -xz;
+

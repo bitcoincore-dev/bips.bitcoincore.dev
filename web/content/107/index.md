@@ -69,8 +69,8 @@ into:
 - **Phase 2**
   - In 2020, the maximum block size will be increased dynamically
     according to sustained increases in transaction volume
-  - Every 4032 blocks (\~4 weeks), a CHECK will be performed to
-    determine if a raise in the maximum block size should occur
+  - Every 4032 blocks (~4 weeks), a CHECK will be performed to determine
+    if a raise in the maximum block size should occur
     - This calculates to a theoretical maximum of 13 increases per year
   - IF of the last \>= 3025 blocks were \>=60% full, the maximum block
     size will be increased by 10%
@@ -88,7 +88,7 @@ For example:
   January 1st 2020, the starting maximum block size will be 6 MB
 - IF \>=3025 blocks are \>= 3.6 MB, the new maximum block size become
   6.6 MB.
-- The theoretical maximum block size at the end of 2020 would be \~20.7
+- The theoretical maximum block size at the end of 2020 would be ~20.7
   MB, assuming all 13 increases are triggered every 4 weeks by the end
   of the year.
 
@@ -109,7 +109,7 @@ For example:
       low, causing transaction delays that are trying to be avoided in
       the first place
     - Between September 2013-2015, the standard deviation measured from
-      average block size (n=730 data points from blockchain.info) was \~
+      average block size (n=730 data points from blockchain.info) was ~
       0.13 MB or 13% of the maximum block size
       - If blocks needed to be 90% full before an increase were
         triggered, normal variance in the average block size would mean
@@ -119,7 +119,7 @@ For example:
       60% level represents a 3 standard deviation distance from the
       limit.
   - Why 3025 blocks?
-    - The assessment period is 4032 blocks or \~ 4 weeks, with the
+    - The assessment period is 4032 blocks or ~ 4 weeks, with the
       threshold set as 4032 blocks/0.75 + 1
     - Increases in the maximum block size should only occur after a
       sustained trend can be observed in order to:

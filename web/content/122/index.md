@@ -52,13 +52,13 @@ The URI follow this form:
 
 Where:
 
-| Element | Description                                                                                                                                  | Required?         |
-|---------|----------------------------------------------------------------------------------------------------------------------------------------------|-------------------|
-| chain   | **chain ID** (see below) of the desired chain, leading 0s included. If omitted (which would be the usual case), Bitcoin main net is assumed. | optional          |
-| type    | tx                                                                                                                                           | for transactions. |
-| block   | for blocks (supports both hash or height).                                                                                                   |                   |
-| address | for addresses.                                                                                                                               |                   |
-| hash    | the relevant hash to refer to (leading zeros included), or block height.                                                                     | required          |
+| Element | Description                                                                                                                                  |                                            |
+|---------|----------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------|
+| chain   | **chain ID** (see below) of the desired chain, leading 0s included. If omitted (which would be the usual case), Bitcoin main net is assumed. |                                            |
+| type    | tx                                                                                                                                           | for transactions.                          |
+|         | block                                                                                                                                        | for blocks (supports both hash or height). |
+|         | address                                                                                                                                      | for addresses.                             |
+| hash    | the relevant hash to refer to (leading zeros included), or block height.                                                                     |                                            |
 
 #### ABNF grammar
 

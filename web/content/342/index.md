@@ -6,11 +6,11 @@ in_search_index = true
 
 [taxonomies]
 authors = ["Pieter Wuille", "Jonas Nick", "Anthony Towns"]
-status = ["Draft"]
+status = ["Final"]
 
 [extra]
 bip = 342
-status = ["Draft"]
+status = ["Final"]
 github = "https://github.com/bitcoin/bips/blob/master/bip-0342.mediawiki"
 +++
 
@@ -22,7 +22,7 @@ github = "https://github.com/bitcoin/bips/blob/master/bip-0342.mediawiki"
               Anthony Towns <aj@erisian.com.au>
       Comments-Summary: No comments yet.
       Comments-URI: https://github.com/bitcoin/bips/wiki/Comments:BIP-0342
-      Status: Draft
+      Status: Final
       Type: Standards Track
       Created: 2020-01-19
       License: BSD-3-Clause

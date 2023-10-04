@@ -111,10 +111,10 @@ identifier in the list. When an identifier is deprecated, its status
 should be changed to `Deprecated` but it should retain its place in the
 list indefinitely.
 
-| ID  | Algorithm Name | Work                           | Param size | Solution size   | Provably Secure | SPH Resistance | Status |
-|-----|----------------|--------------------------------|------------|-----------------|-----------------|----------------|--------|
-| 1   | sha256         | 11k cycles                     | 11+ bytes  | 0, 4 or 8 bytes | Yes             | Low            | Active |
-| 2   | cuckoo-cycle   | ss 28: 150G cycles / \~48M RAM | 6+ bytes   | 168 bytes       | No              | High           | Active |
+| ID  | Algorithm Name | Work                          | Param size | Solution size   | Provably Secure | SPH Resistance | Status |
+|-----|----------------|-------------------------------|------------|-----------------|-----------------|----------------|--------|
+| 1   | sha256         | 11k cycles                    | 11+ bytes  | 0, 4 or 8 bytes | Yes             | Low            | Active |
+| 2   | cuckoo-cycle   | ss 28: 150G cycles / ~48M RAM | 6+ bytes   | 168 bytes       | No              | High           | Active |
 
 #### sha256
 

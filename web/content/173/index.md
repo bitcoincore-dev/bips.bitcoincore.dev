@@ -442,7 +442,7 @@ can be found [here](https://github.com/sipa/ezbase32/).
 The following table summarizes the chances for detection failure (as
 multiples of 1 in 10<sup>9</sup>).
 
-| Window length | Number of wrong characters           |
+| Window length |                                      |
 |---------------|--------------------------------------|
 | Length        | Description                          |
 | 8             | Longest detecting 6 errors           |

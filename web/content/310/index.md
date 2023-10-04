@@ -86,7 +86,7 @@ The following names are used as type aliases, making the message
 description easier.
 
 - **TMask** - case independent hexadecimal string of length 8, encoding
-  an unsigned 32-bit integer (\~`[0-9a-fA-F]{8}`)
+  an unsigned 32-bit integer (~`[0-9a-fA-F]{8}`)
 
 <!-- -->
 
