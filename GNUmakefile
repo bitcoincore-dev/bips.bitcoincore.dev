@@ -5,3 +5,5 @@ default:
 	. ./scripts/tailwind.sh
 	. ./scripts/install-pagefind.sh
 	. ./scripts/install-zola.sh
+web:default
+	cd web && zola serve
