@@ -15,10 +15,10 @@ Please submit any issues you see with rendering or formatting here, as a GitHub 
 * Install [Rust](https://www.rust-lang.org/) and [zola](https://www.getzola.org/)
 
 ```sh
-./scripts/bips.sh
-./scripts/static.sh
-./scripts/generate.sh
-./scripts/tailwind.sh
+. ./scripts/bips.sh
+. ./scripts/static.sh
+. ./scripts/generate.sh
+. ./scripts/tailwind.sh
 ```
 
 ```
