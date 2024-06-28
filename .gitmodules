@@ -1,3 +1,4 @@
 [submodule "bips"]
 	path = bips
-	url = https://github.com/bitcoin/bips.git
+	url = https://github.com/bitcoincore-dev/bips.git
+	ignore = dirty
