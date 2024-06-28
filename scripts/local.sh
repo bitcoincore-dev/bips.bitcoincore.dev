@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 ./scripts/bips.sh
 ./scripts/tailwind.sh

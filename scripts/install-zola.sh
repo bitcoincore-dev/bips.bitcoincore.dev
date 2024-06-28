@@ -5,7 +5,7 @@ case "${unameOut}" in
     *Microsoft*)     OS="WSL";; #must be first since Windows subsystem for linux will have Linux in the name too
     *microsoft*)     OS="WSL2";; #WARNING: My v2 uses ubuntu 20.4 at the moment slightly different name may not always work
     Linux*)          OS="linux";;
-    Darwin*)         OS="macos";;
+    Darwin*)         OS="macos";type -P brew && brew install zola;;
     CYGWIN*)         OS="Cygwin";;
     MINGW*)          OS="windows";;
     *Msys)           OS="windows";;
@@ -30,10 +30,3 @@ fi
 
 echo OS=$OS
 echo ARCH=$ARCH
-URL="https://github.com/tailwindlabs/tailwindcss/releases/download/v3.4.1/tailwindcss-$OS-$ARCH"
-echo URL=$URL
-curl -sLO $URL
-chmod +x tailwindcss*
-
-mkdir -p bin
-mv tailwindcss* bin/tailwindcss
