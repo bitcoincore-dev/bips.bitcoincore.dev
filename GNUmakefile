@@ -1,8 +1,12 @@
 .PHONY:web scripts
+default:
+	cargo b -r && cargo install --path .
+	$(MAKE) web
 web: scripts
 	cd web && zola serve
 scripts:
 	. ./scripts/bips.sh
+	. ./scripts/mints.sh
 	. ./scripts/static.sh
 	. ./scripts/generate.sh
 	. ./scripts/tailwind.sh

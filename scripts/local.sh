@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 ./scripts/bips.sh
+./scripts/mints.sh
 ./scripts/tailwind.sh
 ./scripts/static.sh
 ./scripts/generate.sh

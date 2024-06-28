@@ -2,3 +2,6 @@
 	path = bips
 	url = https://github.com/bitcoincore-dev/bips.git
 	ignore = dirty
+[submodule "mints"]
+	path = mints
+	url = https://github.com/bitcoincore-dev/miniscript-templates.git

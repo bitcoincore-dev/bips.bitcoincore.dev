@@ -8,6 +8,10 @@ lazy_static! {
     static ref BIP_NUMBER: Regex =
         Regex::new(r"^bips/bip-([0-9]+)\.mediawiki$").expect("error parsing regex");
 }
+lazy_static! {
+    static ref MINT_NUMBER: Regex =
+        Regex::new(r"^mints/mint-([0-9]+)\.mediawiki$").expect("error parsing regex");
+}
 
 fn main() -> io::Result<()> {
     let cmd = std::env::args().into_iter().skip(1).take(1).next();
@@ -20,6 +24,33 @@ fn main() -> io::Result<()> {
                 // parse the bip number from the path
                 // and map into tuple (number, path)
                 BIP_NUMBER
+                    .captures(&path)?
+                    .get(1)?
+                    .as_str()
+                    .parse::<u32>()
+                    .map_or(None, |n| Some((n, path.clone())))
+            })
+            .collect::<Vec<(u32, String)>>();
+
+        match &cmd[..] {
+            "count" => return cmd_count(&input),
+            "generate" => return cmd_generate(&input),
+            "show" => return cmd_show(&input),
+            _ => {
+                println!("unknown command!");
+                return Ok(());
+            }
+        }
+    }
+    if let Some(cmd) = cmd {
+        let stdin = io::stdin();
+        let lines = stdin.lock().lines().collect::<io::Result<Vec<String>>>()?;
+        let input = lines
+            .iter()
+            .filter_map(|path| {
+                // parse the bip number from the path
+                // and map into tuple (number, path)
+                MINT_NUMBER
                     .captures(&path)?
                     .get(1)?
                     .as_str()
