@@ -126,9 +126,8 @@ In our simplified example we have been referring to Alice's transactions as havi
 
 Alice performs the tweak with the sum of her input private keys in the following manner:
 
-*  Let _A = A<sub>1</sub> + A<sub>2</sub> + ... + A<sub>n</sub>_
-*  Let _input_hash = hash(outpoint<sub>L</sub> || A)_, where _outpoint<sub>L</sub>_ is the smallest outpoint lexicographically<ref name="why_smallest_outpoint">**Why use the lexicographically smallest outpoint for the hash?** Recall that the purpose of including the input hash is so that the sender and receiver can both come up with a deterministic nonce that ensures that a unique address is generated each time, even when reusing the same scriptPubKey as an input. Choosing the smallest outpoint lexicographically satisifes this requirement, while also ensuring that the generated output is not dependent on the final ordering of inputs in the transaction. Using a single outpoint also works well with memory constrained devices (such as hardware signing devices) as it does not require the device to have the entire transaction in memory in order to generate the silent payment output.</ref>
 *  Let _a = a<sub>1</sub> + a<sub>2</sub> + ... + a<sub>n</sub>_
+*  Let _input_hash = hash(outpoint<sub>L</sub> || (a·G))_, where _outpoint<sub>L</sub>_ is the smallest outpoint lexicographically<ref name="why_smallest_outpoint">**Why use the lexicographically smallest outpoint for the hash?** Recall that the purpose of including the input hash is so that the sender and receiver can both come up with a deterministic nonce that ensures that a unique address is generated each time, even when reusing the same scriptPubKey as an input. Choosing the smallest outpoint lexicographically satisifes this requirement, while also ensuring that the generated output is not dependent on the final ordering of inputs in the transaction. Using a single outpoint also works well with memory constrained devices (such as hardware signing devices) as it does not require the device to have the entire transaction in memory in order to generate the silent payment output.</ref>
 *  Let _P<sub>0</sub> = B + hash(input_hash·a·B || 0)·G_
 
 
@@ -326,7 +325,6 @@ The receiver obtains the public key from the _scriptSig_. The receiver MUST pars
 
 The sender and receiver MUST calculate an input hash for the transaction in the following manner:
 
-*  Let _A = A<sub>1</sub> + A<sub>2</sub> + ... + A<sub>n</sub>_, where each _A<sub>i</sub>_ is the public key of an input from the _<a href=" inputs-for-shared-secret-derivation" target="_blank">Inputs For Shared Secret Derivation</a>_ list<ref name="why_include_A"></ref>
 *  Let _input_hash = hash<sub>BIP0352/Inputs</sub>(outpoint<sub>L</sub> || A)_, where _outpoint<sub>L</sub>_ is the smallest outpoint lexicographically by txid and vout used in the transaction<ref name="why_smallest_outpoint"></ref>
 
 
@@ -348,10 +346,11 @@ The sending wallet performs coin selection as usual with the following restricti
 
 After the inputs have been selected, the sender can create one or more outputs for one or more silent payment addresses in the following manner:
 
-*  Generate the _input_hash_ with the smallest outpoint lexicographically, using the method described above
 *  Collect the private keys for each input from the _<a href=" inputs-for-shared-secret-derivation" target="_blank">Inputs For Shared Secret Derivation</a>_ list
 *  For each private key _a<sub>i</sub>_ corresponding to a <a href="/341" target="_blank">BIP341</a> taproot output, check that the private key produces a point with an even Y coordinate and negate the private key if not<ref name="why_negate_taproot_private_keys">**Why do taproot private keys need to be checked?** Recall from <a href="/340" target="_blank">BIP340</a> that each X-only public key has two corresponding private keys, _d_ and _n - d_. To maintain parity between sender and receiver, it is necessary to use the private key corresponding to the even Y coordinate when performing the ECDH step since the receiver will assume the even Y coordinate when summing the taproot X-only public keys.</ref>
 *  Let _a = a<sub>1</sub> + a<sub>2</sub> + ... + a<sub>n</sub>_, where each _a<sub>i</sub>_ has been negated if necessary
+    *  If _a = 0_, fail
+*  Generate the _input_hash_ with the smallest outpoint lexicographically and _A = a·G_, using the method described above
 *  Group receiver silent payment addresses by _B<sub>scan</sub>_ (e.g. each group consists of one _B<sub>scan</sub>_ and one or more _B<sub>m</sub>_)
 *  For each group:
     *  Let _ecdh_shared_secret = input_hash·a·B<sub>scan</sub>_
@@ -389,8 +388,9 @@ A scan and spend key pair using BIP32 derivation are defined (taking inspiration
 
 If each of the checks in _<a href="#scanning-silent-payment-eligible-transactions" target="_blank">Scanning silent payment eligible transactions</a>_ passes, the receiving wallet must:
 
-*  Generate the _input_hash_ with the smallest outpoint lexicographically, using the method described above
 *  Let _A = A<sub>1</sub> + A<sub>2</sub> + ... + A<sub>n</sub>_, where each _A<sub>i</sub>_ is the public key of an input from the _<a href=" inputs-for-shared-secret-derivation" target="_blank">Inputs For Shared Secret Derivation</a>_ list
+    *  If _A_ is the point at infinity, skip the transaction
+*  Generate the _input_hash_ with the smallest outpoint lexicographically and _A_, using the method described above
 *  Let _ecdh_shared_secret = input_hash·b<sub>scan</sub>·A_
 *  Check for outputs:
     *  Let _outputs_to_check_ be the taproot output keys from all taproot outputs in the transaction (spent and unspent).
@@ -563,6 +563,19 @@ A malicious notification could potentially cause the following issues:
 
 
 Wallet designers can choose which tradeoffs they find appropriate. For example, a wallet could check the block filter to at least probabilistically confirm the likely existence of the UTXO, thus efficiently cutting down on spam. The payment could then be marked as unconfirmed until a scan is performed and the existence of the UTXO in accordance to the silent payment specification is verified.
+
+<h2> Change Log </h2>
+
+
+To help implementers understand updates to this document, we attach a version number that resembles _semantic versioning_ (`MAJOR.MINOR.PATCH`).
+The `MAJOR` version is incremented if changes to the BIP are introduced that are incompatible with prior versions.
+The `MINOR` version is incremented whenever the inputs or the output of an algorithm changes in a backward-compatible way or new backward-compatible functionality is added.
+The `PATCH` version is incremented for other changes that are noteworthy (bug fixes, test vectors, important clarifications, etc.).
+
+*  **1.0.1** (2024-06-22):
+    *  Add steps to fail if private key sum is zero (for sender) or public key sum is point at infinity (for receiver), add corresponding test vectors.
+*  **1.0.0** (2024-05-08):
+    *  Initial version, merged as BIP-352.
 
 
 <h2> Acknowledgements </h2>
