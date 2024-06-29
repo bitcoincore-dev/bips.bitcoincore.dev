@@ -1,6 +1,6 @@
 .PHONY:web scripts
 default:
-	cargo b -r && cargo install --path .
+	cargo b
 	$(MAKE) web
 web: scripts
 	cd web && zola serve
