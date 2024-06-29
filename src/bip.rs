@@ -236,12 +236,28 @@ fn render(context: &mut RenderContext, line: &str) -> Option<String> {
             // table header
             // convert to markdown format
             if line.starts_with("!") {
-
+                // edge case
+                // BIP 36
+                if line.contains("check(key)") {
+                    // print!("\n\n\n{}\n\n\n", line);
+                    // for i in line.chars() {
+                    //     println!("i.is_numeric()={}\n", i.is_numeric());
+                    //     print!("{}\n", i);
+                    // }
+                    return Some(format!(
+                        "FIRST----{} SECOND{} pk_k(key) <key> THIRD{}\n",
+                        " ".repeat(0),
+                        render_line(&line["  ".len()+10..line.len()]).unwrap().replace("rowspan=\"4\""," "),
+                        " ".repeat(4)
+                    ));
+                }
 
                 if line.contains("check") {
                     // ignore for now
-                    print!("\n\n\n{}\n\n\n",line);
-                    for i in line.chars() {print!("{}\n", i);}
+                    print!("\n\n\n{}\n\n\n", line);
+                    for i in line.chars() {
+                        print!("{}\n", i);
+                    }
                     //return None;
                 }
 
@@ -250,21 +266,17 @@ fn render(context: &mut RenderContext, line: &str) -> Option<String> {
                     return None;
                 }
 
-
-
-                if line.contains("rowspan") {
-                    // ignore for now
-                    return None;
-                }
-
-
+                //if line.contains("rowspan") {
+                //    // ignore for now
+                //    return None;
+                //}
 
                 let headers: Vec<&str> = line["!".len()..line.len()]
                     .split("!!")
                     .map(|s| s.trim())
                     .collect();
 
-                print!("{:?}\n",headers);
+                print!("{:?}\n", headers);
 
                 if headers.len() > 1 {
                     // multiple column values on a single line
