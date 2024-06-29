@@ -245,7 +245,7 @@ fn render(context: &mut RenderContext, line: &str) -> Option<String> {
                     //     print!("{}\n", i);
                     // }
                     return Some(format!(
-                        r"{}{} pk_k(key) \<key\> THIRD{}\n",
+                        r"{}{}{}",
                         " ".repeat(0),
                         render_line(&line["  ".len()+10..line.len()]).unwrap().replace("rowspan=\"4\""," "),
                         " ".repeat(4)
