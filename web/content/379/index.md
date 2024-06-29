@@ -68,7 +68,7 @@ it.
 <h2>Specification</h2>
 
 
-These specifications apply to P2WSH (<a href="BIP" target="_blank">141</a>(bip-0141.mediawiki)) and Tapscript (<a href="BIP" target="_blank">342</a>(bip-0342.mediawiki)) scripts, with only minor
+These specifications apply to P2WSH (<a href="/141" target="_blank">bip-0141</a>) and Tapscript (<a href="/342" target="_blank">bip-0342</a>) scripts, with only minor
 variations between the two. Differences are noted inline. Unless explicitly stated otherwise,
 specifications apply to both. P2SH and bare scripts are excluded from this specification.
 
@@ -88,39 +88,52 @@ The `pk`, `pkh`, and `and_n` fragments and `t:`,
 `l:`, and `u:` wrappers are syntactic sugar for other Miniscripts, as listed
 in the table below. Note that `<20>` are in hex representation in this document.
 
-Miniscript fragments are expected to be used in <a href="BIP" target="_blank">382</a>(bip-0382.mediawiki) `wsh()` descriptors
-and <a href="BIP" target="_blank">386</a>(bip-0386.mediawiki) `tr()` descriptors. Key expressions are specified in
+Miniscript fragments are expected to be used in (<a href="/382" target="_blank">bip-0382</a>) `wsh()` descriptors
+and (<a href="/386" target="_blank">bip-0386</a>) `tr()` descriptors. Key expressions are specified in
 <a href="BIP" target="_blank">380</a>(bip-0380.mediawiki#user-content-Key_Expressions). Additionally, BIPs 382 and 386 specify
 restrictions on key expressions and what they resolve to - these apply to key expressions in
 Miniscript. BIP 382's key expression restrictions apply to Miniscript in P2WSH contexts, and BIP
 386's key expression restrictions apply to Miniscript in P2TR contexts. From a user's perspective,
 Miniscript is not a separate language, but rather a significant expansion of the descriptor language.
 
-| Semantics                                                | Miniscript Fragment           | Bitcoin Script
-|----------------------------------------------------------|-------------------------------|---------------
-| false                                                    | `0`                           | `0`
-| true                                                     | `1`                           | `1`
-| check(key)                                               | `pk_k(key)`                   | `<key>`
-|                                                          | `pk_h(key)`                   | `DUP HASH160 <HASH160(key)> EQUALVERIFY `
-|                                                          | `pk(key)` = `c:pk_k(key)`     | `<key> CHECKSIG`
-|                                                          | `pkh(key)` = `c:pk_h(key)`    | `DUP HASH160 <HASH160(key)> EQUALVERIFY CHECKSIG`
-| nSequence ≥ n (and compatible)                           | `older(n)`                    | `<n> CHECKSEQUENCEVERIFY`
-| nLockTime ≥ n (and compatible)                           | `after(n)`                    | `<n> CHECKLOCKTIMEVERIFY`
-| len(x) = 32 and SHA256(x) = h                            | `sha256(h)`                   | `SIZE <20> EQUALVERIFY SHA256 <h> EQUAL`
-| len(x) = 32 and HASH256(x) = h                           | `hash256(h)`                  | `SIZE <20> EQUALVERIFY HASH256 <h> EQUAL`
-| len(x) = 32 and RIPEMD160(x) = h                         | `ripemd160(h)`                | `SIZE <20> EQUALVERIFY RIPEMD160 <h> EQUAL`
-| len(x) = 32 and HASH160(x) = h                           | `hash160(h)`                  | `SIZE <20> EQUALVERIFY HASH160 <h> EQUAL`
-| (X and Y) or Z                                           | `andor(X,Y,Z)`                | `[X] NOTIF [Z] ELSE [Y] ENDIF`
-| X and Y                                                  | `and_v(X,Y)`                  | `[X] [Y]`
-|                                                          | `and_b(X,Y)`                  | `[X] [Y] BOOLAND`
-|                                                          | `and_n(X,Y)` = `andor(X,Y,0)` | `[X] NOTIF 0 ELSE [Y] ENDIF`
-| X or Z                                                   | `or_b(X,Z)`                   | `[X] [Z] BOOLOR`
-|                                                          | `or_c(X,Z)`                   | `[X] NOTIF [Z] ENDIF`
-|                                                          | `or_d(X,Z)`                   | `[X] IFDUP NOTIF [Z] ENDIF`
-|                                                          | `or_i(X,Z)`                   | `IF [X] ELSE [Z] ENDIF`
-| X_1 + ... + X_n = k                                      | `thresh(k,X_1,...,X_n)`       | `[X_1] [X_2] ADD ... [X_n] ADD ... <k> EQUAL`
-| check(key_1) + ... + check(key_n) = k *(P2WSH only)*     | `multi(k,key_1,...,key_n)`    | `<k> <key_1> ... <key_n> <n> CHECKMULTISIG`
-| check(key_1) + ... + check(key_n) = k *(Tapscript only)* | `multi_a(k,key_1,...,key_n)`  | `<key_1> CHECKSIG <key_2> CHECKSIGADD ... <key_n> CHECKSIGADD <k> NUMEQUAL`
+
+|Semantics|Miniscript Fragment|Bitcoin Script|
+|-|-|-|
+|false|0|0|
+|true|1|1|
+|rowspan="4"|check(key)|pk_k(key)|&lt;key&gt;|
+|pk_k(key)|DUP HASH160 &lt;HASH160&lt;(key)&gt; EQUALVERIFY|
+|pk(key) = c:pk_k(key)|&lt;key&gt; CHECKSIG|
+|pkh(key) = c:pk_h(key)|DUP HASH160 &lt;HASH160&lt;(key)&gt; EQUALVERIFY CHECKSIG|
+|nSequence &lt;= n <br>(and compatible)|older(n)|&lt;n&gt; CHECKSEQUENCEVERIFIY|
+|nLockTime &lt;= n <br>(and compatible)|after(n)|&lt;n&gt; CHECKSEQUENCEVERIFIY|
+|len(x) = 32 and SHA256(x) = h|sha256(h)|SIZE &lt;20&gt; EQUALVERIFIY SHA256 &lt;h&gt; EQUAL|
+|len(x) = 32 and SHA256(x) = h|sha256(h)|SIZE &lt;20&gt; EQUALVERIFIY SHA256 &lt;h&gt; EQUAL|
+|len(x) = 32 and HASH256(x) = h|hash256(h)|SIZE &lt;20&gt; EQUALVERIFIY HASH256 &lt;h&gt; EQUAL|
+|len(x) = 32 and RIPEMD160(x) = h|ripemd160(h)|SIZE &lt;20&gt; EQUALVERIFIY RIPEMD160 &lt;h&gt; EQUAL|
+|len(x) = 32 and HASH160(x) = h|hash160(h)|SIZE &lt;20&gt; EQUALVERIFIY HASH160 &lt;h&gt; EQUAL|
+|(X and Y) or Z|andor(X,Y,Z)|[X] NOTIF [Z] ELSE [Y] ENDIF|
+|rowspan="3"|X and Y|and_v(X,Y)|[X] [Y]|
+|and_b(X,Y)|[X] [Y] BOOLAND|
+|and_n(X,Y) = andor(X,Y,0)|[X] NOTIF 0 ELSE [Y] ENDIF|
+|rowspan="4"|X or Y|or_b(X,Z)|[X] [Z] BOOLOR|
+|or_c(X,Z)|[X] NOTIF [Z] ENDIF|
+|or_d(X,Z) = or_d(X,Z)|[X] IFDUP NOTIF [Z] ENDIF|
+|or_i(X,Z) = or_i(X,Z)|IF [X] ELSE [Z] ENDIF|
+|X <sub>1</sub> + ... + X <sub>n</sub> = k|thresh(k, X<sub>1</sub>, ... , X<sub>n</sub>)|[X<sub>1</sub>] [X<sub>2</sub>] ADD ... [X<sub>n</sub>] ADD ... &lt;k&gt; EQUAL|
+|check(key<sub>1</sub>) + ... <br>+ check(key<sub>n</sub>) = k <br>(P2WSH only)|multi(k, key<sub>1</sub>, ... , key<sub>n</sub>)|&lt;k&gt; &lt;key<sub>1</sub>&gt; ... &lt;key<sub>n</sub>&gt; &lt;n&gt; CHECKMULTISIG|
+|check(key<sub>1</sub>) + ... <br>+ check(key<sub>n</sub>) = k <br>(Tapscript only)|multi_a(k, key<sub>1</sub>, ... , key<sub>n</sub>)|key<sub>1</sub> CHECKSIG key<sub>2</sub> CHECKSIGADD ... key<sub>n</sub> CHECKSIGADD &lt;k&gt; NUMEQUAL|
+|||
+|rowspan="10"|X (identities)|
+|a:X|TOALTSTACK [X] FROMALTSTACK|
+|s:X|SWAP [X]|
+|c:X|[X] CHECKSIG|
+|t:X = and_v(X,1)|[X] 1|
+|d:X = and_v(X,1)|DUP IF [X] ENDIF|
+|v:X|[X] VERIFY (or VERIFY version of last opcode in [X])|
+
+
+<!--
 | X (identities)                                           | `a:X`                         | `TOALTSTACK [X] FROMALTSTACK`
 |                                                          | `s:X`                         | `SWAP [X]`
 |                                                          | `c:X`                         | `[X] CHECKSIG`
@@ -131,6 +144,8 @@ Miniscript is not a separate language, but rather a significant expansion of the
 |                                                          | `n:X`                         | `[X] 0NOTEQUAL`
 |                                                          | `l:X` = `or_i(0,X)`           | `IF 0 ELSE [X] ENDIF`
 |                                                          | `u:X` = `or_i(X,0)`           | `IF [X] ELSE 0 ENDIF`
+
+-->
 
 <h3>Type System</h3>
 
@@ -151,6 +166,8 @@ properties: "**z**" (zero-arg), "**o**" (one-arg), "**n**" (nonzero), "**d**"
 
 The following table lists the correctness requirements for each of the Miniscript expressions, and
 its type properties in function of those of their subexpressions.
+
+<!--
 
 | Miniscript                   | Requires                                              | Type        | Properties
 |------------------------------|-------------------------------------------------------|-------------|-----------
@@ -181,6 +198,8 @@ its type properties in function of those of their subexpressions.
 | `j:X`                        | X is Bn                                               | B           | o=o<sub>X</sub>; n; d; u=u<sub>X</sub>
 | `n:X`                        | X is B                                                | B           | z=z<sub>X</sub>; o=o<sub>X</sub>; n=n<sub>X</sub>; d=d<sub>X</sub>; u
 
+-->
+
 <h4>Timelock Type Mixing</h4>
 
 
@@ -204,6 +223,8 @@ malleability guarantees of a script we define three additional type properties: 
 "**f**" (forced) and "**e**" (expressive).
 
 The following table lists the malleability properties and requirement of each fragment.
+
+<!--
 
 | Miniscript                   | Requires                                                            | Properties
 |------------------------------|---------------------------------------------------------------------|-----------
@@ -235,6 +256,8 @@ The following table lists the malleability properties and requirement of each fr
 | `j:X`                        |                                                                     | s=s<sub>X</sub>; e=f<sub>X
 | `n:X`                        |                                                                     | s=s<sub>X</sub>; f=f<sub>X</sub>; e=e<sub>X</sub>
 
+-->
+
 <h4>Satisfaction</h4>
 
 
@@ -246,6 +269,8 @@ non-standard actor. These are called *non-canonical* options, and are listed for
 ~~[struckthrough]~~. The fragments where a satisfaction or dissatisfaction does not exist will
 contain *(none)*. The fragments where the satisfaction or dissatisfaction is to provide no data
 will contain *(empty)*.
+
+<!--
 
 | Miniscript                   | Dissatisfactions (dsat)                                 | Satisfactions (sat)
 |------------------------------|---------------------------------------------------------|--------------------
@@ -276,6 +301,8 @@ will contain *(empty)*.
 | `v:X`                        | *(none)*                                                | sat(X)
 | `j:X`                        | 0; ~~<a href="dsat(X)" target="_blank">(if nonzero top stack)</a>~~                 | sat(X)
 | `n:X`                        | dsat(X)                                                 | sat(X)
+
+-->
 
 <h4>Non-malleable Satisfaction Algorithm</h4>
 
@@ -445,7 +472,7 @@ TBD
 <h2>Backwards Compatibility</h2>
 
 
-Miniscript's syntax is compatible with BIP 380 Output Script Descriptors, and should be considered
+Miniscript's syntax is compatible with <a href="/380" target="_blank">bip-0380</a> Output Script Descriptors, and should be considered
 an extension to it that provides a new type of Script expression that is only valid in
 `wsh()` and `tr()` contexts. As these are wholly new expressions, they are not
 compatible with any existing implementation of descriptors. Additionally, the scripts produced are
@@ -461,11 +488,13 @@ descriptors and produce the same scripts.
 A first reference implementation and documentation for Miniscript in P2WSH was originally published at
 https://github.com/sipa/miniscript .
 
+<a href="/381" target="_blank">bip-0381</a>
+
 The reference implementation for Miniscript in P2WSH was introduced in Bitcoin Core through PRs
-[24147](https://github.com/bitcoin/bitcoin/pull/24147), [24148](https://github.com/bitcoin/bitcoin/pull/24148), and
-[24149](https://github.com/bitcoin/bitcoin/pull/24149). The last one to be merged was released in Bitcoin
+<a href="https://github.com/bitcoin/bitcoin/pull/24147" target="_blank">24147</a>, <a href="https://github.com/bitcoin/bitcoin/pull/24148" target="_blank">24148</a>, and
+<a href="https://github.com/bitcoin/bitcoin/pull/24149" target="_blank">24149</a>. The last one to be merged was released in Bitcoin
 Core version 25.0.
 
 The reference implementation for Miniscript in Tapscript was introduced in Bitcoin Core in PR
-[27255](https://github.com/bitcoin/bitcoin/pull/27255). This PR was merged and released in Bitcoin Core
+<a href="https://github.com/bitcoin/bitcoin/pull/27255" target="_blank">27255</a>. This PR was merged and released in Bitcoin Core
 version 26.0.
