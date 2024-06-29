@@ -285,17 +285,36 @@ The properties are divided into two classes: those that hold over all strings wh
 |rowspan="2" | errors|rowspan="2" | of type|rowspan="2" | window|rowspan="2" | code/verifier|
 |-|-|-|-|
 |_0_|_2<sup>-30</sup>_|_2<sup>-25</sup>_|_2<sup>-20</sup>_|_2<sup>-15</sup>_|_2<sup>-10</sup>_|
+|&leq; 4|only subst.|any|rowspan="6" | Bech32m/Bech32m|100.00%|colspan="5" | none<sup>(a)</sup>|
+|any|any|&leq; 4|56.16%|43.84%|colspan="4" | none<sup>(b)</sup>|
+|&leq; 2|any|&leq; 68|7.71%|92.28%|colspan="4" | none<sup>(b)</sup>|
+|&leq; 2|any|any|7.79%|92.20%|0.004%|colspan="3" | none<sup>(b)</sup>|
+|&leq; 3|any|&leq; 69|7.73%|92.23%|0.033%<sup>(d)</sup>|colspan="3" | none<sup>(b)</sup>|
+|&leq; 3|any|any|7.77%|92.19%|0.034%|0.000065%|colspan="2" | none<sup>(b)</sup>|
+|&leq; 4|only subst.|any|rowspan="6" | Bech32/Bech32|100.00%|colspan="5" | none|
 |any|any|&leq; 4|54.00%|43.84%|1.08%|0.90%|0.17%|0.0091%|
 |&leq; 2|any|&leq; 68|4.59%|92.29%|1.09%|1.01%|0.99%|0.039%|
 |&leq; 2|any|any|4.58%|92.21%|1.11%|1.04%|1.02%|0.038%|
 |&leq; 3|any|&leq; 69|6.69%|92.23%|0.56%|0.48%|0.041%|0.00055%|
 |&leq; 3|any|any|6.66%|92.19%|0.59%|0.52%|0.041%|0.00053%|
+|0|-|-|rowspan="3" | Bech32m/Bech32|100.00%|colspan="5" | none<sup>(a)</sup>|
+|1|any|-|46.53%|53.46%|colspan="4" | none<sup>(b)</sup>|
+|&leq; 2|any|any|22.18%|77.77%|0.048%|colspan="3" | none<sup>(b)</sup>|
+|&leq; 4|only subst.|any|rowspan="6" | Bech32m/Bech32m|100.00%|colspan="5" | none<sup>(a)</sup>|
+|1|any|-|24.34%|75.66%|colspan="4" | none<sup>(c)</sup>|
+|&leq; 2|any|&leq; 28|16.85%|83.15%|colspan="4" | none<sup>(c)</sup>|
+|any|any|&leq; 4|74.74%|25.25%|0.0016%|colspan="3" | none<sup>(c)</sup>|
+|&leq; 2|any|any|15.72%|84.23%|0.039%|0.0053%|colspan="2" | none<sup>(c)</sup>|
+|&leq; 3|any|any|13.98%|85.94%|0.078%|0.00063%|colspan="2" | none<sup>(c)</sup>|
+|&leq; 4|only subst.|any|rowspan="6" | Bech32/Bech32|100.00%|colspan="5" | none|
 |1|any|-|14.63%|75.71%|2.43%|2.43%|2.43%|2.38%|
 |&leq; 2|any|&leq; 28|14.22%|83.15%|0.94%|0.84%|0.79%|0.054%|
 |any|any|&leq; 4|73.23%|25.26%|0.76%|0.63%|0.12%|0.0064%|
 |&leq; 2|any|any|12.79%|84.24%|1.06%|0.95%|0.92%|0.041%|
 |&leq; 3|any|any|13.00%|85.94%|0.57%|0.45%|0.044%|0.00067%|
-||
+|&leq; 3|only subst.|any|rowspan="3" | Bech32m/Bech32|100.00%|colspan="5" | none<sup>(c)</sup>|
+|1|any|-|70.89%|29.11%|colspan="4" | none<sup>(c)</sup>|
+|&leq; 2|any|any|36.12%|63.79%|0.092%|0.00049%|colspan="2" | none<sup>(c)</sup>|
 
 
 The numbers in this table, as well as a comparison with the numbers for the ‘’1’’ constant and earlier proposed improved constants, can be found <a href="https://gist.github.com/sipa/14c248c288c3880a3b191f978a34508e#file-results_final-txt" target="_blank">here</a>.

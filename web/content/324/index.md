@@ -600,7 +600,7 @@ The following table lists currently defined message type IDs:
 |`SENDCMPCT`|`TX`|`GETCFILTERS`|`CFILTER`|
 |`GETCFHEADERS`|`CFHEADERS`|`GETCFCHECKPT`|`CFCHECKPT`|
 |+28|`ADDRV2`|
-|&geq;29|
+|&geq;29|| colspan="4" | (undefined)|
 
 
 

@@ -394,7 +394,13 @@ multiples of 1 in 10<sup>9</sup>).
 
 |Length|Description|≤4|5|6|7|8|≥9|
 |-|-|-|-|-|-|-|-|
-||
+|8|Longest detecting 6 errors|colspan="3" | 0|1.127|0.909|n/a|
+|18|Longest detecting 5 errors|colspan="2" | 0|0.965|0.929|0.932|0.931|
+|19|Worst case for 6 errors|0|0.093|0.972|0.928|colspan="2" | 0.931|
+|39|Length for a P2WPKH address|0|0.756|0.935|0.932|colspan="2" | 0.931|
+|59|Length for a P2WSH address|0|0.805|0.933|colspan="3" | 0.931|
+|71|Length for a 40-byte program address|0|0.830|0.934|colspan="3" | 0.931|
+|89|Longest detecting 4 errors|0|0.867|0.933|colspan="3" | 0.931|
 
 This means that when 5 changed characters occur randomly distributed in
 the 39 characters of a P2WPKH address, there is a chance of

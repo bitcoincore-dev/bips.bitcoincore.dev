@@ -101,7 +101,7 @@ Miniscript is not a separate language, but rather a significant expansion of the
 |-|-|-|
 |false|0|0|
 |true|1|1|
-|rowspan="4"|check(key)|pk_k(key)|&lt;key&gt;|
+|check(key)    |pk_k(key)|&lt;key&gt;|
 |pk_k(key)|DUP HASH160 &lt;HASH160&lt;(key)&gt; EQUALVERIFY|
 |pk(key) = c:pk_k(key)|&lt;key&gt; CHECKSIG|
 |pkh(key) = c:pk_h(key)|DUP HASH160 &lt;HASH160&lt;(key)&gt; EQUALVERIFY CHECKSIG|

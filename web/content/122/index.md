@@ -57,11 +57,11 @@ Where:
 
 |style="text-align: center;" | Element|Required?|
 |-|-|
-|chain|optional|
+|chain|colspan="2" | **chain ID** (see below) of the desired chain, leading 0s included. If omitted (which would be the usual case), Bitcoin main net is assumed.|optional|
 |rowspan="3" | type|tx|for transactions.|rowspan="3" | required|
 |block|for blocks (supports both hash or height).|
 |address|for addresses.|
-|hash|required|
+|hash|colspan="2" | the relevant hash to refer to (leading zeros included), or block height.|required|
 
 
 <h4>ABNF grammar</h4>

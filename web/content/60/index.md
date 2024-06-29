@@ -62,6 +62,7 @@ Payload:
 |8|services|uint64_t|bitfield of features to be enabled for this connection|
 |8|timestamp|int64_t|standard UNIX timestamp in seconds|
 |26|addr_recv|net_addr|The network address of the node receiving this message|
+|colspan="4"| version >= 106|
 |26|addr_from|net_addr|The network address of the node emitting this message|
 |8|nonce|uint64_t|Node random nonce, randomly generated every time a version packet is sent. This nonce is used to detect connections to self.|
 |?|user_agent|var_str|<a href="/14" target="_blank">User Agent</a> (0x00 if string is 0 bytes long)|
