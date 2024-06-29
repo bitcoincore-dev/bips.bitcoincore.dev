@@ -36,7 +36,8 @@ pub fn generate(bip: u32, path: &str) -> io::Result<()> {
     let mut ctx = RenderContext::None;
 
     // start by parsing out front matter for zola
-    render_front_matter(&mut file, wikitext.nodes)?;
+    // render_front_matter(&mut file, wikitext.nodes)?;
+    render_front_matter(&mut file, wikitext.unwrap().nodes)?;
 
     // render the rest of the document, line by line
     if let Ok(lines) = read_lines(path) {
@@ -232,18 +233,38 @@ fn render(context: &mut RenderContext, line: &str) -> Option<String> {
                 return Some(buffer);
             }
 
-            if line.contains("colspan") {
-                // ignore for now
-                return None;
-            }
-
             // table header
             // convert to markdown format
             if line.starts_with("!") {
+
+
+                if line.contains("check") {
+                    // ignore for now
+                    print!("\n\n\n{}\n\n\n",line);
+                    for i in line.chars() {print!("{}\n", i);}
+                    //return None;
+                }
+
+                if line.contains("colspan") {
+                    // ignore for now
+                    return None;
+                }
+
+
+
+                if line.contains("rowspan") {
+                    // ignore for now
+                    return None;
+                }
+
+
+
                 let headers: Vec<&str> = line["!".len()..line.len()]
                     .split("!!")
                     .map(|s| s.trim())
                     .collect();
+
+                print!("{:?}\n",headers);
 
                 if headers.len() > 1 {
                     // multiple column values on a single line
@@ -631,7 +652,8 @@ pub fn count(bip: u32, path: &str, stats: &mut Stats) -> io::Result<()> {
 
     // parse mediawiki content
     let wikitext = wiki::Configuration::default().parse(&content);
-    for node in wikitext.nodes {
+    //for node in wikitext.nodes {
+    for node in wikitext.unwrap().nodes {
         record_node(bip, &node, stats);
     }
 
@@ -647,7 +669,8 @@ pub fn show(path: &str) -> io::Result<()> {
 
     // parse mediawiki content
     let wikitext = wiki::Configuration::default().parse(&content);
-    for node in wikitext.nodes {
+    //for node in wikitext.nodes {
+    for node in wikitext.unwrap().nodes {
         println!("{:#?}", node);
     }
 
