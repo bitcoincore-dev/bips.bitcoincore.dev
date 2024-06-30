@@ -96,17 +96,9 @@ Miniscript. BIP 382's key expression restrictions apply to Miniscript in P2WSH c
 386's key expression restrictions apply to Miniscript in P2TR contexts. From a user's perspective,
 Miniscript is not a separate language, but rather a significant expansion of the descriptor language.
 
-<!--
 
-|rowspan="2"|ROWSPAN=2|Semantics|Miniscript Fragment|Bitcoin Script|
-|-|-|-|-|
-|COLSPAN=1|COLSPAN=1|COLSPAN=1|
-
--->
-
-|||
-|-|-|
-|style="width:400px;"|Semantics|Miniscript Fragment|Bitcoin Script|
+|Semantics|Miniscript Fragment|Bitcoin Script|
+|-|-|-|
 |false|0|0|
 |true|1|1|
 |rowspan="4"|check(key)|pk_k(key)|&lt;key&gt;|

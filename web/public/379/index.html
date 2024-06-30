@@ -176,47 +176,39 @@ restrictions on key expressions and what they resolve to - these apply to key ex
 Miniscript. BIP 382's key expression restrictions apply to Miniscript in P2WSH contexts, and BIP
 386's key expression restrictions apply to Miniscript in P2TR contexts. From a user's perspective,
 Miniscript is not a separate language, but rather a significant expansion of the descriptor language.</p>
-<!--
-
-|rowspan="2"|ROWSPAN=2|Semantics|Miniscript Fragment|Bitcoin Script|
-|-|-|-|-|
-|COLSPAN=1|COLSPAN=1|COLSPAN=1|
-
--->
-<table><thead><tr><th></th><th></th></tr></thead><tbody>
-<tr><td>style=&quot;width:400px;&quot;</td><td>Semantics</td></tr>
-<tr><td>false</td><td>0</td></tr>
-<tr><td>true</td><td>1</td></tr>
-<tr><td>rowspan=&quot;4&quot;</td><td>check(key)</td></tr>
-<tr><td>pk_k(key)</td><td>DUP HASH160 &lt;HASH160&lt;(key)&gt; EQUALVERIFY</td></tr>
-<tr><td>pk(key) = c:pk_k(key)</td><td>&lt;key&gt; CHECKSIG</td></tr>
-<tr><td>pkh(key) = c:pk_h(key)</td><td>DUP HASH160 &lt;HASH160&lt;(key)&gt; EQUALVERIFY CHECKSIG</td></tr>
-<tr><td>nSequence &lt;= n <br>(and compatible)</td><td>older(n)</td></tr>
-<tr><td>nLockTime &lt;= n <br>(and compatible)</td><td>after(n)</td></tr>
-<tr><td>len(x) = 32 and SHA256(x) = h</td><td>sha256(h)</td></tr>
-<tr><td>len(x) = 32 and SHA256(x) = h</td><td>sha256(h)</td></tr>
-<tr><td>len(x) = 32 and HASH256(x) = h</td><td>hash256(h)</td></tr>
-<tr><td>len(x) = 32 and RIPEMD160(x) = h</td><td>ripemd160(h)</td></tr>
-<tr><td>len(x) = 32 and HASH160(x) = h</td><td>hash160(h)</td></tr>
-<tr><td>(X and Y) or Z</td><td>andor(X,Y,Z)</td></tr>
-<tr><td>rowspan=&quot;3&quot;</td><td>X and Y</td></tr>
-<tr><td>and_b(X,Y)</td><td>[X] [Y] BOOLAND</td></tr>
-<tr><td>and_n(X,Y) = andor(X,Y,0)</td><td>[X] NOTIF 0 ELSE [Y] ENDIF</td></tr>
-<tr><td>rowspan=&quot;4&quot;</td><td>X or Y</td></tr>
-<tr><td>or_c(X,Z)</td><td>[X] NOTIF [Z] ENDIF</td></tr>
-<tr><td>or_d(X,Z) = or_d(X,Z)</td><td>[X] IFDUP NOTIF [Z] ENDIF</td></tr>
-<tr><td>or_i(X,Z) = or_i(X,Z)</td><td>IF [X] ELSE [Z] ENDIF</td></tr>
-<tr><td>X <sub>1</sub> + ... + X <sub>n</sub> = k</td><td>thresh(k, X<sub>1</sub>, ... , X<sub>n</sub>)</td></tr>
-<tr><td>check(key<sub>1</sub>) + ... <br>+ check(key<sub>n</sub>) = k <br>(P2WSH only)</td><td>multi(k, key<sub>1</sub>, ... , key<sub>n</sub>)</td></tr>
-<tr><td>check(key<sub>1</sub>) + ... <br>+ check(key<sub>n</sub>) = k <br>(Tapscript only)</td><td>multi_a(k, key<sub>1</sub>, ... , key<sub>n</sub>)</td></tr>
-<tr><td></td><td></td></tr>
-<tr><td>rowspan=&quot;10&quot;</td><td>X (identities)</td></tr>
-<tr><td>a:X</td><td>TOALTSTACK [X] FROMALTSTACK</td></tr>
-<tr><td>s:X</td><td>SWAP [X]</td></tr>
-<tr><td>c:X</td><td>[X] CHECKSIG</td></tr>
-<tr><td>t:X = and_v(X,1)</td><td>[X] 1</td></tr>
-<tr><td>d:X = and_v(X,1)</td><td>DUP IF [X] ENDIF</td></tr>
-<tr><td>v:X</td><td>[X] VERIFY (or VERIFY version of last opcode in [X])</td></tr>
+<table><thead><tr><th>Semantics</th><th>Miniscript Fragment</th><th>Bitcoin Script</th></tr></thead><tbody>
+<tr><td>false</td><td>0</td><td>0</td></tr>
+<tr><td>true</td><td>1</td><td>1</td></tr>
+<tr><td>rowspan=&quot;4&quot;</td><td>check(key)</td><td>pk_k(key)</td></tr>
+<tr><td>pk_k(key)</td><td>DUP HASH160 &lt;HASH160&lt;(key)&gt; EQUALVERIFY</td><td></td></tr>
+<tr><td>pk(key) = c:pk_k(key)</td><td>&lt;key&gt; CHECKSIG</td><td></td></tr>
+<tr><td>pkh(key) = c:pk_h(key)</td><td>DUP HASH160 &lt;HASH160&lt;(key)&gt; EQUALVERIFY CHECKSIG</td><td></td></tr>
+<tr><td>nSequence &lt;= n <br>(and compatible)</td><td>older(n)</td><td>&lt;n&gt; CHECKSEQUENCEVERIFIY</td></tr>
+<tr><td>nLockTime &lt;= n <br>(and compatible)</td><td>after(n)</td><td>&lt;n&gt; CHECKSEQUENCEVERIFIY</td></tr>
+<tr><td>len(x) = 32 and SHA256(x) = h</td><td>sha256(h)</td><td>SIZE &lt;20&gt; EQUALVERIFIY SHA256 &lt;h&gt; EQUAL</td></tr>
+<tr><td>len(x) = 32 and SHA256(x) = h</td><td>sha256(h)</td><td>SIZE &lt;20&gt; EQUALVERIFIY SHA256 &lt;h&gt; EQUAL</td></tr>
+<tr><td>len(x) = 32 and HASH256(x) = h</td><td>hash256(h)</td><td>SIZE &lt;20&gt; EQUALVERIFIY HASH256 &lt;h&gt; EQUAL</td></tr>
+<tr><td>len(x) = 32 and RIPEMD160(x) = h</td><td>ripemd160(h)</td><td>SIZE &lt;20&gt; EQUALVERIFIY RIPEMD160 &lt;h&gt; EQUAL</td></tr>
+<tr><td>len(x) = 32 and HASH160(x) = h</td><td>hash160(h)</td><td>SIZE &lt;20&gt; EQUALVERIFIY HASH160 &lt;h&gt; EQUAL</td></tr>
+<tr><td>(X and Y) or Z</td><td>andor(X,Y,Z)</td><td>[X] NOTIF [Z] ELSE [Y] ENDIF</td></tr>
+<tr><td>rowspan=&quot;3&quot;</td><td>X and Y</td><td>and_v(X,Y)</td></tr>
+<tr><td>and_b(X,Y)</td><td>[X] [Y] BOOLAND</td><td></td></tr>
+<tr><td>and_n(X,Y) = andor(X,Y,0)</td><td>[X] NOTIF 0 ELSE [Y] ENDIF</td><td></td></tr>
+<tr><td>rowspan=&quot;4&quot;</td><td>X or Y</td><td>or_b(X,Z)</td></tr>
+<tr><td>or_c(X,Z)</td><td>[X] NOTIF [Z] ENDIF</td><td></td></tr>
+<tr><td>or_d(X,Z) = or_d(X,Z)</td><td>[X] IFDUP NOTIF [Z] ENDIF</td><td></td></tr>
+<tr><td>or_i(X,Z) = or_i(X,Z)</td><td>IF [X] ELSE [Z] ENDIF</td><td></td></tr>
+<tr><td>X <sub>1</sub> + ... + X <sub>n</sub> = k</td><td>thresh(k, X<sub>1</sub>, ... , X<sub>n</sub>)</td><td>[X<sub>1</sub>] [X<sub>2</sub>] ADD ... [X<sub>n</sub>] ADD ... &lt;k&gt; EQUAL</td></tr>
+<tr><td>check(key<sub>1</sub>) + ... <br>+ check(key<sub>n</sub>) = k <br>(P2WSH only)</td><td>multi(k, key<sub>1</sub>, ... , key<sub>n</sub>)</td><td>&lt;k&gt; &lt;key<sub>1</sub>&gt; ... &lt;key<sub>n</sub>&gt; &lt;n&gt; CHECKMULTISIG</td></tr>
+<tr><td>check(key<sub>1</sub>) + ... <br>+ check(key<sub>n</sub>) = k <br>(Tapscript only)</td><td>multi_a(k, key<sub>1</sub>, ... , key<sub>n</sub>)</td><td>key<sub>1</sub> CHECKSIG key<sub>2</sub> CHECKSIGADD ... key<sub>n</sub> CHECKSIGADD &lt;k&gt; NUMEQUAL</td></tr>
+<tr><td></td><td></td><td></td></tr>
+<tr><td>rowspan=&quot;10&quot;</td><td>X (identities)</td><td></td></tr>
+<tr><td>a:X</td><td>TOALTSTACK [X] FROMALTSTACK</td><td></td></tr>
+<tr><td>s:X</td><td>SWAP [X]</td><td></td></tr>
+<tr><td>c:X</td><td>[X] CHECKSIG</td><td></td></tr>
+<tr><td>t:X = and_v(X,1)</td><td>[X] 1</td><td></td></tr>
+<tr><td>d:X = and_v(X,1)</td><td>DUP IF [X] ENDIF</td><td></td></tr>
+<tr><td>v:X</td><td>[X] VERIFY (or VERIFY version of last opcode in [X])</td><td></td></tr>
 </tbody></table>
 <!--
 | X (identities)                                           | `a:X`                         | `TOALTSTACK [X] FROMALTSTACK`
@@ -548,7 +540,7 @@ version 26.0.</p>
             <div data-pagefind-ignore class="w-full flex flex-col items-center space-y-2 text-center">
                 <div class="flex items-center space-x-2">
                     <p class="font-bold">Updated</p>
-                    <p class="font-bold">2024-06-29</p>
+                    <p class="font-bold">2024-06-30</p>
                 </div>
                 <p>See an issue with rendering or formatting? Please submit an issue on <a href="https://github.com/nickmonad/bips.dev" target="_blank">GitHub</a></p>
                 <p><a href="/">bips.dev</a> is presented by <a href="https://nickmonad.blog" target="_blank">nickmonad</a></p>
