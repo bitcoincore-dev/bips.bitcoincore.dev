@@ -165,7 +165,8 @@ Thus it is useful to have a notation to represent both descriptors as a single d
 </li>
 </ul>
 <p>When a <tt>/&lt;NUM;NUM;...;NUM&gt;</tt> is encountered, parsers should account for a presence of multiple descriptors where the first descriptor uses the first <tt>NUM</tt>, and a second descriptor uses the second <tt>NUM</tt>, and so on, until each <tt>NUM</tt> is accounted for in the production of public keys, scripts, and addresses, as well as descriptor import and export operations.
-Descriptors that contain multiple Key Expressions that each have a <tt>/&lt;NUM;NUM;...;NUM&gt;</tt> must have tuples of exactly the same length so that they are derived in lockstep in the same way that <tt>/*</tt> paths in multiple Key expressions are handled.</p>
+Descriptors that contain multiple Key Expressions that each have a <tt>/&lt;NUM;NUM;...;NUM&gt;</tt> must have tuples of exactly the same length so that they are derived in lockstep in the same way that <tt>/*</tt> paths in multiple Key expressions are handled.
+Duplicate <tt>NUM</tt>s within a tuple are not allowed.</p>
 <p>The common use case for this is to represent descriptors for producing receiving and change addresses.
 When interpreting for this use case, wallets should use the first descriptor for producing receiving addresses, and the second descriptor for producing change addresses.
 For this use case, the element will commonly be the value <tt>/&lt;0;1&gt;</tt></p>

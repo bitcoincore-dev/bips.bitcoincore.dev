@@ -122,7 +122,7 @@
   Author: Jonas Schnelli &lt;dev@jonasschnelli.ch&gt;
   Comments-Summary: No comments yet.
   Comments-URI: https:&#x2F;&#x2F;github.com&#x2F;bitcoin&#x2F;bips&#x2F;wiki&#x2F;Comments:BIP-0159
-  Status: Draft
+  Status: Final
   Type: Standards Track
   Created: 2017-05-11
   License: BSD-2-Clause
@@ -149,7 +149,7 @@ all historical blocks.</p>
 <h3> Risks </h3>
 <p>Pruned peers following this BIP may consume more outbound bandwidth.</p>
 <p>Light clients (and such) who are not checking the <code>nServiceFlags</code> (service bits) from a relayed <code>addr</code>-message may unwillingly connect to a pruned peer and ask for (filtered) blocks at a depth below their pruned depth. Light clients should therefore check the service bits (and eventually connect to peers signaling <code>NODE_NETWORK_LIMITED</code> if they require [filtered] blocks around the tip). Light clients obtaining peer IPs though DNS seed should use the DNS filtering option.</p>
-<h2> Compatibility  </h2>
+<h2> Compatibility </h2>
 <p>This proposal is backward compatible.</p>
 <h2> Reference implementation </h2>
 <ul>

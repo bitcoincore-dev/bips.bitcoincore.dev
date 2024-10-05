@@ -176,7 +176,7 @@
     &#x2F;&#x2F; Verify that the length of the signature matches the sum of the length
     &#x2F;&#x2F; of the elements.
     if ((size_t)(lenR + lenS + 7) != sig.size()) return false;
- 
+
     &#x2F;&#x2F; Check whether the R element is an integer.
     if (sig[2] != 0x02) return false;
 
@@ -254,7 +254,7 @@
 <h2>Implementation</h2>
 <p>An implementation for the reference client is available at https://github.com/bitcoin/bitcoin/pull/5713</p>
 <h2>Acknowledgements</h2>
-<p>This document is extracted from the previous BIP62 proposal, which had input from various people, in particular Greg Maxwell and Peter Todd, who gave feedback about this document as well. </p>
+<p>This document is extracted from the previous BIP62 proposal, which had input from various people, in particular Greg Maxwell and Peter Todd, who gave feedback about this document as well.</p>
 <h2>Disclosures</h2>
 <ul>
 <li>Subsequent to the network-wide adoption and enforcement of this BIP, the author <a href="https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2015-July/009697.html" target="_blank">disclosed</a> that strict DER signatures provided an indirect solution to a consensus bug he had previously discovered.</li>

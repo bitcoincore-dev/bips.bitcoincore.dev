@@ -69,10 +69,14 @@ User and domain names which are not expressible using standard printable ASCII M
 
 Note that because resolvers are not required to support resolving non-ASCII identifiers, wallets SHOULD avoid using non-ASCII identifiers.
 
+For payment instructions that have a built-in expiry time (e.g. Lightning BOLT 12 offers), care must be taken to ensure that the DNS records expire prior to the expiry of the payment instructions. Otherwise, senders may have payment instructions cached locally which have expired, preventing payment.
+
 <h3> Resolution </h3>
 
 
 Clients resolving Bitcoin payment instructions MUST ignore any TXT records at the same label which do not begin with (ignoring case) "bitcoin:". Resolvers encountering multiple "bitcoin:"-matching TXT records at the same label MUST treat the records as invalid and refuse to use any payment instructions therein.
+
+Clients resolving Bitcoin payment instructions MUST concatenate all strings in the TXT record before processing the complete URI.<ref>TXT records are defined as "one or more character-strings" in <a href="https://www.rfc-editor.org/rfc/rfc1035#section-3.3.14" target="_blank">RFC 1035</a>, and a "character-string" is a single byte (with a max value of 255) followed by that many characters.</ref>
 
 Clients resolving Bitcoin payment instructions MUST fully validate DNSSEC signatures leading to the DNS root (including any relevant CNAME or DNAME records) and MUST NOT accept DNSSEC signatures which use SHA-1 or RSA with keys shorter than 1024 bits. Resolvers MAY accept SHA-1 DS records.
 
@@ -94,9 +98,24 @@ Payment instructions which do contain on-chain addresses which will be re-used S
 <h3> Display </h3>
 
 
-Wallets SHOULD parse recipient information in the form `user`@`domain` or ₿`user`@`domain` and resolve such entry into recipient information using the above record. Similarly, wallets accepting payment information from external devices (e.g. hardware wallets) SHOULD accept RFC 9102-formatted proofs (as a series of unsorted `AuthenticationChain` records) and, if they verify, SHOULD display the recipient in the form ₿`user`@`domain`. For the avoidance of doubt, the ₿ is *not* included in the DNS label which is resolved.
+When displaying a verified human-readable name, wallets SHOULD prefix it with ₿, i.e. ₿`user`@`domain`. They SHOULD parse recipient information in both `user`@`domain` and ₿`user`@`domain` forms and resolve such an entry into recipient information using the above record. For the avoidance of doubt, the ₿ is *not* included in the DNS label which is resolved.
 
-Wallets providing users the ability to "copy" their address information generally SHOULD copy the underlying URI directly in order to avoid the DNS indirection. However, wallets providing users the ability to copy their human-readable address information MUST include the ₿ prefix (i.e. copy it in the form ₿`user`@`domain`).
+Wallets providing the ability for users to "copy" their address information SHOULD copy the underlying URI directly, rather than the human-readable name. This avoids an additional DNS lookup by the application in which it is pasted. Wallets that nevertheless provide users the ability to copy their human-readable name, MUST include the ₿ prefix (i.e. copy it in the form ₿`user`@`domain`).
+
+Wallets accepting payment information from external devices (e.g. hardware wallets) SHOULD accept RFC 9102-formatted proofs (as a series of unsorted `AuthenticationChain` records) and, if verification succeeds, SHOULD display the recipient in the form ₿`user`@`domain`.
+
+<h3> PSBT types </h3>
+
+
+Wallets accepting payment information from external devices (e.g. hardware wallets) MAY examine the following per-output PSBT fields to fetch RFC 9102-formatted proofs. Wallets creating PSBTs with recipient information derived from human-readable names SHOULD include the following fields.
+
+When validating the contained proof, clients MUST enforce the inception on all contained RRSigs is no later than the current time and that the expiry of all RRSigs is no earlier than an hour in the past. Clients MAY allow for an expiry up to an hour in the past to allow for delays between PSBT construction and signing only if such a delay is likely to occur in their intended usecase.
+
+
+|Name|<tt><keytype></tt>|<tt><keydata></tt>|<tt><valuedata></tt>|<tt><valuedata></tt> Description|Versions Requiring Inclusion|Versions Requiring Exclusion|Versions Allowing Inclusion|
+|-|-|-|-|-|-|-|-|
+|BIP 353 DNSSEC proof|<tt>PSBT_OUT_DNSSEC_PROOF = 0x35</tt>|None|<tt><1-byte-length-prefixed BIP 353 human-readable name without the ₿ prefix><RFC 9102-formatted DNSSEC Proof></tt>|A BIP 353 human-readable name (without the ₿ prefix), prefixed by a 1-byte length.|||0, 2|
+
 
 <h2> Rationale </h2>
 
@@ -149,18 +168,28 @@ This work is intended to extend and subsume the existing "Lightning Address" sch
 
 
 `matt@mattcorallo.com` resolves to
-`matt.user._bitcoin-payment.mattcorallo.com. 3600 IN TXT	"bitcoin:?lno=lno1qsgqmqvgm96frzdg8m0gc6nzeqffvzsqzrxqy32afmr3jn9ggkwg3egfwch2hy0l6jut6vfd8vpsc3h89l6u3dm4q2d6nuamav3w27xvdmv3lpgklhg7l5teypqz9l53hj7zvuaenh34xqsz2sa967yzqkylfu9xtcd5ymcmfp32h083e805y7jfd236w9afhavqqvl8uyma7x77yun4ehe9pnhu2gekjguexmxpqjcr2j822xr7q34p078gzslf9wpwz5y57alxu99s0z2ql0kfqvwhzycqq45ehh58xnfpuek80hw6spvwrvttjrrq9pphh0dpydh06qqspp5uq4gpyt6n9mwexde44qv7lstzzq60nr40ff38u27un6y53aypmx0p4qruk2tf9mjwqlhxak4znvna5y"`
-Note that `lno` indicates a value containing a lightning BOLT12 offer.
 
-<h2> Reference Implementations </h2>
+<pre>matt.user._bitcoin-payment.mattcorallo.com. 1800 IN TXT  "bitcoin:?lno=lno1qsgr30k45jhvkfqxjqheaetac
+u4guyxvqttftvqu0f5sneckep3lkwdut7mmhhpcyjmlmnjn4hze8ed7pq88xqkxt2dcw5mlxhz644fms82f7k4ymfxs2ehhpjtxw
+xly0w5k8xdtlvpqyd8xzdq4tq8lgupnueshgydr330lc3j5kdcqh54gt7jdg9n68j4eqqeu7ts8uh0qxamee6ndj37tc6mzgejth
+vvjqj96p8dz2h" "rsh5z5n27qfk6svjz5pmkh0smq26k0j2j4q36xgq3r5qzet9kuhq4lydpen5mskxgjdvs5faqgv8pmj7cfd7
+ny84djksqpqk9ky6juc7fpezecxvg7sjx05dckyypnv9tmvfp6tkpehmtaqmvuupetxuzqf4t0azddjdcpasgw6hxuz9g"
+```
 
-*  A DNSSEC proof generation and validation implementation can be found at https://git.bitcoin.ninja/index.cgi?p=dnssec-prover;a=summary
-*  A lightning-specific name to payment instruction resolver can be found at https://git.bitcoin.ninja/index.cgi?p=lightning-resolver;a=summary
-*  Reference implementations for parsing the URI contents can be found in <a href="/21" target="_blank">BIP 21</a>.
+* Note that `lno` indicates a value containing a lightning BOLT12 offer.
+* Note that the complete URI is broken into two strings with maximum 255 characters each
+
+== Reference Implementations ==
+* A DNSSEC proof generation and validation implementation can be found at https://git.bitcoin.ninja/index.cgi?p=dnssec-prover;a=summary
+* A lightning-specific name to payment instruction resolver can be found at https://git.bitcoin.ninja/index.cgi?p=lightning-resolver;a=summary
+* Reference implementations for parsing the URI contents can be found in [[bip-0021.mediawiki|BIP 21]].
 
 
-<h2> Acknowledgements </h2>
+== Footnotes ==
 
+<references />
+
+== Acknowledgements ==
 
 Thanks to Rusty Russell for the concrete address rotation suggestion.
 

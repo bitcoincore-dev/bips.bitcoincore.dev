@@ -145,7 +145,7 @@
 <p>Note that several other programming languages do not exhibit this behaviour, making new implementations likely to be slower and generally more bogus than Bitcoin Core. For example, Python unexpectedly returns 0 when shifting an integer beyond its size.</p>
 <h2>Other solutions</h2>
 <h3>Floating-point approximation</h3>
-<p>An obvious solution would be to reimplement the shape of the subsidy curve using floating-point approximations, such as simulated annealing or quantitative easing, which have already proven their worth in consensus systems. Unfortunately, since the financial crisis everyone considers numbers with decimal points in them fishy, and integers are not well supported by Javascript. </p>
+<p>An obvious solution would be to reimplement the shape of the subsidy curve using floating-point approximations, such as simulated annealing or quantitative easing, which have already proven their worth in consensus systems. Unfortunately, since the financial crisis everyone considers numbers with decimal points in them fishy, and integers are not well supported by Javascript.</p>
 <h3>Truncation</h3>
 <p>An alternative solution would be to represent the total number of bitcoins as a string:</p>
 <pre><code>    &quot;21000000000000000000000&quot;

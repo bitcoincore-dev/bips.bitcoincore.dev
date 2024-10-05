@@ -124,7 +124,7 @@
           Jonas Schnelli &lt;dev@jonasschnelli.ch&gt;
           Pieter Wuille &lt;bitcoin-dev@wuille.net&gt;
   Comments-URI: https:&#x2F;&#x2F;github.com&#x2F;bitcoin&#x2F;bips&#x2F;wiki&#x2F;Comments:BIP-0324
-  Status: Draft
+  Status: Final
   Type: Standards Track
   Created: 2019-03-08
   License: BSD-3-Clause
@@ -544,7 +544,7 @@ def respond_v2_handshake(peer, garbage_len):
         if received_garbage[-16:] == peer.recv_garbage_terminator:
             # Receive, decode, and ignore version packet.
             # This includes skipping decoys and authenticating the received garbage.
-            v2_receive_packet(peer, aad=received_garbage)
+            v2_receive_packet(peer, aad=received_garbage[:-16])
             return
         else:
             received_garbage += recv(peer, 1)

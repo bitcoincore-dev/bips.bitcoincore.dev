@@ -211,7 +211,7 @@ The transition to FAILED takes precedence, as otherwise an ambiguity can arise.
 There could be two non-overlapping deployments on the same bit, where the first one transitions to LOCKED_IN while the
 other one simultaneously transitions to STARTED, which would mean both would demand setting the bit.</p>
 <p>Note that a block's state never depends on its own nVersion; only on that of its ancestors.</p>
-<pre><code>        case STARTED: 
+<pre><code>        case STARTED:
             if (GetMedianTimePast(block.parent) &gt;= timeout) {
                 return FAILED;
             }

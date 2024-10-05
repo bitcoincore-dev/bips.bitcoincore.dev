@@ -151,13 +151,13 @@ their block.</p>
 as required by BIP65 (CHECKLOCKTIMEVERIFY) and matching the behavior of
 BIP68 (sequence numbers) and BIP112 (CHECKSEQUENCEVERIFY).</p>
 <h2>Specification</h2>
-<p>The values for transaction locktime remain unchanged. The difference is only in 
-the calculation determining whether a transaction can be included. Instead of 
-an unreliable timestamp, the following function is used to determine the current 
+<p>The values for transaction locktime remain unchanged. The difference is only in
+the calculation determining whether a transaction can be included. Instead of
+an unreliable timestamp, the following function is used to determine the current
 block time for the purpose of checking lock-time constraints:</p>
 <pre><code>    enum { nMedianTimeSpan=11 };
-    
-    int64_t GetMedianTimePast(const CBlockIndex* pindex)
+</code></pre>
+<pre><code>    int64_t GetMedianTimePast(const CBlockIndex* pindex)
     {
         int64_t pmedian[nMedianTimeSpan];
         int64_t* pbegin = &amp;pmedian[nMedianTimeSpan];

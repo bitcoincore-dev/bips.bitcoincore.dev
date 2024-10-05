@@ -224,9 +224,6 @@ The aggregate public key can be _tweaked_, which modifies the key as defined in 
 In order to apply a tweak, the KeyAgg Context output by _KeyAgg_ is provided to the _ApplyTweak_ algorithm with the _is_xonly_t_ argument set to false for plain tweaking and true for X-only tweaking.
 The resulting KeyAgg Context can be used to apply another tweak with _ApplyTweak_ or obtain the aggregate public key with _GetXonlyPubkey_ or _GetPlainPubkey_.
 
-In addition to individual public keys, the _KeyAgg_ algorithm accepts tweaks, which modify the aggregate public key as defined in the <a href="#tweaking-definition" target="_blank">Tweaking Definition</a> subsection.
-For example, if _KeyAgg_ is run with _v = 2_, _is_xonly_t<sub>1</sub> = false_, _is_xonly_t<sub>2</sub> = true_, then the aggregate key is first plain tweaked with _tweak<sub>1</sub>_ and then X-only tweaked with _tweak<sub>2</sub>_.
-
 The purpose of supporting tweaking is to ensure compatibility with existing uses of tweaking, i.e., that the result of signing is a valid signature for the tweaked public key.
 The MuSig2 algorithms take arbitrary tweaks as input but accepting arbitrary tweaks may negatively affect the security of the scheme.<ref>It is an open question whether allowing arbitrary tweaks from an adversary affects the unforgeability of MuSig2.</ref>
 Instead, signers should obtain the tweaks according to other specifications.
@@ -698,7 +695,7 @@ Algorithm _DeterministicSign(sk, aggothernonce, pk<sub>1..u</sub>, tweak<sub>1..
 *  Let _keyagg_ctx<sub>0</sub> = KeyAgg(pk<sub>1..u</sub>)_; fail if that fails
 *  For _i = 1 .. v_:
     *  Let _keyagg_ctx<sub>i</sub> = ApplyTweak(keyagg_ctx<sub>i-1</sub>, tweak<sub>i</sub>, is_xonly_t<sub>i</sub>)_; fail if that fails
-*  Let _aggpk = GetPubkey(keyagg_ctx<sub>v</sub>)_
+*  Let _aggpk = GetXonlyPubkey(keyagg_ctx<sub>v</sub>)_
 *  Let _k<sub>i</sub> = int(hash<sub>MuSig/deterministic/nonce</sub>(sk' || aggothernonce || aggpk || bytes(8, len(m)) || m || bytes(1, i - 1))) mod n_ for _i = 1,2_
 *  Fail if _k<sub>1</sub> = 0_ or _k<sub>2</sub> = 0_
 *  Let _R<sub>⁎,1</sub> = k<sub>1</sub>⋅G, R<sub>⁎,2</sub> = k<sub>2</sub>⋅G_
@@ -901,6 +898,8 @@ An exception to this rule is `MAJOR` version zero (0.y.z) which is for developme
 The `MINOR` version is incremented whenever the inputs or the output of an algorithm changes in a backward-compatible way or new backward-compatible functionality is added.
 The `PATCH` version is incremented for other changes that are noteworthy (bug fixes, test vectors, important clarifications, etc.).
 
+*  **1.0.2** (2024-07-22):
+    *  Fix minor bug in the specification of _DeterministicSign_ and add small improvement to a _PartialSigAgg_ test vector.
 *  **1.0.1** (2024-05-14):
     *  Fix minor issue in _PartialSigVerify_ vectors.
 *  **1.0.0** (2023-03-26):
@@ -947,4 +946,4 @@ The `PATCH` version is incremented for other changes that are noteworthy (bug fi
 <h2> Acknowledgements </h2>
 
 
-We thank Brandon Black, Riccardo Casatta, Lloyd Fournier, Russell O'Connor, and Pieter Wuille for their contributions to this document.
+We thank Brandon Black, Riccardo Casatta, Sivaram Dhakshinamoorthy, Lloyd Fournier, Russell O'Connor, and Pieter Wuille for their contributions to this document.
