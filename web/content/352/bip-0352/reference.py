@@ -7,7 +7,6 @@ import json
 from typing import List, Tuple, Dict, cast
 from sys import argv, exit
 from functools import reduce
-from itertools import permutations
 
 # local files
 from bech32m import convertbits, bech32_encode, decode, Encoding
@@ -27,6 +26,9 @@ from bitcoin_utils import (
     )
 
 
+K_max = 2323  # per-group recipient limit
+
+
 def get_pubkey_from_input(vin: VinInfo) -> ECPubKey:
     if is_p2pkh(vin.prevout):
         # skip the first 3 op_codes and grab the 20 byte hash
@@ -36,7 +38,7 @@ def get_pubkey_from_input(vin: VinInfo) -> ECPubKey:
             if i - 33 >= 0:
                 # starting from the back, we move over the scriptSig with a 33 byte
                 # window (to match a compressed pubkey). we hash this and check if it matches
-                # the 20 byte has from the scriptPubKey. for standard scriptSigs, this will match
+                # the 20 byte hash from the scriptPubKey. for standard scriptSigs, this will match
                 # right away because the pubkey is the last item in the scriptSig.
                 # if its a non-standard (malleated) scriptSig, we will still find the pubkey if its
                 # a compressed pubkey.
@@ -117,7 +119,7 @@ def decode_silent_payment_address(address: str, hrp: str = "tsp") -> Tuple[ECPub
     return B_scan, B_spend
 
 
-def create_outputs(input_priv_keys: List[Tuple[ECKey, bool]], outpoints: List[COutPoint], recipients: List[str], hrp="tsp") -> List[str]:
+def create_outputs(input_priv_keys: List[Tuple[ECKey, bool]], outpoints: List[COutPoint], recipients: List[str], expected: Dict[str, any] = None, hrp="tsp") -> List[str]:
     G = ECKey().set(1).get_pubkey()
     negated_keys = []
     for key, is_xonly in input_priv_keys:
@@ -130,18 +132,36 @@ def create_outputs(input_priv_keys: List[Tuple[ECKey, bool]], outpoints: List[CO
     if not a_sum.valid:
         # Input privkeys sum is zero -> fail
         return []
+    assert ECKey().set(bytes.fromhex(expected.get("input_private_key_sum"))) == a_sum, "a_sum did not match expected input_private_key_sum"
     input_hash = get_input_hash(outpoints, a_sum * G)
     silent_payment_groups: Dict[ECPubKey, List[ECPubKey]] = {}
     for recipient in recipients:
-        B_scan, B_m = decode_silent_payment_address(recipient, hrp=hrp)
+        B_scan, B_m = decode_silent_payment_address(recipient["address"], hrp=hrp)
+        # Verify decoded intermediate keys for recipient
+        expected_B_scan = ECPubKey().set(bytes.fromhex(recipient["scan_pub_key"]))
+        expected_B_m = ECPubKey().set(bytes.fromhex(recipient["spend_pub_key"]))
+        assert expected_B_scan == B_scan, "B_scan did not match expected recipient.scan_pub_key"
+        assert expected_B_m == B_m, "B_m did not match expected recipient.spend_pub_key"
         if B_scan in silent_payment_groups:
             silent_payment_groups[B_scan].append(B_m)
         else:
             silent_payment_groups[B_scan] = [B_m]
 
+    # Fail if per-group recipient limit (K_max) is exceeded
+    if any([len(group) > K_max for group in silent_payment_groups.values()]):
+        return []
+
     outputs = []
     for B_scan, B_m_values in silent_payment_groups.items():
         ecdh_shared_secret = input_hash * a_sum * B_scan
+        expected_shared_secrets = expected.get("shared_secrets", {})
+        # Find the recipient address that corresponds to this B_scan and get its index
+        for recipient_idx, recipient in enumerate(recipients):
+            recipient_B_scan = ECPubKey().set(bytes.fromhex(recipient["scan_pub_key"]))
+            if recipient_B_scan == B_scan:
+                expected_shared_secret_hex = expected_shared_secrets[recipient_idx]
+                assert ecdh_shared_secret.get_bytes(False).hex() == expected_shared_secret_hex, f"ecdh_shared_secret did not match expected, recipient {recipient_idx} ({recipient['address']}): expected={expected_shared_secret_hex}"
+                break
         k = 0
         for B_m in B_m_values:
             t_k = TaggedHash("BIP0352/SharedSecret", ecdh_shared_secret.get_bytes(False) + ser_uint32(k))
@@ -152,12 +172,18 @@ def create_outputs(input_priv_keys: List[Tuple[ECKey, bool]], outpoints: List[CO
     return list(set(outputs))
 
 
-def scanning(b_scan: ECKey, B_spend: ECPubKey, A_sum: ECPubKey, input_hash: bytes, outputs_to_check: List[ECPubKey], labels: Dict[str, str] = {}) -> List[Dict[str, str]]:
+def scanning(b_scan: ECKey, B_spend: ECPubKey, A_sum: ECPubKey, input_hash: bytes, outputs_to_check: List[ECPubKey], labels: Dict[str, str] = None, expected: Dict[str, any] = None) -> List[Dict[str, str]]:
     G = ECKey().set(1).get_pubkey()
+    input_hash_key = ECKey().set(input_hash)
+    computed_tweak_point = input_hash_key * A_sum
+    assert computed_tweak_point.get_bytes(False).hex() == expected.get("tweak"), "tweak did not match expected"
     ecdh_shared_secret = input_hash * b_scan * A_sum
+    assert ecdh_shared_secret.get_bytes(False).hex() == expected.get("shared_secret"), "ecdh_shared_secret did not match expected shared_secret"
     k = 0
     wallet = []
     while True:
+        if k == K_max:  # Don't look further than the per-group recipient limit (K_max)
+            break
         t_k = TaggedHash("BIP0352/SharedSecret", ecdh_shared_secret.get_bytes(False) + ser_uint32(k))
         P_k = B_spend + t_k * G
         for output in outputs_to_check:
@@ -237,11 +263,16 @@ if __name__ == "__main__":
                     is_p2tr(vin.prevout),
                 ))
                 input_pub_keys.append(pubkey)
+            assert [pk.get_bytes(False).hex() for pk in input_pub_keys] == expected.get("input_pub_keys"), "input_pub_keys did not match expected"
 
             sending_outputs = []
             if (len(input_pub_keys) > 0):
                 outpoints = [vin.outpoint for vin in vins]
-                sending_outputs = create_outputs(input_priv_keys, outpoints, given["recipients"], hrp="sp")
+                recipients = []  # expand given recipient entries to full list
+                for recipient_entry in given["recipients"]:
+                    count = recipient_entry.get("count", 1)
+                    recipients.extend([recipient_entry] * count)
+                sending_outputs = create_outputs(input_priv_keys, outpoints, recipients, expected=expected, hrp="sp")
 
                 # Note: order doesn't matter for creating/finding the outputs. However, different orderings of the recipient addresses
                 # will produce different generated outputs if sending to multiple silent payment addresses belonging to the
@@ -304,6 +335,7 @@ if __name__ == "__main__":
                     # Input pubkeys sum is point at infinity -> skip tx
                     assert expected["outputs"] == []
                     continue
+                assert A_sum.get_bytes(False).hex() == expected.get("input_pub_key_sum"), "A_sum did not match expected input_pub_key_sum"
                 input_hash = get_input_hash([vin.outpoint for vin in vins], A_sum)
                 pre_computed_labels = {
                     (generate_label(b_scan, label) * G).get_bytes(False).hex(): generate_label(b_scan, label).hex()
@@ -316,6 +348,7 @@ if __name__ == "__main__":
                     input_hash=input_hash,
                     outputs_to_check=outputs_to_check,
                     labels=pre_computed_labels,
+                    expected=expected,
                 )
 
             # Check that the private key is correct for the found output public key
@@ -334,9 +367,14 @@ if __name__ == "__main__":
             # same sender but with different labels. Because of this, expected["outputs"] contains all possible valid output sets,
             # based on all possible permutations of recipient address orderings. Must match exactly one of the possible found output
             # sets in expected["outputs"]
-            generated_set = {frozenset(d.items()) for d in add_to_wallet}
-            expected_set = {frozenset(d.items()) for d in expected["outputs"]}
-            assert generated_set == expected_set, "Receive test failed"
+            if "outputs" in expected:  # detailed check against expected outputs
+                generated_set = {frozenset(d.items()) for d in add_to_wallet}
+                expected_set = {frozenset(d.items()) for d in expected["outputs"]}
+                assert generated_set == expected_set, "Receive test failed"
+            elif "n_outputs" in expected:  # only check the number of found outputs
+                assert len(add_to_wallet) == expected["n_outputs"], "Receive test failed"
+            else:
+                assert False, "either 'outputs' or 'n_outputs' must be specified in 'expected' field of receiving test vector"
 
 
     print("All tests passed")

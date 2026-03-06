@@ -2,7 +2,7 @@
 // 5 blocks and collision space sizes of 1-32 bits. Change the RPC cert path
 // and credentials to run on your system. The program assumes you're running
 // a btcd with cfilter support, which mainline btcd doesn't have; in order to
-// circumvent this assumption, comment out the if block that checks for
+// circumvent this assumption, comment out the if block that checks the
 // filter size of DefaultP.
 
 package main
@@ -193,7 +193,7 @@ func main() {
 
 		block, err := client.GetBlock(blockHash)
 		if err != nil {
-			fmt.Println("Couldn't get block hash: ", err.Error())
+			fmt.Println("Couldn't get block data: ", err.Error())
 			return
 		}
 
@@ -223,7 +223,7 @@ func main() {
 		}
 
 		// We'll now ensure that we've constructed the same filter as
-		// the chain server we're fetching blocks form.
+		// the chain server we're fetching blocks from.
 		filter, err := client.GetCFilter(
 			blockHash, wire.GCSFilterRegular,
 		)
@@ -290,12 +290,10 @@ func main() {
 				fmt.Println("Error writing test case to output: ", err.Error())
 				return
 			}
+
+			testBlockIndex++
 		}
 
 		prevBasicHeader = basicHeader
-
-		if uint32(height) == testBlockHeights[testBlockIndex].height {
-			testBlockIndex++
-		}
 	}
 }
