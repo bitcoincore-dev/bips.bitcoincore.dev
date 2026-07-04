@@ -107,7 +107,7 @@ For <tt>index</tt>, addresses are numbered from 0 in a sequentially increasing m
 <h3> Timelock derivation </h3>
 
 
-The timelock used in the time-locked address is derived from the <tt>index</tt>. The timelock is a unix time. It is always at the start of the first second at the beginning of the month (see <a href="#Test vectors" target="_blank">Test vectors</a>). The <tt>index</tt> counts upwards the months from January 2020, ending in December 2099. At 12 months per year for 80 years this totals 960 timelocks. Note that care must be taken with the year 2038 problem on 32-bit systems.
+The timelock used in the time-locked address is derived from the <tt>index</tt>. The timelock is a unix time. It is always at the start of the first second at the beginning of the month (see <a href="#test-vectors" target="_blank">Test vectors</a>). The <tt>index</tt> counts upwards the months from January 2020, ending in December 2099. At 12 months per year for 80 years this totals 960 timelocks. Note that care must be taken with the year 2038 problem on 32-bit systems.
 
 ```
 year = 2020 + index // 12

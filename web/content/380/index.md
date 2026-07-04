@@ -313,6 +313,7 @@ All available expression types are listed in this table.
 |Script|<tt>SCRIPT</tt>|380|
 |Key|<tt>KEY</tt>|380|
 |Tree|<tt>TREE</tt>|<a href="/386" target="_blank">386</a>|
+|Annotation|<tt>ANNOT</tt>|<a href="bip-descriptorannotations.mediawiki" target="_blank">?</a>|
 
 
 <h2>Appendix B: Index of Script Expressions</h2>
@@ -336,4 +337,5 @@ This Table lists all available Script expressions and the BIPs specifying them.
 |<tt>addr(ADDR)</tt>|<a href="/385" target="_blank">385</a>|
 |<tt>tr(KEY)</tt>, <tt>tr(KEY, TREE)</tt>|<a href="/386" target="_blank">386</a>|
 |<tt>musig(KEY, KEY, ..., KEY)</tt>|<a href="/390" target="_blank">390</a>|
+|<tt>sp(KEY)</tt>, <tt>sp(KEY, KEY)</tt>|<a href="/392" target="_blank">392</a>|
 

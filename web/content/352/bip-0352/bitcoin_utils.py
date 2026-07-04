@@ -2,11 +2,11 @@ import hashlib
 import struct
 from io import BytesIO
 from ripemd160 import ripemd160
-from secp256k1 import ECKey
-from typing import Union
+from secp256k1lab.secp256k1 import Scalar
+from typing import List, Optional, Union
 
 
-def from_hex(hex_string):
+def from_hex(hex_string: str) -> BytesIO:
     """Deserialize from a hex string representation (e.g. from RPC)"""
     return BytesIO(bytes.fromhex(hex_string))
 
@@ -15,15 +15,15 @@ def ser_uint32(u: int) -> bytes:
     return u.to_bytes(4, "big")
 
 
-def ser_uint256(u):
+def ser_uint256(u: int) -> bytes:
     return u.to_bytes(32, 'little')
 
 
-def deser_uint256(f):
+def deser_uint256(f: BytesIO) -> int:
     return int.from_bytes(f.read(32), 'little')
 
 
-def deser_txid(txid: str):
+def deser_txid(txid: str) -> bytes:
     # recall that txids are serialized little-endian, but displayed big-endian
     # this means when converting from a human readable hex txid, we need to first
     # reverse it before deserializing it
@@ -31,7 +31,7 @@ def deser_txid(txid: str):
     return bytes.fromhex(dixt)
 
 
-def deser_compact_size(f: BytesIO):
+def deser_compact_size(f: BytesIO) -> int:
     view = f.getbuffer()
     nbytes = view.nbytes
     view.release()
@@ -48,12 +48,12 @@ def deser_compact_size(f: BytesIO):
     return nit
 
 
-def deser_string(f: BytesIO):
+def deser_string(f: BytesIO) -> bytes:
     nit = deser_compact_size(f)
     return f.read(nit)
 
 
-def deser_string_vector(f: BytesIO):
+def deser_string_vector(f: BytesIO) -> List[bytes]:
     nit = deser_compact_size(f)
     r = []
     for _ in range(nit):
@@ -65,17 +65,17 @@ def deser_string_vector(f: BytesIO):
 class COutPoint:
     __slots__ = ("hash", "n",)
 
-    def __init__(self, hash=b"", n=0,):
+    def __init__(self, hash: bytes = b"", n: int = 0) -> None:
         self.hash = hash
         self.n = n
 
-    def serialize(self):
+    def serialize(self) -> bytes:
         r = b""
         r += self.hash
         r += struct.pack("<I", self.n)
         return r
 
-    def deserialize(self, f):
+    def deserialize(self, f: BytesIO) -> None:
         self.hash = f.read(32)
         self.n = struct.unpack("<I", f.read(4))[0]
 
@@ -83,7 +83,14 @@ class COutPoint:
 class VinInfo:
     __slots__ = ("outpoint", "scriptSig", "txinwitness", "prevout", "private_key")
 
-    def __init__(self, outpoint=None, scriptSig=b"", txinwitness=None, prevout=b"", private_key=None):
+    def __init__(
+        self,
+        outpoint: Optional["COutPoint"] = None,
+        scriptSig: bytes = b"",
+        txinwitness: Optional["CTxInWitness"] = None,
+        prevout: bytes = b"",
+        private_key: Optional[Scalar] = None,
+    ) -> None:
         if outpoint is None:
             self.outpoint = COutPoint()
         else:
@@ -93,7 +100,7 @@ class VinInfo:
         else:
             self.txinwitness = txinwitness
         if private_key is None:
-            self.private_key = ECKey()
+            self.private_key = Scalar()
         else:
             self.private_key = private_key
         self.scriptSig = scriptSig
@@ -103,11 +110,11 @@ class VinInfo:
 class CScriptWitness:
     __slots__ = ("stack",)
 
-    def __init__(self):
+    def __init__(self) -> None:
         # stack is a vector of strings
-        self.stack = []
+        self.stack: List[bytes] = []
 
-    def is_null(self):
+    def is_null(self) -> bool:
         if self.stack:
             return False
         return True
@@ -116,14 +123,14 @@ class CScriptWitness:
 class CTxInWitness:
     __slots__ = ("scriptWitness",)
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.scriptWitness = CScriptWitness()
 
-    def deserialize(self, f: BytesIO):
+    def deserialize(self, f: BytesIO) -> "CTxInWitness":
         self.scriptWitness.stack = deser_string_vector(f)
         return self
 
-    def is_null(self):
+    def is_null(self) -> bool:
         return self.scriptWitness.is_null()
 
 
